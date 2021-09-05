@@ -1,0 +1,800 @@
+#+title My Emacs configuration
+#+property: header-args:emacs-lisp
+
+* Keep files clean
+
+#+begin_src emacs-lisp
+  
+  (use-package no-littering)
+  
+  (setq backup-directory-alist `(("." . ,(expand-file-name "tmp/backups/" user-emacs-directory))))
+  
+#+end_src
+
+* Auto package update
+
+#+begin_src emacs-lisp
+  
+  (use-package auto-package-update
+    :custom
+    (auto-package-update-interval 7)
+    (auto-package-update-hide-results t)
+    (auto-package-update-prompt-before-update t)
+    :config
+    (auto-package-update-maybe)
+    (auto-package-update-at-time "08:00")
+    )
+  
+#+end_src
+
+* Basic UI config
+
+#+begin_src emacs-lisp
+  
+  (setq inhibit-startup-message t)
+  (scroll-bar-mode 1)
+  (tool-bar-mode -1)
+  (tooltip-mode -1)
+  (set-fringe-mode 10)
+  (menu-bar-mode -1)
+  (tab-bar-mode 1)
+  (setq tab-bar-show t)
+  
+#+end_src
+
+* Font config
+
+#+begin_src emacs-lisp
+  
+  (set-face-attribute 'default nil
+                      :font "Cascadia Mono PL"
+                      :height 110
+                      )
+#+end_src
+
+* Line numbers
+
+#+begin_src emacs-lisp
+  
+  (setq display-line-numbers-type 'relative)
+  (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+  
+#+end_src
+
+* Doom modeline
+
+#+begin_src emacs-lisp
+
+  (use-package doom-modeline
+    :init (doom-modeline-mode 1)
+    )
+  
+#+end_src
+
+* Doom themes
+
+#+begin_src emacs-lisp
+  
+  ;; (load-theme 'doom-miramare t) -> low cont
+  ;; (load-theme 'doom-sourcerer t) -> pretty low cont
+  ;; (load-theme 'doom-spacegray t) -> pretty low cont
+  ;; (load-theme 'doom-wilmersdorf t) -> low cont
+  ;; (load-theme 'doom-zenburn t) -> classic
+  ;; (load-theme 'doom-1337 t) -> high cont
+  ;; (load-theme 'doom-monokai-ristretto t) -> coffee like
+  
+  (use-package doom-themes
+    :config
+    (load-theme 'doom-nord t)
+    (setq doom-themes-treemacs-theme "doom-colors")
+    (doom-themes-treemacs-config)
+    (doom-themes-org-config)
+    )
+  
+#+end_src
+
+* Git
+
+** Magit
+
+#+begin_src emacs-lisp
+  
+  (use-package magit)
+  
+#+end_src
+
+** Forge
+
+#+begin_src emacs-lisp
+  
+  (use-package forge)
+  
+#+end_src
+
+* Ivy
+
+** Ivy Base
+
+#+begin_src emacs-lisp
+  
+  (use-package ivy
+    :init
+    (setq ivy-use-virtual-buffers t)
+    (setq enable-recursive-minibuffers t)
+    :config
+    (ivy-mode)
+    )
+  
+#+end_src
+
+** Counsel
+
+#+begin_src emacs-lisp
+  
+  (use-package counsel
+    :after ivy
+    :config
+    (counsel-mode)
+    )
+  
+#+end_src
+
+** Prescient
+
+#+begin_src emacs-lisp
+  
+  (use-package prescient
+    :after ivy
+    :init
+    (setq prescient-filter-method '(literal regexp fuzzy initialism))
+    :config
+    (prescient-persist-mode)
+    )
+  
+#+end_src
+
+** Ivy Hydra
+
+#+begin_src emacs-lisp
+  
+  (use-package ivy-hydra
+    :after ivy
+    )
+  
+#+end_src
+
+** Ivy Rich
+
+#+begin_src emacs-lisp
+  
+  (use-package ivy-rich
+    :after ivy
+    :init (ivy-rich-mode 1))
+  
+#+end_src
+
+** Ivy Prescient
+
+#+begin_src emacs-lisp
+  
+  (use-package ivy-prescient
+    :after counsel
+    :config
+    (ivy-prescient-mode)
+    )
+  
+#+end_src
+
+* Company
+
+** Company Base
+
+#+begin_src emacs-lisp
+  
+  (use-package company
+    :after lsp-mode
+    :hook (lsp-mode . company-mode)
+    :custom
+    (company-minimum-prefix-length 1)
+    (company-idle-delay 0.0)
+    )
+  
+#+end_src
+
+** Company Box
+
+#+begin_src emacs-lisp
+
+  (use-package company-box
+    :after company
+    :hook (company-mode . company-box-mode)
+    )
+  
+#+end_src
+
+** Company Prescient
+
+#+begin_src emacs-lisp
+  
+  (use-package company-prescient
+    :after company
+    :config
+    (company-prescient-mode)
+    )
+  
+#+end_src
+
+* Flycheck
+
+#+begin_src emacs-lisp
+  
+  (use-package flycheck
+    :config
+    (global-flycheck-mode)
+    )
+  
+#+end_src
+
+* Which key
+
+#+begin_src emacs-lisp
+  
+  (use-package which-key
+    :init
+    (which-key-mode)
+    :config
+    (setq which-key-idle-delay 0.3)
+    )
+  
+#+end_src
+
+* Yasnippet
+
+** Yasnippet Base
+
+#+begin_src emacs-lisp
+
+  (use-package yasnippet
+    :config
+    (yas-global-mode 1)
+    )
+  
+#+end_src
+
+** Yasnippet snippets
+
+#+begin_src emacs-lisp
+  
+  (use-package yasnippet-snippets
+    :after yasnippet
+    )
+  
+#+end_src
+
+** Ivy Yasnippet
+
+#+begin_src emacs-lisp
+  
+  (use-package ivy-yasnippet)
+  
+#+end_src
+
+* Projectile
+
+** Projectile Base
+
+#+begin_src emacs-lisp
+  
+  (use-package projectile
+    :config
+    (projectile-mode 1)
+    )
+  
+#+end_src
+
+** Counsel Projectile
+
+#+begin_src emacs-lisp
+  
+  (use-package counsel-projectile
+    :after projectile
+    :config
+    (counsel-projectile-mode)
+    )
+  
+#+end_src
+
+* Avy
+
+#+begin_src emacs-lisp
+  
+  (use-package avy
+    :config
+    (avy-setup-default)
+    )
+  
+#+end_src
+
+* LSP
+
+** LSP Base
+
+#+begin_src emacs-lisp
+  
+  (use-package lsp-mode
+    :init
+    (setq gc-cons-threshold 100000000)
+    :hook (lsp-mode . lsp-enable-which-key-integration)
+    :commands (lsp lsp-deferred)
+    )
+  
+#+end_src
+
+** LSP UI
+
+#+begin_src emacs-lisp
+  
+  (use-package lsp-ui
+    :hook (lsp-mode . lsp-ui-mode)
+    :init
+    (setq lsp-ui-peek-enable t)
+    (setq lsp-ui-sideline-enable t)
+    (setq lsp-ui-sideline-show-diagnostics t)
+    (setq lsp-ui-sideline-show-hover nil)
+    (setq lsp-ui-sideline-show-code-actions nil)
+    )
+  
+#+end_src
+
+** LSP Ivy
+
+#+begin_src emacs-lisp
+  
+  (use-package lsp-ivy
+    :commands lsp-ivy-workspace-symbol
+    )
+  
+#+end_src
+
+** DAP Mode
+
+#+begin_src emacs-lisp
+  
+  (use-package dap-mode
+    :config
+    (dap-mode 1)
+    (require 'dap-chrome)
+    )
+  
+#+end_src
+
+* Language support
+
+** TypeScript
+
+#+begin_src emacs-lisp
+
+  (use-package typescript-mode
+    :mode "\\.tsx?\\'"
+    :hook ((typescript-mode . lsp-deferred)
+           (before-save . lsp-eslint-apply-all-fixes)
+           )
+    :config
+    (setq typescript-indent-level 2)
+    )
+  
+#+end_src
+
+** JavaScript
+
+#+begin_src emacs-lisp
+  
+  (use-package js2-mode
+    :mode "\\.js\\'"
+    :hook ((js2-mode . lsp-deferred)
+           (before-save . lsp-eslint-apply-all-fixes)
+           )
+    :config
+    (setq js-indent-level 2)
+    )
+  
+#+end_src
+
+** JSX
+
+#+begin_src emacs-lisp
+  
+  (use-package rjsx-mode
+    :mode "\\.jsx\\'"
+    :hook ((rjsx-mode . lsp-deferred)
+           (before-save . lsp-eslint-apply-all-fixes)
+           )
+    )
+  
+#+end_src
+
+* Undo-fu
+
+#+begin_src emacs-lisp
+
+  (use-package undo-fu
+    :config
+    (global-unset-key (kbd "C-z"))
+    (global-set-key (kbd "C-z") 'undo-fu-only-undo)
+    (global-set-key (kbd "C-S-z") 'undo-fu-only-redo)
+    )
+  
+#+end_src
+
+* Evil
+
+** Evil Base
+
+#+begin_src emacs-lisp
+  
+  (use-package evil
+    :after undo-fu
+    :init
+    (setq evil-want-integration t)
+    (setq evil-want-keybinding nil)
+    (setq evil-undo-system 'undo-fu)
+    :config
+    (evil-mode 1)
+    )
+  
+#+end_src
+
+** Evil Collection
+
+#+begin_src emacs-lisp
+  
+  (use-package evil-collection
+    :after evil
+    :config
+    (evil-collection-init)
+    )
+  
+#+end_src
+
+** Evil Surround
+
+#+begin_src emacs-lisp
+  
+  (use-package evil-surround
+    :after evil-collection
+    :config
+    (global-evil-surround-mode 1)
+    )
+  
+#+end_src
+
+** Evil Nerd Commenter
+
+#+begin_src emacs-lisp
+  
+  (use-package evil-nerd-commenter
+    :after evil-collection
+    :config
+    (evilnc-default-hotkeys)
+    )
+  
+#+end_src
+
+** Evil Matchit
+
+#+begin_src emacs-lisp
+
+  (use-package evil-matchit
+    :after evil-collection
+    :config
+    (global-evil-matchit-mode 1)
+    )
+  
+#+end_src
+
+** Evil Snipe
+
+#+begin_src emacs-lisp
+  
+  (use-package evil-snipe
+    :after evil-collection
+    :init
+    (setq evil-snipe-scope 'buffer)
+    (setq evil-snipe-repeat-scope 'buffer)
+    (setq evil-snipe-auto-scroll t)
+    :config
+    (evil-snipe-mode 1)
+    (evil-snipe-override-mode 1)
+    )
+  
+#+end_src
+
+** Evil Anzu
+
+#+begin_src emacs-lisp
+  
+  (use-package evil-anzu
+    :after evil-collection
+    :config
+    (anzu-mode 1)
+    )
+  
+#+end_src
+
+** Evil Escape
+
+#+begin_src emacs-lisp
+  
+  (use-package evil-escape
+    :after evil-collection
+    :config
+    (evil-escape-mode)
+    )
+  
+#+end_src
+
+** Evil Multiedit
+
+#+begin_src emacs-lisp
+  
+  (use-package evil-multiedit
+    :after evil-collection
+    :config
+    (evil-multiedit-default-keybinds)
+    )
+  
+#+end_src
+
+* Rainbow delimiters
+
+#+begin_src emacs-lisp
+  
+  (use-package rainbow-delimiters
+    :hook (prog-mode . rainbow-delimiters-mode)
+    )
+  
+#+end_src
+
+* Helpful
+
+#+begin_src emacs-lisp
+  
+  (use-package helpful
+    :custom
+    (counsel-describe-function-function #'helpful-callable)
+    (counsel-describe-variable-function #'helpful-variable)
+    )
+  
+#+end_src
+
+* All the icons
+
+#+begin_src emacs-lisp
+  
+  (use-package all-the-icons)
+
+#+end_src
+
+* Org Mode
+
+** Org Mode Init Hook
+
+#+begin_src emacs-lisp
+  
+  (defun akrw/org-mode-init-hook ()
+    (org-indent-mode)
+    (visual-line-mode 1)
+    )
+  
+#+end_src
+
+** Org Mode Base
+
+#+begin_src emacs-lisp
+  
+  (setq org-ellipsis " ↓"
+        org-agenda-files '("~/Org/agenda.org")
+        org-agenda-start-with-log-mode t
+        org-log-done 'time
+        org-log-into-drawer t
+        org-capture-templates
+        '(("t" "Task" entry (file+olp "~/Org/agenda.org" "Inbox") "* TODO %?\n %U\n %a\n %i" :empty-lines 1))
+        )
+  (require 'org-tempo)
+  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+  
+  (add-hook 'org-mode-hook 'akrw/org-mode-init-hook)
+  
+#+end_src
+
+** Visual fill column
+
+#+begin_src emacs-lisp
+  
+  (defun akrw/org-mode-visual-fill ()
+    (setq visual-fill-column-width 100
+          visual-fill-column-center-text t)
+    (visual-fill-column-mode 1)
+    )
+  
+  (use-package visual-fill-column
+    :hook (org-mode . akrw/org-mode-visual-fill)
+    )
+  
+#+end_src
+
+
+* General
+
+#+begin_src emacs-lisp
+  
+  (use-package general
+    :after evil-collection
+    :init
+    (setq general-override-states '(insert
+                                    emacs
+                                    hybrid
+                                    normal
+                                    visual
+                                    motion
+                                    operator
+                                    replace))
+    :config
+    (general-evil-setup)
+    (general-create-definer akrw/leader-keys
+      :states '(normal visual motion)
+      :prefix "SPC"
+      :global-prefix "C-SPC"
+      )
+  )
+  
+#+end_src
+
+* Eshell
+
+#+begin_src emacs-lisp
+  
+  (defun akrw/eshell-first-time-hook ()
+    (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
+    (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
+    (evil-normalize-keymaps)
+    (setq eshell-history-size 1000
+          eshell-buffer-maximum-lines 1000
+          eshell-command-aliases-list '(("gst" "git status")
+                                        ("gl" "git pull")
+                                        )
+          eshell-hist-ignoredups t
+          eshell-scroll-to-bottom-on-input t)
+    )
+  
+  (use-package eshell
+    :hook (eshell-first-time-mode . akrw/eshell-first-time-hook)
+    )
+  
+#+end_src
+
+* Dired
+
+** Dired Base
+
+#+begin_src emacs-lisp
+  
+  (setq dired-listing-switches "-agho --group-directories-first")
+  
+#+end_src
+
+** Dired Single
+
+#+begin_src emacs-lisp
+  
+  (use-package dired-single)
+  
+#+end_src
+
+** Dired All The Icons
+
+#+begin_src emacs-lisp
+  
+  (use-package all-the-icons-dired
+    :hook (dired-mode . all-the-icons-dired-mode)
+    )
+
+#+end_src
+
+** Dired Hide Dotfiles
+
+#+begin_src emacs-lisp
+  
+  (use-package dired-hide-dotfiles
+    :hook (dired-mode . dired-hide-dotfiles-mode)
+    )
+  
+#+end_src
+
+* Keybindings
+
+#+begin_src emacs-lisp
+  
+  (defun akrw/search-config ()
+    "Search through emacs config directory."
+    (interactive)
+    (counsel-find-file "~/dotfiles")
+    )
+  
+  (akrw/leader-keys
+    :keymaps 'override
+    "f" '(:ignore t :wk "files")
+    "fr" '(counsel-projectile-rg :wk "rg over project")
+    "fh" '(counsel-recentf :wk "recent files")
+    "fp" '(akrw/search-config :wk "config files")
+    "ff" '(counsel-find-file :wk "find file from current dir")
+    "fs" '(save-buffer :wk "save file")
+    "RET" '(counsel-M-x :wk "rg over project")
+    "SPC" '(counsel-projectile-find-file :wk "find file")
+    "F" '(avy-goto-char :wk "goto 1-char")
+    "S" '(avy-goto-char-2 :wk "goto 2-char")
+    "/" '(swiper :wk "swiper")
+    "t" '(:ignore t :wk "tabs")
+    "tn" '(tab-bar-new-tab :wk "new tab")
+    "tc" '(tab-bar-close-tab :wk "close tab")
+    "tU" '(tab-bar-undo-close-tab :wk "undo close tab")
+    "D" '(dired-jump :wk "open dired here")
+    "g" '(:ignore t :wk "git")
+    "gg" '(magit-status :wk "magit")
+    "a" '(:ignore t :wk "org agenda")
+    "aa" '(org-agenda :wk "org agenda")
+    "al" '(org-agenda-list :wk "org agenda list")
+    "ac" '(org-capture :wk "org agenda capture")
+    "b" '(:ignore t :wk "buffers")
+    "bd" '(kill-this-buffer :wk "kill current buffer")
+    "TAB" '(counsel-switch-buffer :wk "switch buffer")
+    "c" '(:ignore t :wk "code")
+    "cs" '(ivy-yasnippet :wk "snippets")
+    "cr" '(lsp-find-references :wk "find lsp reference")
+    "cd" '(lsp-find-definition :wk "find lsp definition")
+    "ca" '(lsp-execute-code-action :wk "code action")
+    "ck" '(lsp-signature-activate :wk "activate code signature")
+    "cb" '(dap-breakpoint-toggle :wk "toggle breakpoint")
+    "cD" '(dap-hydra :wk "debugging hydra")
+    "e" '(:ignore t :wk "eshell")
+    "ee" '(eshell :wk "eshell")
+    "ep" '(project-eshell :wk "eshell in project's root")
+    )
+  
+  (general-define-key
+   :keymaps '(ivy-minibuffer-map ivy-switch-buffer-map ivy-reverse-i-search-map)
+   "C-j" 'ivy-next-line
+   "C-k" 'ivy-previous-line
+   )
+  
+  (general-define-key
+   :states 'insert
+   :keymaps 'eshell-mode-map
+   "\C-r" 'counsel-esh-history
+   "<home>" 'eshell-bol
+   )
+  
+  (general-define-key
+   :states 'normal
+   :keymaps 'dired-mode-map
+   "h" 'dired-single-up-directory
+   "l" 'dired-single-buffer
+   "H" 'dired-hide-dotfiles-mode
+   )
+  
+  (general-define-key
+   :states 'motion
+   [remap describe-function] 'counsel-describe-function
+   [remap describe-command] 'helpful-command
+   [remap describe-variable] 'counsel-describe-variable
+   [remap describe-key] 'helpful-key
+   " " nil
+   )
+  
+  (general-define-key
+   :states 'normal
+   "u" 'undo-fu-only-undo
+   "\C-r" 'undo-fu-only-redo
+   )
+  
+#+end_src
