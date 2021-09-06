@@ -119,11 +119,10 @@
   
   (use-package ivy
     :init
-    (setq ivy-use-virtual-buffers t)
-    (setq enable-recursive-minibuffers t)
+    (setq ivy-use-virtual-buffers t
+          enable-recursive-minibuffers t)
     :config
-    (ivy-mode)
-    )
+    (ivy-mode))
   
 #+end_src
 
@@ -644,7 +643,6 @@
     (general-create-definer akrw/leader-keys
       :states '(normal visual motion)
       :prefix "SPC"
-      :global-prefix "C-SPC"
       )
   )
   
@@ -664,6 +662,7 @@
                                         ("gl" "git pull")
                                         )
           eshell-hist-ignoredups t
+          eshell-cd-on-directory t
           eshell-scroll-to-bottom-on-input t)
     )
   
@@ -711,6 +710,17 @@
   
 #+end_src
 
+* Smooth scrolling
+
+#+begin_src emacs-lisp
+  
+  (use-package smooth-scrolling
+    :config
+    (smooth-scrolling-mode 1)
+    )
+
+#+end_src
+
 * Keybindings
 
 #+begin_src emacs-lisp
@@ -751,9 +761,11 @@
     "c" '(:ignore t :wk "code")
     "cs" '(ivy-yasnippet :wk "snippets")
     "cr" '(lsp-find-references :wk "find lsp reference")
+    "cR" '(lsp-rename :wk "rename variable")
     "cd" '(lsp-find-definition :wk "find lsp definition")
     "ca" '(lsp-execute-code-action :wk "code action")
     "ck" '(lsp-signature-activate :wk "activate code signature")
+    "cW" '(lsp-workspace-restart :wk "activate code signature")
     "cb" '(dap-breakpoint-toggle :wk "toggle breakpoint")
     "cD" '(dap-hydra :wk "debugging hydra")
     "e" '(:ignore t :wk "eshell")
@@ -795,6 +807,11 @@
    :states 'normal
    "u" 'undo-fu-only-undo
    "\C-r" 'undo-fu-only-redo
+   )
+  
+  (general-define-key
+   :states 'insert
+   "\C-q" 'company-capf
    )
   
 #+end_src
