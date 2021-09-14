@@ -354,6 +354,15 @@
   
 #+end_src
 
+** Clojure
+
+#+begin_src emacs-lisp
+  
+  (use-package cider
+    :hook ((clojurescript-mode . lsp-deferred)))
+  
+#+end_src
+
 * Undo-fu
 
 #+begin_src emacs-lisp
