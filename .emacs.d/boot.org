@@ -111,76 +111,29 @@
   
 #+end_src
 
-* Ivy
+* Helm
 
-** Ivy Base
+** Helm Base
 
 #+begin_src emacs-lisp
   
-  (use-package ivy
+  (use-package helm
     :init
-    (setq ivy-use-virtual-buffers t
-          enable-recursive-minibuffers t)
+    (setq helm-display-function #'helm-display-buffer-in-own-frame
+          helm-display-buffer-width 120
+          helm-display-buffer-height 40)
     :config
-    (ivy-mode))
+    (helm-mode 1))
   
 #+end_src
 
-** Counsel
+** Helm Rg
 
 #+begin_src emacs-lisp
   
-  (use-package counsel
-    :after ivy
+  (use-package helm-rg
     :config
-    (counsel-mode)
-    )
-  
-#+end_src
-
-** Prescient
-
-#+begin_src emacs-lisp
-  
-  (use-package prescient
-    :after ivy
-    :init
-    (setq prescient-filter-method '(literal regexp fuzzy initialism))
-    :config
-    (prescient-persist-mode)
-    )
-  
-#+end_src
-
-** Ivy Hydra
-
-#+begin_src emacs-lisp
-  
-  (use-package ivy-hydra
-    :after ivy
-    )
-  
-#+end_src
-
-** Ivy Rich
-
-#+begin_src emacs-lisp
-  
-  (use-package ivy-rich
-    :after ivy
-    :init (ivy-rich-mode 1))
-  
-#+end_src
-
-** Ivy Prescient
-
-#+begin_src emacs-lisp
-  
-  (use-package ivy-prescient
-    :after counsel
-    :config
-    (ivy-prescient-mode)
-    )
+    (setq helm-rg--extra-args '("--hidden" "-g" "!.git/")))
   
 #+end_src
 
@@ -211,17 +164,6 @@
   
 #+end_src
 
-** Company Prescient
-
-#+begin_src emacs-lisp
-  
-  (use-package company-prescient
-    :after company
-    :config
-    (company-prescient-mode)
-    )
-  
-#+end_src
 
 * Flycheck
 
@@ -270,11 +212,11 @@
   
 #+end_src
 
-** Ivy Yasnippet
+** Helm Yasnippet
 
 #+begin_src emacs-lisp
   
-  (use-package ivy-yasnippet)
+  (use-package helm-c-yasnippet)
   
 #+end_src
 
@@ -291,14 +233,12 @@
   
 #+end_src
 
-** Counsel Projectile
+** Helm Projectile
 
 #+begin_src emacs-lisp
   
-  (use-package counsel-projectile
+  (use-package helm-projectile
     :after projectile
-    :config
-    (counsel-projectile-mode)
     )
   
 #+end_src
@@ -349,13 +289,11 @@
   
 #+end_src
 
-** LSP Ivy
+** LSP Helm
 
 #+begin_src emacs-lisp
   
-  (use-package lsp-ivy
-    :commands lsp-ivy-workspace-symbol
-    )
+  (use-package helm-lsp)
   
 #+end_src
 
@@ -564,8 +502,8 @@
   
   (use-package helpful
     :custom
-    (counsel-describe-function-function #'helpful-callable)
-    (counsel-describe-variable-function #'helpful-variable)
+    (helm-describe-function-function #'helpful-callable)
+    (helm-describe-variable-function #'helpful-variable)
     )
   
 #+end_src
@@ -732,22 +670,23 @@
   (defun akrw/search-config ()
     "Search through emacs config directory."
     (interactive)
-    (counsel-find-file "~/dotfiles")
+    (let ((default-directory "~/dotfiles")) (helm-find nil))
     )
   
   (akrw/leader-keys
     :keymaps 'override
+    "DEL" '(helm-resume :wk "resume helm")
     "f" '(:ignore t :wk "files")
-    "fr" '(counsel-projectile-rg :wk "rg over project")
-    "fh" '(counsel-recentf :wk "recent files")
+    "fr" '(helm-projectile-rg :wk "rg over project")
+    "fh" '(helm-recentf :wk "recent files")
     "fp" '(akrw/search-config :wk "config files")
-    "ff" '(counsel-find-file :wk "find file from current dir")
+    "ff" '(helm-find-files :wk "find file from current dir")
     "fs" '(save-buffer :wk "save file")
-    "RET" '(counsel-M-x :wk "rg over project")
-    "SPC" '(counsel-projectile-find-file :wk "find file")
+    "RET" '(helm-M-x :wk "M-x")
+    "SPC" '(helm-projectile-find-file :wk "find file")
     "F" '(avy-goto-char :wk "goto 1-char")
     "S" '(avy-goto-char-2 :wk "goto 2-char")
-    "/" '(swiper :wk "swiper")
+    "/" '(helm-occur :wk "occur")
     "t" '(:ignore t :wk "tabs")
     "tn" '(tab-bar-new-tab :wk "new tab")
     "tc" '(tab-bar-close-tab :wk "close tab")
@@ -761,9 +700,9 @@
     "ac" '(org-capture :wk "org agenda capture")
     "b" '(:ignore t :wk "buffers")
     "bd" '(kill-this-buffer :wk "kill current buffer")
-    "TAB" '(counsel-switch-buffer :wk "switch buffer")
+    "TAB" '(switch-to-buffer :wk "switch buffer")
     "c" '(:ignore t :wk "code")
-    "cs" '(ivy-yasnippet :wk "snippets")
+    "cs" '(helm-yas-complete :wk "snippets")
     "cr" '(lsp-find-references :wk "find lsp reference")
     "cR" '(lsp-rename :wk "rename variable")
     "cd" '(lsp-find-definition :wk "find lsp definition")
@@ -778,15 +717,16 @@
     )
   
   (general-define-key
-   :keymaps '(ivy-minibuffer-map ivy-switch-buffer-map ivy-reverse-i-search-map)
-   "C-j" 'ivy-next-line
-   "C-k" 'ivy-previous-line
+   :keymaps 'helm-map
+   "C-j" 'helm-next-line
+   "C-k" 'helm-previous-line
+   [escape] 'helm-keyboard-quit
    )
   
   (general-define-key
    :states 'insert
    :keymaps 'eshell-mode-map
-   "\C-r" 'counsel-esh-history
+   "\C-r" 'helm-eshell-history
    "<home>" 'eshell-bol
    )
   
@@ -800,9 +740,7 @@
   
   (general-define-key
    :states 'motion
-   [remap describe-function] 'counsel-describe-function
    [remap describe-command] 'helpful-command
-   [remap describe-variable] 'counsel-describe-variable
    [remap describe-key] 'helpful-key
    " " nil
    )
