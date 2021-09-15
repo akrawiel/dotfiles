@@ -315,12 +315,22 @@
   
 #+end_src
 
+* Editorconfig
+
+#+begin_src emacs-lisp
+  
+  (use-package editorconfig
+    :config
+    (editorconfig-mode 1))
+
+#+end_src
+
 * Language support
 
 ** TypeScript
 
 #+begin_src emacs-lisp
-
+  
   (use-package typescript-mode
     :mode "\\.tsx?\\'"
     :hook ((typescript-mode . lsp-deferred)
