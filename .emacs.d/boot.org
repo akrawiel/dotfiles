@@ -232,7 +232,8 @@
   (use-package projectile
     :config
     (projectile-mode 1)
-    )
+    (projectile-register-project-type 'npm '("package.json")
+                                      :project-file "package.json"))
   
 #+end_src
 
