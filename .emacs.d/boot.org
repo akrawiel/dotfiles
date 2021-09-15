@@ -123,11 +123,13 @@
   
   (use-package helm
     :init
-    (setq helm-display-function #'helm-display-buffer-in-own-frame
-          helm-display-buffer-width 120
-          helm-display-buffer-height 40)
+    (setq helm-display-function #'helm-default-display-buffer
+          helm-autoresize-max-height 20
+          helm-autoresize-min-height 20)
     :config
-    (helm-mode 1))
+    (helm-mode 1)
+    (helm-autoresize-mode 1)
+    )
   
 #+end_src
 
