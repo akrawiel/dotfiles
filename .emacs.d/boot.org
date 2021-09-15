@@ -379,6 +379,45 @@
   
 #+end_src
 
+** Svelte
+
+#+begin_src emacs-lisp
+  
+  (use-package svelte-mode
+    :mode "\\.svelte\\'"
+    :hook ((svelte-mode . lsp-deferred)
+           (before-save . lsp-eslint-apply-all-fixes)
+           (before-save . lsp-format-buffer)))
+  
+#+end_src
+
+** Go
+
+#+begin_src emacs-lisp
+  
+  (use-package go-mode
+    :mode "\\.go\\'"
+    :hook ((go-mode . lsp-deferred)))
+
+#+end_src
+
+** YAML
+
+#+begin_src emacs-lisp
+  
+  (use-package yaml-mode
+    :mode "\\.ya?ml\\'")
+  
+#+end_src
+
+** CSS
+
+#+begin_src emacs-lisp
+  
+  (add-hook 'css-mode-hook 'lsp-deferred)
+  
+#+end_src
+
 * Undo-fu
 
 #+begin_src emacs-lisp
