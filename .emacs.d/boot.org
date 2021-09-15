@@ -274,6 +274,8 @@
     :config
     (setq lsp-idle-delay 0.5
           lsp-auto-guess-root t
+          lsp-vetur-format-enable nil
+          lsp-vetur-experimental-template-interpolation-service t
           )
     :hook (lsp-mode . lsp-enable-which-key-integration)
     :commands (lsp lsp-deferred)
@@ -390,6 +392,21 @@
     :hook ((svelte-mode . lsp-deferred)
            (before-save . lsp-eslint-apply-all-fixes)
            (before-save . lsp-format-buffer)))
+  
+#+end_src
+
+** Vue / Web mode
+
+#+begin_src emacs-lisp
+  
+  (defun akrw/vue-hook ()
+    (when (string= (file-name-extension buffer-file-name) "vue")
+      (lsp-deferred)))
+  
+  (add-hook 'find-file-hook 'akrw/vue-hook)
+  
+  (use-package web-mode
+    :mode "\\.vue\\'")
   
 #+end_src
 
@@ -629,7 +646,6 @@
     )
   
 #+end_src
-
 
 * General
 
