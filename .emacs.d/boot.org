@@ -270,7 +270,9 @@
           read-process-output-max (* 1024 1024)
           )
     :config
-    (setq lsp-idle-delay 0.5)
+    (setq lsp-idle-delay 0.5
+          lsp-auto-guess-root t
+          )
     :hook (lsp-mode . lsp-enable-which-key-integration)
     :commands (lsp lsp-deferred)
     )
