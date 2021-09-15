@@ -160,14 +160,13 @@
 ** Company Box
 
 #+begin_src emacs-lisp
-
+  
   (use-package company-box
     :after company
     :hook (company-mode . company-box-mode)
     )
   
 #+end_src
-
 
 * Flycheck
 
