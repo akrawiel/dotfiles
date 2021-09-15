@@ -40,6 +40,10 @@
   (tab-bar-mode 1)
   (setq tab-bar-show t)
   
+  (setq-default tab-width 2)
+  (setq whitespace-style '(face trailing tabs spaces tab-mark space-mark))
+  (add-hook 'prog-mode-hook 'whitespace-mode)
+  
 #+end_src
 
 * Font config
