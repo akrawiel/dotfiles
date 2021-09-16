@@ -859,6 +859,12 @@
   
   (general-define-key
    :states 'motion
+   :keymap 'gdscript-mode-map
+   "<f5>" 'gdscript-godot-run-project
+   )
+  
+  (general-define-key
+   :states 'motion
    [remap describe-command] 'helpful-command
    [remap describe-key] 'helpful-key
    " " nil
