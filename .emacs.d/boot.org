@@ -826,6 +826,8 @@
     "cW" '(lsp-workspace-restart :wk "activate code signature")
     "cb" '(dap-breakpoint-toggle :wk "toggle breakpoint")
     "cD" '(dap-hydra :wk "debugging hydra")
+    "ci" '(helm-imenu :wk "imenu")
+    "co" '(helm-lsp-workspace-symbol :wk "workspace symbols")
     "e" '(:ignore t :wk "eshell")
     "ee" '(eshell :wk "eshell")
     "ep" '(project-eshell :wk "eshell in project's root")
