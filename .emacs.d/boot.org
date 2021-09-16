@@ -780,6 +780,13 @@
     (let ((default-directory "~/dotfiles")) (helm-find nil))
     )
   
+  (defun akrw/kill-current-tab ()
+    "Kills current tab and its buffer."
+    (interactive)
+    (kill-current-buffer)
+    (tab-bar-close-tab)
+    )
+  
   (akrw/leader-keys
     :keymaps 'override
     "DEL" '(helm-resume :wk "resume helm")
@@ -797,6 +804,7 @@
     "t" '(:ignore t :wk "tabs")
     "tn" '(tab-bar-new-tab :wk "new tab")
     "tc" '(tab-bar-close-tab :wk "close tab")
+    "tC" '(akrw/kill-current-tab :wk "close tab and its buffer")
     "tU" '(tab-bar-undo-close-tab :wk "undo close tab")
     "D" '(dired-jump :wk "open dired here")
     "g" '(:ignore t :wk "git")
