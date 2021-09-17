@@ -315,6 +315,14 @@
     :config
     (dap-mode 1)
     (require 'dap-chrome)
+    (dap-chrome-setup)
+    (dap-register-debug-template
+     "Attach to 9222 port debugger"
+     (list :type "chrome"
+           :request "attach"
+           :port 9229
+           :name "Attach to 9222 port debugger"
+           :program "__ignored"))
     )
   
 #+end_src
