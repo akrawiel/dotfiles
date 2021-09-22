@@ -125,7 +125,8 @@
     :init
     (setq helm-display-function #'helm-default-display-buffer
           helm-autoresize-max-height 20
-          helm-autoresize-min-height 20)
+          helm-autoresize-min-height 20
+          helm-rg-thing-at-point nil)
     :config
     (helm-mode 1)
     (helm-autoresize-mode 1)
