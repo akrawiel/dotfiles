@@ -919,9 +919,13 @@
    )
   
   (general-define-key
-   :states 'motion
    :keymap 'gdscript-mode-map
-   "<f5>" 'gdscript-godot-run-project
+   [(f5)] 'gdscript-godot-run-project
+   )
+  
+  (general-define-key
+   :keymap 'rust-mode-map
+   [(f5)] 'cargo-process-run
    )
   
   (general-define-key
