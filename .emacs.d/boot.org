@@ -498,6 +498,21 @@
   
 #+end_src
 
+** Rust
+
+#+begin_src emacs-lisp
+  
+  (use-package rust-mode
+    :hook (rust-mode . lsp-deferred)
+    :config
+    (setq rust-format-on-save t))
+  
+  (use-package cargo
+    :after rust-mode
+    :hook (rust-mode . cargo-minor-mode))
+  
+#+end_src
+
 * Undo-fu
 
 #+begin_src emacs-lisp
