@@ -39,6 +39,7 @@
   (menu-bar-mode -1)
   (tab-bar-mode 1)
   (setq tab-bar-show t)
+  (setq enable-recursive-minibuffers t)
   
   (setq-default tab-width 2)
   (setq whitespace-style '(face trailing tabs spaces tab-mark space-mark))
@@ -115,32 +116,84 @@
   
 #+end_src
 
-* Helm
+* Vertico
 
-** Helm Base
+** Vertico Base
 
 #+begin_src emacs-lisp
   
-  (use-package helm
-    :init
-    (setq helm-display-function #'helm-default-display-buffer
-          helm-autoresize-max-height 20
-          helm-autoresize-min-height 20
-          helm-rg-thing-at-point nil)
+  (use-package vertico
     :config
-    (helm-mode 1)
-    (helm-autoresize-mode 1)
-    )
+    (vertico-mode 1))
   
 #+end_src
 
-** Helm Rg
+** Savehist
 
 #+begin_src emacs-lisp
   
-  (use-package helm-rg
+  (use-package savehist
+    :init
+    (savehist-mode))
+  
+#+end_src
+
+** Orderless
+
+#+begin_src emacs-lisp
+  
+  (use-package orderless
+    :init
+    (setq completion-styles '(orderless)
+          orderless-matching-styles '(orderless-literal orderless-regexp orderless-flex)
+          completion-category-defaults nil))
+  
+#+end_src
+
+** Marginalia
+
+#+begin_src emacs-lisp
+  
+  (use-package marginalia
+    :init
+    (marginalia-mode))
+  
+#+end_src
+
+** Consult
+
+#+begin_src emacs-lisp
+  
+  (use-package consult
     :config
-    (setq helm-rg--extra-args '("--hidden" "-g" "!.git/")))
+    (setq consult-project-root-function #'projectile-project-root
+          consult-ripgrep-args "rg --glob \!.git --ignore --hidden --line-buffered --color=never --max-columns=1000 --path-separator / --smart-case --no-heading --line-number ."
+          consult-async-min-input 2))
+  
+#+end_src
+
+** Embark
+
+#+begin_src emacs-lisp
+  
+  (use-package embark)
+  
+#+end_src
+
+** Consult Embark integration
+
+#+begin_src emacs-lisp
+  
+  (use-package embark-consult
+    :after (consult embark))
+  
+#+end_src
+
+** Consult LSP
+
+#+begin_src emacs-lisp
+  
+  (use-package consult-lsp)
   
 #+end_src
 
@@ -218,14 +271,6 @@
   
 #+end_src
 
-** Helm Yasnippet
-
-#+begin_src emacs-lisp
-  
-  (use-package helm-c-yasnippet)
-  
-#+end_src
-
 * Projectile
 
 ** Projectile Base
@@ -237,16 +282,6 @@
     (projectile-mode 1)
     (projectile-register-project-type 'npm '("package.json")
                                       :project-file "package.json"))
-  
-#+end_src
-
-** Helm Projectile
-
-#+begin_src emacs-lisp
-  
-  (use-package helm-projectile
-    :after projectile
-    )
   
 #+end_src
 
@@ -297,14 +332,6 @@
           lsp-ui-sideline-show-hover nil
           lsp-ui-sideline-show-code-actions nil)
     )
-  
-#+end_src
-
-** LSP Helm
-
-#+begin_src emacs-lisp
-  
-  (use-package helm-lsp)
   
 #+end_src
 
@@ -617,11 +644,7 @@
 
 #+begin_src emacs-lisp
   
-  (use-package helpful
-    :custom
-    (helm-describe-function-function #'helpful-callable)
-    (helm-describe-variable-function #'helpful-variable)
-    )
+  (use-package helpful)
   
 #+end_src
 
@@ -786,7 +809,7 @@
   (defun akrw/search-config ()
     "Search through emacs config directory."
     (interactive)
-    (let ((default-directory "~/dotfiles")) (helm-find nil))
+    (projectile-find-file-in-directory "~/dotfiles")
     )
   
   (defun akrw/kill-current-tab ()
@@ -798,18 +821,16 @@
   
   (akrw/leader-keys
     :keymaps 'override
-    "DEL" '(helm-resume :wk "resume helm")
     "f" '(:ignore t :wk "files")
-    "fr" '(helm-projectile-rg :wk "rg over project")
-    "fh" '(helm-recentf :wk "recent files")
+    "fr" '(consult-ripgrep :wk "rg over project")
     "fp" '(akrw/search-config :wk "config files")
-    "ff" '(helm-find-files :wk "find file from current dir")
+    "ff" '(find-file :wk "find file from current dir")
     "fs" '(save-buffer :wk "save file")
-    "RET" '(helm-M-x :wk "M-x")
-    "SPC" '(helm-projectile-find-file :wk "find file")
+    "RET" '(execute-extended-command :wk "M-x")
+    "SPC" '(projectile-find-file :wk "find file")
     "F" '(avy-goto-char :wk "goto 1-char")
     "S" '(avy-goto-char-2 :wk "goto 2-char")
-    "/" '(helm-occur :wk "occur")
+    "/" '(consult-line :wk "occur")
     "t" '(:ignore t :wk "tabs")
     "tn" '(tab-bar-new-tab :wk "new tab")
     "tc" '(tab-bar-close-tab :wk "close tab")
@@ -824,9 +845,8 @@
     "ac" '(org-capture :wk "org agenda capture")
     "b" '(:ignore t :wk "buffers")
     "bd" '(kill-this-buffer :wk "kill current buffer")
-    "TAB" '(switch-to-buffer :wk "switch buffer")
+    "TAB" '(consult-buffer :wk "switch buffer")
     "c" '(:ignore t :wk "code")
-    "cs" '(helm-yas-complete :wk "snippets")
     "cr" '(lsp-find-references :wk "find lsp reference")
     "cR" '(lsp-rename :wk "rename variable")
     "cd" '(lsp-find-definition :wk "find lsp definition")
@@ -835,8 +855,8 @@
     "cW" '(lsp-workspace-restart :wk "activate code signature")
     "cb" '(dap-breakpoint-toggle :wk "toggle breakpoint")
     "cD" '(dap-hydra :wk "debugging hydra")
-    "ci" '(helm-imenu :wk "imenu")
-    "co" '(helm-lsp-workspace-symbol :wk "workspace symbols")
+    "ci" '(consult-imenu :wk "imenu")
+    "co" '(consult-lsp-symbols :wk "workspace symbols")
     "e" '(:ignore t :wk "eshell")
     "ee" '(eshell :wk "eshell")
     "ep" '(project-eshell :wk "eshell in project's root")
@@ -855,19 +875,23 @@
     "wL" '(evil-window-move-far-right :wk "move window to right")
     )
   
-  (global-set-key (kbd "M-x") 'helm-M-x)
+  (general-define-key
+   :keymaps 'vertico-map
+   "C-j" 'vertico-next
+   "C-k" 'vertico-previous
+   [escape] 'keyboard-escape-quit
+   )
   
   (general-define-key
-   :keymaps 'helm-map
-   "C-j" 'helm-next-line
-   "C-k" 'helm-previous-line
-   [escape] 'helm-keyboard-quit
+   :keymaps 'vertico-map
+   "C-." 'embark-act
+   "M-." 'embark-dwim
    )
   
   (general-define-key
    :states 'insert
    :keymaps 'eshell-mode-map
-   "\C-r" 'helm-eshell-history
+   "\C-r" 'consult-history
    "<home>" 'eshell-bol
    )
   
