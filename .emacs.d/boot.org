@@ -116,37 +116,26 @@
   
 #+end_src
 
-* Vertico
+* Selectrum
 
-** Vertico Base
+** Selectrum Base
 
 #+begin_src emacs-lisp
   
-  (use-package vertico
+  (use-package selectrum
     :config
-    (vertico-mode 1))
+    (selectrum-mode 1))
   
 #+end_src
 
-** Savehist
+** Selectrum Prescient
 
 #+begin_src emacs-lisp
   
-  (use-package savehist
-    :init
-    (savehist-mode))
-  
-#+end_src
-
-** Orderless
-
-#+begin_src emacs-lisp
-  
-  (use-package orderless
-    :init
-    (setq completion-styles '(orderless)
-          orderless-matching-styles '(orderless-literal orderless-regexp orderless-flex)
-          completion-category-defaults nil))
+  (use-package selectrum-prescient
+    :config
+    (selectrum-prescient-mode 1)
+    (prescient-persist-mode 1))
   
 #+end_src
 
@@ -185,7 +174,7 @@
 #+begin_src emacs-lisp
   
   (use-package embark-consult
-    :after (consult embark))
+    :after (embark consult))
   
 #+end_src
 
@@ -208,7 +197,7 @@
     :hook (lsp-mode . company-mode)
     :custom
     (company-minimum-prefix-length 1)
-    (company-idle-delay 0.0)
+    (company-idle-delay 0.5)
     )
   
 #+end_src
@@ -836,6 +825,7 @@
   
   (akrw/leader-keys
     :keymaps 'override
+    "DEL" '(selectrum-repeat :wk "repeat last command")
     "f" '(:ignore t :wk "files")
     "fr" '(consult-ripgrep :wk "rg over project")
     "fp" '(akrw/search-config :wk "config files")
@@ -891,16 +881,11 @@
     )
   
   (general-define-key
-   :keymaps 'vertico-map
-   "C-j" 'vertico-next
-   "C-k" 'vertico-previous
+   :keymaps 'selectrum-minibuffer-map
+   "C-j" 'selectrum-next-candidate
+   "C-k" 'selectrum-previous-candidate
+   "C-a" 'embark-act
    [escape] 'keyboard-escape-quit
-   )
-  
-  (general-define-key
-   :keymaps 'vertico-map
-   "C-." 'embark-act
-   "M-." 'embark-dwim
    )
   
   (general-define-key
