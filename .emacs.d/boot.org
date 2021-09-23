@@ -52,9 +52,10 @@
 #+begin_src emacs-lisp
   
   (set-face-attribute 'default nil
-                      :font "Cascadia Mono PL"
-                      :height 110
+                      :font "Cascadia Code PL"
+                      :height 100
                       )
+  
 #+end_src
 
 * Line numbers
@@ -108,13 +109,6 @@
   
 #+end_src
 
-** Forge
-
-#+begin_src emacs-lisp
-  
-  (use-package forge)
-  
-#+end_src
 
 * Selectrum
 
@@ -158,23 +152,6 @@
     (setq consult-project-root-function #'projectile-project-root
           consult-ripgrep-args "rg --glob \!.git --ignore --hidden --line-buffered --color=never --max-columns=1000 --path-separator / --smart-case --no-heading --line-number ."
           consult-async-min-input 2))
-  
-#+end_src
-
-** Embark
-
-#+begin_src emacs-lisp
-  
-  (use-package embark)
-  
-#+end_src
-
-** Consult Embark integration
-
-#+begin_src emacs-lisp
-  
-  (use-package embark-consult
-    :after (embark consult))
   
 #+end_src
 
@@ -237,29 +214,6 @@
   
 #+end_src
 
-* Yasnippet
-
-** Yasnippet Base
-
-#+begin_src emacs-lisp
-
-  (use-package yasnippet
-    :config
-    (yas-global-mode 1)
-    )
-  
-#+end_src
-
-** Yasnippet snippets
-
-#+begin_src emacs-lisp
-  
-  (use-package yasnippet-snippets
-    :after yasnippet
-    )
-  
-#+end_src
-
 * Projectile
 
 ** Projectile Base
@@ -300,46 +254,9 @@
     (setq lsp-idle-delay 0.5
           lsp-auto-guess-root t
           lsp-vetur-format-enable nil
-          lsp-vetur-experimental-template-interpolation-service nil
-          )
+          lsp-vetur-experimental-template-interpolation-service nil)
     :hook (lsp-mode . lsp-enable-which-key-integration)
     :commands (lsp lsp-deferred)
-    )
-  
-#+end_src
-
-** LSP UI
-
-#+begin_src emacs-lisp
-  
-  (use-package lsp-ui
-    :hook (lsp-mode . lsp-ui-mode)
-    :init
-    (setq lsp-ui-peek-enable t
-          lsp-ui-sideline-enable t
-          lsp-ui-sideline-show-diagnostics t
-          lsp-ui-sideline-show-hover nil
-          lsp-ui-sideline-show-code-actions nil)
-    )
-  
-#+end_src
-
-** DAP Mode
-
-#+begin_src emacs-lisp
-  
-  (use-package dap-mode
-    :config
-    (dap-mode 1)
-    (require 'dap-chrome)
-    (dap-chrome-setup)
-    (dap-register-debug-template
-     "Attach to 9222 port debugger"
-     (list :type "chrome"
-           :request "attach"
-           :port 9229
-           :name "Attach to 9222 port debugger"
-           :program "__ignored"))
     )
   
 #+end_src
@@ -509,8 +426,6 @@
   (use-package undo-fu
     :config
     (global-unset-key (kbd "C-z"))
-    (global-set-key (kbd "C-z") 'undo-fu-only-undo)
-    (global-set-key (kbd "C-S-z") 'undo-fu-only-redo)
     )
   
 #+end_src
@@ -605,19 +520,7 @@
   (use-package evil-anzu
     :after evil-collection
     :config
-    (anzu-mode 1)
-    )
-  
-#+end_src
-
-** Evil Escape
-
-#+begin_src emacs-lisp
-  
-  (use-package evil-escape
-    :after evil-collection
-    :config
-    (evil-escape-mode)
+    (global-anzu-mode 1)
     )
   
 #+end_src
@@ -630,16 +533,6 @@
     :after evil-collection
     :config
     (evil-multiedit-default-keybinds)
-    )
-  
-#+end_src
-
-* Rainbow delimiters
-
-#+begin_src emacs-lisp
-  
-  (use-package rainbow-delimiters
-    :hook (prog-mode . rainbow-delimiters-mode)
     )
   
 #+end_src
@@ -785,16 +678,6 @@
 
 #+end_src
 
-** Dired Hide Dotfiles
-
-#+begin_src emacs-lisp
-  
-  (use-package dired-hide-dotfiles
-    :hook (dired-mode . dired-hide-dotfiles-mode)
-    )
-  
-#+end_src
-
 * Smooth scrolling
 
 #+begin_src emacs-lisp
@@ -804,6 +687,38 @@
     (smooth-scrolling-mode 1)
     )
 
+#+end_src
+
+* Ligatures
+
+#+begin_src emacs-lisp
+  
+  (use-package ligature
+    :straight (ligature :type git :host github :repo "mickeynp/ligature.el")
+    :config
+    ;; Enable the "www" ligature in every possible major mode
+    (ligature-set-ligatures 't '("www"))
+    ;; Enable traditional ligature support in eww-mode, if the
+    ;; `variable-pitch' face supports it
+    (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+    ;; Enable all Cascadia Code ligatures in programming modes
+    (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                                         ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                         "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                         "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                         "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                         "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                         "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                         "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                         ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                         "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                         "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                         "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                         "\\\\" "://"))
+    ;; Enables ligature checks globally in all buffers. You can also do it
+    ;; per mode with `ligature-mode'.
+    (global-ligature-mode t))
+  
 #+end_src
 
 * Keybindings
@@ -858,8 +773,6 @@
     "ca" '(lsp-execute-code-action :wk "code action")
     "ck" '(lsp-signature-activate :wk "activate code signature")
     "cW" '(lsp-workspace-restart :wk "activate code signature")
-    "cb" '(dap-breakpoint-toggle :wk "toggle breakpoint")
-    "cD" '(dap-hydra :wk "debugging hydra")
     "ci" '(consult-imenu :wk "imenu")
     "co" '(consult-lsp-symbols :wk "workspace symbols")
     "e" '(:ignore t :wk "eshell")
@@ -900,7 +813,6 @@
    :keymaps 'dired-mode-map
    "h" 'dired-single-up-directory
    "l" 'dired-single-buffer
-   "H" 'dired-hide-dotfiles-mode
    )
   
   (general-define-key
