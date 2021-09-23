@@ -254,6 +254,7 @@
     (setq lsp-idle-delay 0.5
           lsp-auto-guess-root t
           lsp-vetur-format-enable nil
+          lsp-headerline-breadcrumb-enable nil
           lsp-vetur-experimental-template-interpolation-service nil)
     :hook (lsp-mode . lsp-enable-which-key-integration)
     :commands (lsp lsp-deferred)
