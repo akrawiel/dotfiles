@@ -151,6 +151,7 @@
     :config
     (setq consult-project-root-function #'projectile-project-root
           consult-ripgrep-args "rg --glob \!.git --ignore --hidden --line-buffered --color=never --max-columns=1000 --path-separator / --smart-case --no-heading --line-number ."
+          consult-preview-max-count 0
           consult-async-min-input 2))
   
 #+end_src
