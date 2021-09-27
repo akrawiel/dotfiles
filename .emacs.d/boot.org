@@ -196,8 +196,11 @@
 #+begin_src emacs-lisp
   
   (use-package flycheck
-    :config
+    :init
     (global-flycheck-mode)
+    :config
+    (flycheck-set-checker-executable 'javascript-eslint "/usr/bin/eslint_d")
+    (flycheck-add-mode 'javascript-eslint 'js2-mode)
     )
   
 #+end_src
@@ -282,6 +285,7 @@
   (use-package typescript-mode
     :mode "\\.tsx?\\'"
     :hook ((typescript-mode . lsp-deferred)
+           (typescript-mode . (lambda () (flycheck-add-next-checker 'lsp 'javascript-eslint)))
            (before-save . lsp-eslint-apply-all-fixes)
            )
     :config
@@ -297,6 +301,7 @@
   (use-package js2-mode
     :mode "\\.js\\'"
     :hook ((js2-mode . lsp-deferred)
+           (js2-mode . (lambda () (flycheck-add-next-checker 'lsp 'javascript-eslint)))
            (before-save . lsp-eslint-apply-all-fixes)
            )
     :config
@@ -312,6 +317,7 @@
   (use-package rjsx-mode
     :mode "\\.jsx\\'"
     :hook ((rjsx-mode . lsp-deferred)
+           (rjsx-mode . (lambda () (flycheck-add-next-checker 'lsp 'javascript-eslint)))
            (before-save . lsp-eslint-apply-all-fixes)
            )
     )
@@ -345,7 +351,10 @@
   
   (defun akrw/vue-hook ()
     (when (string= (file-name-extension buffer-file-name) "vue")
-      (lsp-deferred)))
+      (lsp-deferred)
+      (flycheck-add-mode 'javascript-eslint 'web-mode)
+      (flycheck-add-next-checker 'lsp 'javascript-eslint)
+      (flycheck-select-checker 'javascript-eslint)))
   
   (add-hook 'find-file-hook 'akrw/vue-hook)
   
@@ -777,6 +786,7 @@
     "cW" '(lsp-workspace-restart :wk "activate code signature")
     "ci" '(consult-imenu :wk "imenu")
     "co" '(consult-lsp-symbols :wk "workspace symbols")
+    "cc" '(flycheck-buffer :wk "refresh flycheck buffer")
     "e" '(:ignore t :wk "eshell")
     "ee" '(eshell :wk "eshell")
     "ep" '(project-eshell :wk "eshell in project's root")
