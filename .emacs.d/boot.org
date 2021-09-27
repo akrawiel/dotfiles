@@ -51,10 +51,18 @@
 
 #+begin_src emacs-lisp
   
-  (set-face-attribute 'default nil
-                      :font "Cascadia Code PL"
-                      :height 100
-                      )
+  (defun akrw/set-font ()
+    (set-face-attribute 'default nil
+                        :font "Cascadia Code PL"
+                        :height 100))
+  
+  (if (daemonp)
+      (add-hook 'server-after-make-frame-hook
+                (lambda (frame)
+                  (setq doom-modeline-icon t)
+                  (with-selected-frame frame
+                    (akrw/set-font))))
+    (akrw/set-font))
   
 #+end_src
 
