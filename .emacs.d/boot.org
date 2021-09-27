@@ -430,6 +430,16 @@
   
 #+end_src
 
+** Prettier
+
+#+begin_src emacs-lisp
+  
+  (use-package prettier
+    :config
+    (global-prettier-mode))
+  
+#+end_src
+
 * Undo-fu
 
 #+begin_src emacs-lisp
@@ -787,6 +797,7 @@
     "ci" '(consult-imenu :wk "imenu")
     "co" '(consult-lsp-symbols :wk "workspace symbols")
     "cc" '(flycheck-buffer :wk "refresh flycheck buffer")
+    "cp" '(prettier-prettify :wk "apply prettier to buffer")
     "e" '(:ignore t :wk "eshell")
     "ee" '(eshell :wk "eshell")
     "ep" '(project-eshell :wk "eshell in project's root")
