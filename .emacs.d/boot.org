@@ -238,7 +238,9 @@
     :config
     (projectile-mode 1)
     (projectile-register-project-type 'npm '("package.json")
-                                      :project-file "package.json"))
+                                      :project-file "package.json")
+    (projectile-register-project-type 'dart '("pubspec.yaml")
+                                      :project-file "pubspec.yaml"))
   
 #+end_src
 
@@ -437,6 +439,22 @@
   (use-package cargo
     :after rust-mode
     :hook (rust-mode . cargo-minor-mode))
+  
+#+end_src
+
+** Dart
+
+#+begin_src emacs-lisp
+  
+  (use-package dart-mode
+    :mode "\\.dart\\'"
+    :hook (dart-mode . lsp-deferred))
+  
+  (use-package lsp-dart
+    :after dart-mode
+    :config
+    (setq lsp-lens-enable nil
+          lsp-signature-auto-activate nil))
   
 #+end_src
 
