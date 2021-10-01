@@ -616,6 +616,31 @@
   
 #+end_src
 
+** Org Roam
+
+#+begin_src emacs-lisp
+  
+  (use-package org-roam
+    :init
+    (setq org-roam-v2-ack t
+          org-roam-completion-everywhere t
+          org-roam-mode-section-functions '(org-roam-backlinks-section org-roam-reflinks-section)
+          org-roam-directory (file-truename "~/OrgRoam")
+          org-roam-capture-templates '(("d" "default" plain "%?"
+                                        :target (file+head "${slug}.org"
+                                                           "#+title: ${title}\n")
+                                        :unnarrowed t))
+          org-roam-dailies-directory "dailies/"
+          org-roam-dailies-capture-templates
+          '(("d" "default" entry
+             "* %?"
+             :target (file+head "%<%Y-%m-%d>.org"
+                                "#+title: %<%Y-%m-%d>\n"))))
+    :config
+    (org-roam-db-autosync-mode))
+  
+#+end_src
+
 ** Visual fill column
 
 #+begin_src emacs-lisp
@@ -800,6 +825,15 @@
     "wJ" '(evil-window-move-very-bottom :wk "move window to bottom")
     "wK" '(evil-window-move-very-top :wk "move window to top")
     "wL" '(evil-window-move-far-right :wk "move window to right")
+    "r" '(:ignore t :wk "org roam")
+    "rd" '(org-roam-dailies-goto-today :wk "today's daily note")
+    "rD" '(org-roam-dailies-goto-yesterday :wk "yesterday's daily note")
+    "r\C-d" '(org-roam-dailies-goto-date :wk "find daily note by date")
+    "rr" '(org-roam-node-find :wk "find node")
+    "rG" '(org-roam-graph :wk "open graph")
+    "rb" '(org-roam-buffer-toggle :wk "toggle org roam buffer")
+    "rR" '(org-roam-ref-add :wk "add reference to note")
+    "rT" '(org-roam-tag-add :wk "add tags to note")
     )
   
   (general-define-key
@@ -813,8 +847,14 @@
   (general-define-key
    :states 'insert
    :keymaps 'eshell-mode-map
-   "\C-r" 'consult-history
+   "C-r" 'consult-history
    "<home>" 'eshell-bol
+   )
+  
+  (general-define-key
+   :states 'insert
+   :keymaps 'org-mode-map
+   "M-i" 'org-roam-node-insert
    )
   
   (general-define-key
