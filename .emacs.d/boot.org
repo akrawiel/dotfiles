@@ -1,5 +1,6 @@
 #+title My Emacs configuration
 #+property: header-args:emacs-lisp
+#+startup: overview
 
 * Keep files clean
 
@@ -54,7 +55,7 @@
   (defun akrw/set-font ()
     (set-face-attribute 'default nil
                         :font "Cascadia Code PL"
-                        :height 100))
+                        :height 110))
   
   (if (daemonp)
       (add-hook 'server-after-make-frame-hook
@@ -116,7 +117,6 @@
   (use-package magit)
   
 #+end_src
-
 
 * Selectrum
 
@@ -180,7 +180,9 @@
   
   (use-package company
     :after lsp-mode
-    :hook (lsp-mode . company-mode)
+    :hook ((lsp-mode . company-mode)
+           (org-mode . company-mode)
+           (emacs-lisp-mode . company-mode))
     :custom
     (company-minimum-prefix-length 1)
     (company-idle-delay 0.5)
@@ -600,12 +602,12 @@
 #+begin_src emacs-lisp
   
   (setq org-ellipsis " ↓"
-        org-agenda-files '("~/Org/agenda.org")
+        org-agenda-files '((file-truename "~/Org/agenda.org"))
         org-agenda-start-with-log-mode t
         org-log-done 'time
         org-log-into-drawer t
         org-capture-templates
-        '(("t" "Task" entry (file+olp "~/Org/agenda.org" "Inbox") "* TODO %?\n %U\n %a\n %i" :empty-lines 1))
+        '(("t" "Task" entry (file+olp (file-truename "~/Org/agenda.org") "Inbox") "* TODO %?\n %U\n %a\n %i" :empty-lines 1))
         )
   (require 'org-tempo)
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
@@ -718,35 +720,11 @@
 
 #+end_src
 
-* Ligatures
+* Auth sources
 
 #+begin_src emacs-lisp
   
-  (use-package ligature
-    :straight (ligature :type git :host github :repo "mickeynp/ligature.el")
-    :config
-    ;; Enable the "www" ligature in every possible major mode
-    (ligature-set-ligatures 't '("www"))
-    ;; Enable traditional ligature support in eww-mode, if the
-    ;; `variable-pitch' face supports it
-    (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
-    ;; Enable all Cascadia Code ligatures in programming modes
-    (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
-                                         ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
-                                         "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
-                                         "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
-                                         "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
-                                         "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
-                                         "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
-                                         "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
-                                         ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
-                                         "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
-                                         "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
-                                         "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
-                                         "\\\\" "://"))
-    ;; Enables ligature checks globally in all buffers. You can also do it
-    ;; per mode with `ligature-mode'.
-    (global-ligature-mode t))
+  (setq auth-sources '(password-store "~/.authinfo" "~/.authinfo.gpg" "~/.netrc"))
   
 #+end_src
 
@@ -807,7 +785,7 @@
     "cc" '(flycheck-buffer :wk "refresh flycheck buffer")
     "cp" '(prettier-prettify :wk "apply prettier to buffer")
     "e" '(:ignore t :wk "eshell")
-    "ee" '(eshell :wk "eshell")
+    "ee" '(eshell :wk "eshell here")
     "ep" '(project-eshell :wk "eshell in project's root")
     "w" '(:ignore t :wk "windows")
     "wc" '(evil-window-delete :wk "close window")
