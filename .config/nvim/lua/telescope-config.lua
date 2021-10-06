@@ -4,12 +4,16 @@ local previewers = require('telescope.previewers')
 require('telescope').setup {
   defaults = {
     prompt_prefix = '> ',
-    color_devicons = false,
-    use_less = false,
+    disable_devicons = false,
+    color_devicons = true,
+    use_less = true,
 
-    file_previewer = previewers.vim_buffer_cat.new,
-    grep_previewer = previewers.vim_buffer_vimgrep.new,
-    qflist_previewer = previewers.vim_buffer_qflist.new,
+    layout_config = {
+      horizontal = {
+        height = 0.5,
+        width = 0.9,
+      },
+    },
 
     mappings = {
       i = {
@@ -23,6 +27,17 @@ require('telescope').setup {
         ["<esc>"] = actions.close
       }
     }
+  },
+
+  pickers = {
+    live_grep = {
+      layout_config = {
+        mirror = true,
+      },
+    },
+    find_files = {
+      previewer = false,
+    },
   },
 
   extensions = {

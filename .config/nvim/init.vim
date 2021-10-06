@@ -7,10 +7,13 @@ call plug#begin(stdpath('data') . '/plugged')
 
 Plug 'arthurxavierx/vim-caser'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'famiu/bufdelete.nvim'
 Plug 'gcmt/taboo.vim'
-Plug 'hrsh7th/nvim-compe'
-Plug 'junegunn/gv.vim'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/nvim-cmp'
 Plug 'justinmk/vim-sneak'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'L3MON4D3/LuaSnip'
 Plug 'machakann/vim-highlightedyank'
 Plug 'mbbill/undotree'
 Plug 'mcchrish/nnn.vim'
@@ -19,8 +22,8 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'Shougo/context_filetype.vim'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
@@ -30,14 +33,11 @@ Plug 'vim-airline/vim-airline'
 Plug 'chriskempson/base16-vim'
 Plug 'dracula/vim'
 
-Plug 'calviken/vim-gdscript3'
 Plug 'cespare/vim-toml'
 Plug 'ElmCast/elm-vim'
 Plug 'elzr/vim-json'
 Plug 'HerringtonDarkholme/yats.vim'
-Plug 'jdonaldson/vaxe'
 Plug 'leafOfTree/vim-svelte-plugin'
-Plug 'niftylettuce/vim-jinja'
 Plug 'pangloss/vim-javascript'
 Plug 'posva/vim-vue'
 Plug 'rust-lang/rust.vim'
@@ -92,7 +92,7 @@ set shortmess+=c
 set signcolumn=yes
 set termguicolors
 set noshowmode
-set timeoutlen=500
+set timeoutlen=300
 set conceallevel=0
 set list lcs=tab:\|\ 
 set completeopt=menuone,noselect,noinsert
@@ -130,7 +130,7 @@ lua require('lsp-config')
 
 " LSP completion config
 
-lua require('compe-config')
+lua require('cmp-config')
 
 " Language config
 

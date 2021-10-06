@@ -14,17 +14,14 @@ local common_on_attach = function(client, bufnr)
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   buf_set_keymap('n', 'gk', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<space>cr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', '<space>cd', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_qflist()<CR>', opts)
+  buf_set_keymap('n', '<space>cq', '<cmd>lua vim.lsp.diagnostic.set_qflist()<CR>', opts)
 end
 
 local eslint = {
@@ -36,6 +33,11 @@ local eslint = {
     '%f(%l,%c): %rror %m',
   },
   formatCommand = 'eslint_d --fix-to-stdout --stdin --stdin-filename ${INPUT}',
+  formatStdin = true,
+}
+
+local prettier = {
+  formatCommand = 'prettierd "${INPUT}"',
   formatStdin = true,
 }
 
@@ -53,6 +55,7 @@ local servers = {
       common_on_attach(client, bufnr)
 
       client.resolved_capabilities.document_formatting = false
+      client.resolved_capabilities.document_range_formatting = false
     end,
     params = {
       root_dir = javascript_root,
@@ -81,50 +84,28 @@ local servers = {
     }
   },
   {
-    name = 'omnisharp',
-    on_attach = function(client, bufnr)
-      common_on_attach(client, bufnr)
-
-      vim.api.nvim_command[[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 5000)]]
-
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', '<F9>', "<cmd>call jobstart('dotnet run')<CR>", {
-        silent = false,
-        noremap = true
-      })
-    end,
-    params = {
-      cmd = { "omnisharp", "--languageserver" , "--hostPID", tostring(vim.fn.getpid()) };
-    }
+    name = 'html',
+    on_attach = common_on_attach,
+  },
+  {
+    name = 'gopls',
+    on_attach = common_on_attach,
+  },
+  {
+    name = 'dartls',
+    on_attach = common_on_attach,
   },
   {
     name = 'gdscript',
     on_attach = common_on_attach,
   },
   {
-    name = 'html',
-    on_attach = common_on_attach,
-  },
-  {
-    name = 'haxe_language_server',
-    on_attach = common_on_attach,
-    params = {
-      cmd = { "node", "/home/akrawiel/Applications/haxe-language-server/bin/server.js" },
-      filetypes = { "haxe" },
-      init_options = {
-        displayArguments = { "build.hxml" },
-      },
-      root_dir = util.root_pattern("*.hxml"),
-      settings = {
-        haxe = {
-          executable = "haxe",
-        },
-      },
-    }
-  },
-  {
     name = 'efm',
     on_attach = function(client, bufnr)
       common_on_attach(client, bufnr)
+
+      client.resolved_capabilities.document_formatting = true
+      client.resolved_capabilities.code_action = true
 
       vim.api.nvim_command[[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 5000)]]
     end,
@@ -140,26 +121,30 @@ local servers = {
       root_dir = javascript_root,
       settings = {
         languages = {
-          javascript = {eslint},
-          javascriptreact = {eslint},
-          ["javascript.jsx"] = {eslint},
-          typescript = {eslint},
-          typescriptreact = {eslint},
-          ["typescript.tsx"] = {eslint},
-          svelte = {eslint},
-          vue = {eslint}
+          javascript = {prettier, eslint},
+          javascriptreact = {prettier, eslint},
+          ["javascript.jsx"] = {prettier, eslint},
+          typescript = {prettier, eslint},
+          typescriptreact = {prettier, eslint},
+          ["typescript.tsx"] = {prettier, eslint},
+          svelte = {prettier, eslint},
+          vue = {prettier, eslint}
         }
       }
     }
-  }
+  },
 }
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 for _, server in pairs(servers) do
   local result_params = {
     on_attach = server.on_attach,
     flags = {
-      debounce_text_changes = 150,
-    }
+      debounce_text_changes = 500,
+    },
+    capabilities = capabilities,
   }
 
   if server.params then
