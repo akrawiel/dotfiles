@@ -151,5 +151,3 @@ highlight Sneak guifg=black guibg=white ctermfg=black ctermbg=white
 au BufNew,BufReadPost,BufReadPre,BufEnter *.md setlocal tw=80
 au BufNew,BufReadPost,BufReadPre,BufEnter *.md setlocal colorcolumn=80
 au BufNew,BufReadPost,BufReadPre,BufEnter * setlocal conceallevel=0
-
-" test comment
