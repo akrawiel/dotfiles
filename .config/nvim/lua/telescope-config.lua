@@ -58,7 +58,8 @@ M.search_config = function()
   require('telescope.builtin').find_files({
     prompt_title = 'Config',
     cwd = '~/.config/nvim',
-    file_ignore_patterns = { "undo/.*" }
+    file_ignore_patterns = { "undo/.*" },
+    follow = true,
   })
 end
 
