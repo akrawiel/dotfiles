@@ -32,8 +32,8 @@ nnoremap <silent> <space><tab> :lua require('telescope.builtin').buffers()<CR>
 nnoremap <silent> <space>ff :lua require('telescope.builtin').file_browser()<CR>
 nnoremap <silent> <space>fp :lua require('telescope-config').search_config()<CR>
 nnoremap <silent> <space>fr :lua require('telescope.builtin').live_grep()<CR>
-nnoremap <silent> <space>lo :lua require('telescope.builtin').lsp_document_symbols()<CR>
-nnoremap <silent> <space>ld :lua require('telescope.builtin').lsp_workspace_diagnostics()<CR>
+nnoremap <silent> <space>co :lua require('telescope.builtin').lsp_document_symbols()<CR>
+nnoremap <silent> <space>cD :lua require('telescope.builtin').lsp_workspace_diagnostics()<CR>
 nnoremap <silent> <space>/ :lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>
 nnoremap <silent> <F1> :lua require('telescope.builtin').help_tags()<CR>
 nnoremap <silent> <space><return> :lua require('telescope.builtin').commands()<CR>
