@@ -95,7 +95,7 @@ set shortmess+=c
 set signcolumn=yes
 set termguicolors
 set noshowmode
-set timeoutlen=300
+set timeoutlen=700
 set conceallevel=0
 set list lcs=tab:\|\ 
 set completeopt=menuone,noselect,noinsert
