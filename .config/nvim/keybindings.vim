@@ -72,8 +72,7 @@ map <silent> <space>S <Plug>SneakLabel_S
 
 " Git
 
-nnoremap <silent> <space>gg :G<CR>
-nnoremap <silent> <space>gG :Gtabedit :<CR>
+nnoremap <silent> <space>gg :LazyGit<CR>
 nnoremap <silent> <space>gh :diffget //2<CR>
 nnoremap <silent> <space>gl :diffget //3<CR>
 
