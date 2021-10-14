@@ -23,8 +23,7 @@
     (auto-package-update-prompt-before-update t)
     :config
     (auto-package-update-maybe)
-    (auto-package-update-at-time "08:00")
-    )
+    (auto-package-update-at-time "08:00"))
   
 #+end_src
 
@@ -45,6 +44,9 @@
   (setq-default tab-width 2)
   (setq whitespace-style '(face trailing tabs spaces tab-mark space-mark))
   (add-hook 'prog-mode-hook 'whitespace-mode)
+
+  (setq gc-cons-threshold (* 100 1024 1024)
+   read-process-output-max (* 1024 1024))
   
 #+end_src
 
@@ -81,8 +83,7 @@
 #+begin_src emacs-lisp
 
   (use-package doom-modeline
-    :init (doom-modeline-mode 1)
-    )
+    :init (doom-modeline-mode 1))
   
 #+end_src
 
@@ -101,20 +102,7 @@
   (use-package doom-themes
     :config
     (load-theme 'doom-nord t)
-    (setq doom-themes-treemacs-theme "doom-colors")
-    (doom-themes-treemacs-config)
-    (doom-themes-org-config)
-    )
-  
-#+end_src
-
-* Git
-
-** Magit
-
-#+begin_src emacs-lisp
-  
-  (use-package magit)
+    (doom-themes-org-config))
   
 #+end_src
 
@@ -164,14 +152,6 @@
   
 #+end_src
 
-** Consult LSP
-
-#+begin_src emacs-lisp
-  
-  (use-package consult-lsp)
-  
-#+end_src
-
 * Company
 
 ** Company Base
@@ -185,8 +165,7 @@
            (emacs-lisp-mode . company-mode))
     :custom
     (company-minimum-prefix-length 1)
-    (company-idle-delay 0.5)
-    )
+    (company-idle-delay 0.5))
   
 #+end_src
 
@@ -196,8 +175,7 @@
   
   (use-package company-box
     :after company
-    :hook (company-mode . company-box-mode)
-    )
+    :hook (company-mode . company-box-mode))
   
 #+end_src
 
@@ -207,11 +185,7 @@
   
   (use-package flycheck
     :init
-    (global-flycheck-mode)
-    :config
-    (flycheck-set-checker-executable 'javascript-eslint "/usr/bin/eslint_d")
-    (flycheck-add-mode 'javascript-eslint 'js2-mode)
-    )
+    (global-flycheck-mode))
   
 #+end_src
 
@@ -223,8 +197,7 @@
     :init
     (which-key-mode)
     :config
-    (setq which-key-idle-delay 0.3)
-    )
+    (setq which-key-idle-delay 0.3))
   
 #+end_src
 
@@ -236,11 +209,7 @@
   
   (use-package projectile
     :config
-    (projectile-mode 1)
-    (projectile-register-project-type 'npm '("package.json")
-                                      :project-file "package.json")
-    (projectile-register-project-type 'dart '("pubspec.yaml")
-                                      :project-file "pubspec.yaml"))
+    (projectile-mode 1))
   
 #+end_src
 
@@ -250,31 +219,7 @@
   
   (use-package avy
     :config
-    (avy-setup-default)
-    )
-  
-#+end_src
-
-* LSP
-
-** LSP Base
-
-#+begin_src emacs-lisp
-  
-  (use-package lsp-mode
-    :init
-    (setq gc-cons-threshold (* 100 1024 1024)
-          read-process-output-max (* 1024 1024)
-          )
-    :config
-    (setq lsp-idle-delay 0.5
-          lsp-auto-guess-root t
-          lsp-vetur-format-enable nil
-          lsp-headerline-breadcrumb-enable nil
-          lsp-vetur-experimental-template-interpolation-service nil)
-    :hook (lsp-mode . lsp-enable-which-key-integration)
-    :commands (lsp lsp-deferred)
-    )
+    (avy-setup-default))
   
 #+end_src
 
@@ -288,194 +233,13 @@
 
 #+end_src
 
-* Language support
-
-** TypeScript
-
-#+begin_src emacs-lisp
-  
-  (use-package typescript-mode
-    :mode "\\.tsx?\\'"
-    :hook ((typescript-mode . lsp-deferred)
-           (typescript-mode . (lambda () (flycheck-add-next-checker 'lsp 'javascript-eslint)))
-           (before-save . lsp-eslint-apply-all-fixes)
-           )
-    :config
-    (setq typescript-indent-level 2)
-    )
-  
-#+end_src
-
-** JavaScript
-
-#+begin_src emacs-lisp
-  
-  (use-package js2-mode
-    :mode "\\.js\\'"
-    :hook ((js2-mode . lsp-deferred)
-           (js2-mode . (lambda () (flycheck-add-next-checker 'lsp 'javascript-eslint)))
-           (before-save . lsp-eslint-apply-all-fixes)
-           )
-    :config
-    (setq js-indent-level 2)
-    )
-  
-#+end_src
-
-** JSX
-
-#+begin_src emacs-lisp
-  
-  (use-package rjsx-mode
-    :mode "\\.jsx\\'"
-    :hook ((rjsx-mode . lsp-deferred)
-           (rjsx-mode . (lambda () (flycheck-add-next-checker 'lsp 'javascript-eslint)))
-           (before-save . lsp-eslint-apply-all-fixes)
-           )
-    )
-  
-#+end_src
-
-** Clojure
-
-#+begin_src emacs-lisp
-  
-  (use-package cider
-    :hook ((clojurescript-mode . lsp-deferred)))
-  
-#+end_src
-
-** Svelte
-
-#+begin_src emacs-lisp
-  
-  (use-package svelte-mode
-    :mode "\\.svelte\\'"
-    :hook ((svelte-mode . lsp-deferred)
-           (before-save . lsp-eslint-apply-all-fixes)
-           (before-save . lsp-format-buffer)))
-  
-#+end_src
-
-** Vue / Web mode
-
-#+begin_src emacs-lisp
-  
-  (defun akrw/vue-hook ()
-    (when (string= (file-name-extension buffer-file-name) "vue")
-      (lsp-deferred)
-      (flycheck-add-mode 'javascript-eslint 'web-mode)
-      (flycheck-add-next-checker 'lsp 'javascript-eslint)
-      (flycheck-select-checker 'javascript-eslint)))
-  
-  (add-hook 'find-file-hook 'akrw/vue-hook)
-  
-  (use-package web-mode
-    :mode "\\.vue\\'")
-  
-#+end_src
-
-** Go
-
-#+begin_src emacs-lisp
-  
-  (use-package go-mode
-    :mode "\\.go\\'"
-    :hook ((go-mode . lsp-deferred)))
-
-#+end_src
-
-** YAML
-
-#+begin_src emacs-lisp
-  
-  (use-package yaml-mode
-    :mode "\\.ya?ml\\'")
-  
-#+end_src
-
-** CSS
-
-#+begin_src emacs-lisp
-  
-  (add-hook 'css-mode-hook 'lsp-deferred)
-  
-#+end_src
-
-** GDScript
-
-#+begin_src emacs-lisp
-  
-  (use-package gdscript-mode
-    :hook (gdscript-mode . lsp-deferred)
-    :config
-    (setq gdscript-indent-offset 2))
-  
-  (defun lsp--gdscript-ignore-errors (original-function &rest args)
-    "Ignore the error message resulting from Godot not replying to the `JSONRPC' request."
-    (if (string-equal major-mode "gdscript-mode")
-        (let ((json-data (nth 0 args)))
-          (if (and (string= (gethash "jsonrpc" json-data "") "2.0")
-                   (not (gethash "id" json-data nil))
-                   (not (gethash "method" json-data nil)))
-              nil ; (message "Method not found")
-            (apply original-function args)))
-      (apply original-function args)))
-  
-  ;; Runs the function `lsp--gdscript-ignore-errors` around `lsp--get-message-type` to suppress unknown notification errors.
-  (advice-add #'lsp--get-message-type :around #'lsp--gdscript-ignore-errors)
-  
-#+end_src
-
-** Rust
-
-#+begin_src emacs-lisp
-  
-  (use-package rust-mode
-    :hook (rust-mode . lsp-deferred)
-    :config
-    (setq rust-format-on-save t))
-  
-  (use-package cargo
-    :after rust-mode
-    :hook (rust-mode . cargo-minor-mode))
-  
-#+end_src
-
-** Dart
-
-#+begin_src emacs-lisp
-  
-  (use-package dart-mode
-    :mode "\\.dart\\'"
-    :hook (dart-mode . lsp-deferred))
-  
-  (use-package lsp-dart
-    :after dart-mode
-    :config
-    (setq lsp-lens-enable nil
-          lsp-signature-auto-activate nil))
-  
-#+end_src
-
-** Prettier
-
-#+begin_src emacs-lisp
-  
-  (use-package prettier
-    :config
-    (global-prettier-mode))
-  
-#+end_src
-
 * Undo-fu
 
 #+begin_src emacs-lisp
 
   (use-package undo-fu
     :config
-    (global-unset-key (kbd "C-z"))
-    )
+    (global-unset-key (kbd "C-z")))
   
 #+end_src
 
@@ -492,8 +256,7 @@
           evil-want-keybinding nil
           evil-undo-system 'undo-fu)
     :config
-    (evil-mode 1)
-    )
+    (evil-mode 1))
   
 #+end_src
 
@@ -504,8 +267,7 @@
   (use-package evil-collection
     :after evil
     :config
-    (evil-collection-init)
-    )
+    (evil-collection-init))
   
 #+end_src
 
@@ -516,8 +278,7 @@
   (use-package evil-surround
     :after evil-collection
     :config
-    (global-evil-surround-mode 1)
-    )
+    (global-evil-surround-mode 1))
   
 #+end_src
 
@@ -528,8 +289,7 @@
   (use-package evil-nerd-commenter
     :after evil-collection
     :config
-    (evilnc-default-hotkeys)
-    )
+    (evilnc-default-hotkeys))
   
 #+end_src
 
@@ -540,8 +300,7 @@
   (use-package evil-matchit
     :after evil-collection
     :config
-    (global-evil-matchit-mode 1)
-    )
+    (global-evil-matchit-mode 1))
   
 #+end_src
 
@@ -557,8 +316,7 @@
           evil-snipe-auto-scroll t)
     :config
     (evil-snipe-mode 1)
-    (evil-snipe-override-mode 1)
-    )
+    (evil-snipe-override-mode 1))
   
 #+end_src
 
@@ -569,8 +327,7 @@
   (use-package evil-anzu
     :after evil-collection
     :config
-    (global-anzu-mode 1)
-    )
+    (global-anzu-mode 1))
   
 #+end_src
 
@@ -581,8 +338,7 @@
   (use-package evil-multiedit
     :after evil-collection
     :config
-    (evil-multiedit-default-keybinds)
-    )
+    (evil-multiedit-default-keybinds))
   
 #+end_src
 
@@ -610,8 +366,7 @@
   
   (defun akrw/org-mode-init-hook ()
     (org-indent-mode)
-    (visual-line-mode 1)
-    )
+    (visual-line-mode 1))
   
 #+end_src
 
@@ -625,8 +380,8 @@
         org-log-done 'time
         org-log-into-drawer t
         org-capture-templates
-        '(("t" "Task" entry (file+olp (file-truename "~/Org/agenda.org") "Inbox") "* TODO %?\n %U\n %a\n %i" :empty-lines 1))
-        )
+        '(("t" "Task" entry (file+olp (file-truename "~/Org/agenda.org") "Inbox") "* TODO %?\n %U\n %a\n %i" :empty-lines 1)))
+
   (require 'org-tempo)
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
   
@@ -666,12 +421,10 @@
   (defun akrw/org-mode-visual-fill ()
     (setq visual-fill-column-width 100
           visual-fill-column-center-text t)
-    (visual-fill-column-mode 1)
-    )
+    (visual-fill-column-mode 1))
   
   (use-package visual-fill-column
-    :hook (org-mode . akrw/org-mode-visual-fill)
-    )
+    :hook (org-mode . akrw/org-mode-visual-fill))
   
 #+end_src
 
@@ -694,9 +447,7 @@
     (general-evil-setup)
     (general-create-definer akrw/leader-keys
       :states '(normal visual motion)
-      :prefix "SPC"
-      )
-  )
+      :prefix "SPC"))
   
 #+end_src
 
@@ -710,17 +461,12 @@
     (evil-normalize-keymaps)
     (setq eshell-history-size 1000
           eshell-buffer-maximum-lines 1000
-          eshell-command-aliases-list '(("gst" "git status")
-                                        ("gl" "git pull")
-                                        )
           eshell-hist-ignoredups t
           eshell-cd-on-directory t
-          eshell-scroll-to-bottom-on-input t)
-    )
+          eshell-scroll-to-bottom-on-input t))
   
   (use-package eshell
-    :hook (eshell-first-time-mode . akrw/eshell-first-time-hook)
-    )
+    :hook (eshell-first-time-mode . akrw/eshell-first-time-hook))
   
 #+end_src
 
@@ -747,8 +493,7 @@
 #+begin_src emacs-lisp
   
   (use-package all-the-icons-dired
-    :hook (dired-mode . all-the-icons-dired-mode)
-    )
+    :hook (dired-mode . all-the-icons-dired-mode))
 
 #+end_src
 
@@ -758,8 +503,7 @@
   
   (use-package smooth-scrolling
     :config
-    (smooth-scrolling-mode 1)
-    )
+    (smooth-scrolling-mode 1))
 
 #+end_src
 
@@ -778,15 +522,13 @@
   (defun akrw/search-config ()
     "Search through emacs config directory."
     (interactive)
-    (projectile-find-file-in-directory "~/dotfiles")
-    )
+    (projectile-find-file-in-directory "~/dotfiles"))
   
   (defun akrw/kill-current-tab ()
     "Kills current tab and its buffer."
     (interactive)
     (kill-current-buffer)
-    (tab-bar-close-tab)
-    )
+    (tab-bar-close-tab))
   
   (akrw/leader-keys
     :keymaps 'override
@@ -807,8 +549,6 @@
     "tC" '(akrw/kill-current-tab :wk "close tab and its buffer")
     "tU" '(tab-bar-undo-close-tab :wk "undo close tab")
     "D" '(dired-jump :wk "open dired here")
-    "g" '(:ignore t :wk "git")
-    "gg" '(magit-status :wk "magit")
     "a" '(:ignore t :wk "org agenda")
     "aa" '(org-agenda :wk "org agenda")
     "al" '(org-agenda-list :wk "org agenda list")
@@ -817,16 +557,8 @@
     "bd" '(kill-this-buffer :wk "kill current buffer")
     "TAB" '(consult-buffer :wk "switch buffer")
     "c" '(:ignore t :wk "code")
-    "cr" '(lsp-find-references :wk "find lsp reference")
-    "cR" '(lsp-rename :wk "rename variable")
-    "cd" '(lsp-find-definition :wk "find lsp definition")
-    "ca" '(lsp-execute-code-action :wk "code action")
-    "ck" '(lsp-signature-activate :wk "activate code signature")
-    "cW" '(lsp-workspace-restart :wk "activate code signature")
     "ci" '(consult-imenu :wk "imenu")
-    "co" '(consult-lsp-symbols :wk "workspace symbols")
     "cc" '(flycheck-buffer :wk "refresh flycheck buffer")
-    "cp" '(prettier-prettify :wk "apply prettier to buffer")
     "e" '(:ignore t :wk "eshell")
     "ee" '(eshell :wk "eshell here")
     "ep" '(project-eshell :wk "eshell in project's root")
@@ -851,63 +583,45 @@
     "rG" '(org-roam-graph :wk "open graph")
     "rb" '(org-roam-buffer-toggle :wk "toggle org roam buffer")
     "rR" '(org-roam-ref-add :wk "add reference to note")
-    "rT" '(org-roam-tag-add :wk "add tags to note")
-    )
+    "rT" '(org-roam-tag-add :wk "add tags to note"))
   
   (general-define-key
    :keymaps 'selectrum-minibuffer-map
    "C-j" 'selectrum-next-candidate
    "C-k" 'selectrum-previous-candidate
    "C-a" 'embark-act
-   [escape] 'keyboard-escape-quit
-   )
+   [escape] 'keyboard-escape-quit)
   
   (general-define-key
    :states 'insert
    :keymaps 'eshell-mode-map
    "C-r" 'consult-history
-   "<home>" 'eshell-bol
-   )
+   "<home>" 'eshell-bol)
   
   (general-define-key
    :states 'insert
    :keymaps 'org-mode-map
-   "M-i" 'org-roam-node-insert
-   )
+   "M-i" 'org-roam-node-insert)
   
   (general-define-key
    :states 'normal
    :keymaps 'dired-mode-map
    "h" 'dired-single-up-directory
-   "l" 'dired-single-buffer
-   )
-  
-  (general-define-key
-   :keymap 'gdscript-mode-map
-   [(f5)] 'gdscript-godot-run-project
-   )
-  
-  (general-define-key
-   :keymap 'rust-mode-map
-   [(f5)] 'cargo-process-run
-   )
+   "l" 'dired-single-buffer)
   
   (general-define-key
    :states 'motion
    [remap describe-command] 'helpful-command
    [remap describe-key] 'helpful-key
-   " " nil
-   )
+   " " nil)
   
   (general-define-key
    :states 'normal
    "u" 'undo-fu-only-undo
-   "\C-r" 'undo-fu-only-redo
-   )
+   "\C-r" 'undo-fu-only-redo)
   
   (general-define-key
    :states 'insert
-   "\C-q" 'company-capf
-   )
+   "\C-q" 'company-capf)
   
 #+end_src

@@ -22,9 +22,10 @@
 
 (setq straight-use-package-by-default t)
 
+(setq vc-follow-symlinks t)
+
 ;; Auto-load init.org file
 
 (use-package org
   :config
-  (org-babel-load-file "~/.emacs.d/boot.org")
-  )
+  (org-babel-load-file "~/.emacs.d/boot.org"))
