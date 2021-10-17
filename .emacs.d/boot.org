@@ -375,14 +375,23 @@
 #+begin_src emacs-lisp
   
   (setq org-ellipsis " ↓"
-        org-agenda-files '((file-truename "~/Org/agenda.org"))
+        org-agenda-files '("~/Org/agenda.org")
         org-agenda-start-with-log-mode t
         org-log-done 'time
         org-log-into-drawer t
+        org-agenda-span 14
+        org-agenda-start-day "-2d"
+        org-agenda-start-on-weekday nil
         org-capture-templates
-        '(("t" "Task" entry (file+olp (file-truename "~/Org/agenda.org") "Inbox") "* TODO %?\n %U\n %a\n %i" :empty-lines 1)))
-
+        '(("t" "Task" entry (file+olp "~/Org/agenda.org" "Inbox") "* TODO %?\n %U\n %a\n %i" :empty-lines 1)))
+  
   (require 'org-tempo)
+  
+  (custom-set-variables
+   '(org-agenda-view-columns-initially nil)
+   '(org-modules
+     '(ol-bbdb ol-bibtex ol-docview ol-doi ol-eww ol-gnus org-habit ol-info ol-irc ol-mhe ol-rmail org-tempo ol-w3m)))
+  
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
   
   (add-hook 'org-mode-hook 'akrw/org-mode-init-hook)
@@ -515,6 +524,16 @@
   
 #+end_src
 
+* ActivityWatch
+
+#+begin_src emacs-lisp
+  
+  (use-package activity-watch-mode
+    :config
+    (global-activity-watch-mode))
+  
+#+end_src
+
 * Keybindings
 
 #+begin_src emacs-lisp
@@ -529,6 +548,11 @@
     (interactive)
     (kill-current-buffer)
     (tab-bar-close-tab))
+  
+  (defun akrw/ripgrep-org-roam ()
+    "Searches through all org-roam files"
+    (interactive)
+    (consult-ripgrep "~/OrgRoam"))
   
   (akrw/leader-keys
     :keymaps 'override
@@ -555,6 +579,7 @@
     "ac" '(org-capture :wk "org agenda capture")
     "b" '(:ignore t :wk "buffers")
     "bd" '(kill-this-buffer :wk "kill current buffer")
+    "bR" '(revert-buffer-quick :wk "revert current buffer")
     "TAB" '(consult-buffer :wk "switch buffer")
     "c" '(:ignore t :wk "code")
     "ci" '(consult-imenu :wk "imenu")
@@ -583,7 +608,8 @@
     "rG" '(org-roam-graph :wk "open graph")
     "rb" '(org-roam-buffer-toggle :wk "toggle org roam buffer")
     "rR" '(org-roam-ref-add :wk "add reference to note")
-    "rT" '(org-roam-tag-add :wk "add tags to note"))
+    "rT" '(org-roam-tag-add :wk "add tags to note")
+    "rf" '(akrw/ripgrep-org-roam :wk "ripgrep through org-roam files"))
   
   (general-define-key
    :keymaps 'selectrum-minibuffer-map
