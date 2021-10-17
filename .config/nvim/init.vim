@@ -5,6 +5,7 @@ filetype off
 
 call plug#begin(stdpath('data') . '/plugged')
 
+Plug 'ActivityWatch/aw-watcher-vim'
 Plug 'arthurxavierx/vim-caser'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'famiu/bufdelete.nvim'
@@ -23,6 +24,9 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'nvim-treesitter/playground'
 Plug 'rafamadriz/friendly-snippets'
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'Shougo/context_filetype.vim'
@@ -136,6 +140,10 @@ lua require('lsp-config')
 
 lua require('cmp-config')
 
+" Treesitter config
+
+lua require('treesitter-config')
+
 " Language config
 
 let g:vue_pre_processors = []
@@ -155,3 +163,5 @@ highlight Sneak guifg=black guibg=white ctermfg=black ctermbg=white
 au BufNew,BufReadPost,BufReadPre,BufEnter *.md setlocal tw=80
 au BufNew,BufReadPost,BufReadPre,BufEnter *.md setlocal colorcolumn=80
 au BufNew,BufReadPost,BufReadPre,BufEnter * setlocal conceallevel=0
+
+au VimEnter * AWStart
