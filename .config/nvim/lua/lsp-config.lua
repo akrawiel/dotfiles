@@ -12,7 +12,7 @@ local common_on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  -- buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   buf_set_keymap('n', 'gk', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
@@ -98,6 +98,25 @@ local servers = {
   {
     name = 'gdscript',
     on_attach = common_on_attach,
+  },
+  {
+    name = 'rust_analyzer',
+    on_attach = function(client, bufnr)
+      common_on_attach(client, bufnr)
+
+      client.resolved_capabilities.document_formatting = true
+
+      vim.api.nvim_command[[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 5000)]]
+    end,
+    params = {
+      settings = {
+        ["rust-analyzer"] = {
+          rustfmt = {
+            enableRangeFormatting = true
+          }
+        },
+      },
+    },
   },
   {
     name = 'efm',
