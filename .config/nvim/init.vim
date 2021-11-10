@@ -59,7 +59,7 @@ filetype plugin indent on
 " Standard options
 
 syntax on
-color dracula
+color base16-dracula
 
 set number relativenumber
 set nowrap
