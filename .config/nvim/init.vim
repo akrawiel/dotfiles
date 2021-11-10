@@ -5,15 +5,13 @@ filetype off
 
 call plug#begin(stdpath('data') . '/plugged')
 
-Plug 'ActivityWatch/aw-watcher-vim'
 Plug 'arthurxavierx/vim-caser'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'famiu/bufdelete.nvim'
-Plug 'gcmt/taboo.vim'
+Plug 'ggandor/lightspeed.nvim'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/nvim-cmp'
-Plug 'justinmk/vim-sneak'
 Plug 'kdheepak/lazygit.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'L3MON4D3/LuaSnip'
@@ -28,10 +26,12 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/playground'
+Plug 'phaazon/hop.nvim'
+Plug 'pwntester/octo.nvim'
 Plug 'rafamadriz/friendly-snippets'
+Plug 'romgrk/barbar.nvim'
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'Shougo/context_filetype.vim'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
@@ -101,11 +101,12 @@ set shortmess+=c
 set signcolumn=yes
 set termguicolors
 set noshowmode
-set timeoutlen=700
+set timeoutlen=1000
 set conceallevel=0
 set list lcs=tab:\|\ 
 set completeopt=menuone,noselect,noinsert
 set scrolloff=4
+set cursorline
 
 " Keybindings config
 
@@ -128,10 +129,13 @@ let g:nnn#action = {
 
 let g:highlightedyank_highlight_duration = 100
 
-" Taboo config
+" Hop
 
-let g:taboo_tab_format = " %N %m%f "
-let g:taboo_modified_tab_flag = "* "
+lua require'hop'.setup()
+
+" Octo
+
+lua require'octo'.setup()
 
 " LSP config
 
@@ -153,16 +157,13 @@ let g:elm_setup_keybindings = 0
 let g:vim_svelte_plugin_use_typescript = 1
 let g:vim_svelte_plugin_use_sass = 1
 
-" Sneak
+" Lightspeed
 
-let g:sneak#s_next = 1
-let g:sneak#target_labels = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'
-highlight Sneak guifg=black guibg=white ctermfg=black ctermbg=white
+lua require'lightspeed'.opts.exit_after_idle_msecs = { labeled = nil, unlabeled = nil }
+lua require'lightspeed'.opts.jump_to_first_match = false
 
 " MD file type config
 
 au BufNew,BufReadPost,BufReadPre,BufEnter *.md setlocal tw=80
 au BufNew,BufReadPost,BufReadPre,BufEnter *.md setlocal colorcolumn=80
 au BufNew,BufReadPost,BufReadPre,BufEnter * setlocal conceallevel=0
-
-au VimEnter * AWStart
