@@ -83,6 +83,11 @@ nnoremap <silent> <space>gl :diffget //3<CR>
 
 vnoremap <silent> <space>lr :<C-u>'<,'>!tac<CR>
 
+" Ex commands to fill
+
+nnoremap <C-s> :<C-u>%s/
+vnoremap <C-s> :<C-u>'<,'>s/
+
 " Undo tree
 
 nnoremap <silent> <F5> :UndotreeToggle<CR>
