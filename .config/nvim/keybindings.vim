@@ -9,7 +9,9 @@ nnoremap <space>qq :qa<CR>
 nnoremap <silent> <space>bd :BufferClose<CR>
 nnoremap <silent> <space>bO :BufferCloseAllButCurrent<CR>
 nnoremap <silent> gt :BufferNext<CR>
-nnoremap <silent> gT :BufferPrevious<CR>
+nnoremap <silent> gt :BufferNext<CR>
+nnoremap <silent> <space>t :tabnext<CR>
+nnoremap <silent> <space>T :tabprevious<CR>
 nnoremap <silent> <space><tab> :BufferPick<CR>
 
 " Function keys
@@ -29,7 +31,8 @@ nnoremap <silent> <leader>L :HopLine<CR>
 " Telescope
 
 nnoremap <silent> <space><space> :lua require('telescope.builtin').find_files({ find_command = { 'fd', '--type', 'f', '--hidden', '--exclude', '.git' } })<CR>
-nnoremap <silent> <space>ff :lua require('telescope.builtin').file_browser()<CR>
+nnoremap <silent> <space>ff :lua require('telescope.builtin').file_browser({ cwd = require('telescope.utils').buffer_dir() })<CR>
+nnoremap <silent> <space>fb :lua require('telescope.builtin').buffers()<CR>
 nnoremap <silent> <space>fp :lua require('telescope-config').search_config()<CR>
 nnoremap <silent> <space>fr :lua require('telescope.builtin').live_grep()<CR>
 nnoremap <silent> <space>co :lua require('telescope.builtin').lsp_document_symbols()<CR>
@@ -64,15 +67,6 @@ nnoremap <silent> <M-k> :m .-2<CR>==
 nnoremap <silent> <C-j> :cnext<CR>
 nnoremap <silent> <C-k> :cprev<CR>
 
-" Sneak
-
-" map <silent> f <Plug>Sneak_f
-" map <silent> F <Plug>Sneak_F
-" map <silent> t <Plug>Sneak_t
-" map <silent> T <Plug>Sneak_T
-" map <silent> <space>s <Plug>SneakLabel_s
-" map <silent> <space>S <Plug>SneakLabel_S
-
 " Git
 
 nnoremap <silent> <space>gg :LazyGit<CR>
@@ -87,6 +81,7 @@ vnoremap <silent> <space>lr :<C-u>'<,'>!tac<CR>
 
 nnoremap <C-s> :<C-u>%s/
 vnoremap <C-s> :<C-u>'<,'>s/
+nnoremap <c-o> :<c-u>Octo 
 
 " Undo tree
 
