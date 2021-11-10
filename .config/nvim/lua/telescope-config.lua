@@ -17,8 +17,9 @@ require('telescope').setup {
 
     mappings = {
       i = {
-        ["<C-n>"] = false,
-        ["<C-p>"] = false,
+        ["<C-n>"] = function() end,
+        ["<C-p>"] = function() end,
+        ["<C-t>"] = function() end,
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
         ["<tab>"] = actions.toggle_selection + actions.move_selection_next,
