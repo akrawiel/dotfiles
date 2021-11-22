@@ -7,9 +7,12 @@ nnoremap <space>qq :qa<CR>
 " Barbar
 
 nnoremap <silent> <space>bd :BufferClose<CR>
+nnoremap <silent> <space>bh :BufferMovePrevious<CR>
+nnoremap <silent> <space>bl :BufferMoveNext<CR>
 nnoremap <silent> <space>bO :BufferCloseAllButCurrent<CR>
+nnoremap <silent> <space>bC :bufdo :BufferWipeout<CR>
 nnoremap <silent> gt :BufferNext<CR>
-nnoremap <silent> gt :BufferNext<CR>
+nnoremap <silent> gT :BufferPrevious<CR>
 nnoremap <silent> <space>t :tabnext<CR>
 nnoremap <silent> <space>T :tabprevious<CR>
 nnoremap <silent> <space><tab> :BufferPick<CR>
