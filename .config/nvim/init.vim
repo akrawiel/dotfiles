@@ -121,7 +121,6 @@ lua require('telescope-config')
 let g:nnn#set_default_mappings = 0
 let g:nnn#layout = { 'window': { 'width': 0.8, 'height': 0.7, 'highlight': 'Debug' } }
 let g:nnn#action = {
-      \ '<c-t>': 'tab split',
       \ '<c-x>': 'split',
       \ '<c-v>': 'vsplit' }
 
