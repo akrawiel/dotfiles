@@ -7,7 +7,6 @@ require'nvim-treesitter.configs'.setup {
     "javascript",
     "json",
     "lua",
-    "query",
     "rust",
     "scss",
     "svelte",
@@ -18,9 +17,6 @@ require'nvim-treesitter.configs'.setup {
     "yaml",
   },
   highlight = {
-    enable = true,
-  },
-  playground = {
     enable = true,
   },
   incremental_selection = {

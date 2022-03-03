@@ -24,9 +24,9 @@ nnoremap <silent> <F4> :NnnPicker %:p:h<CR>
 
 " Hop
 
-nnoremap <silent> <leader>w :HopWord<CR>
 nnoremap <silent> <leader>f :HopChar1<CR>
 nnoremap <silent> <leader>s :HopChar2<CR>
+nnoremap <silent> <leader>w :HopWord<CR>
 nnoremap <silent> <leader>/ :HopPattern<CR>
 nnoremap <silent> <leader>l :HopLineStart<CR>
 nnoremap <silent> <leader>L :HopLine<CR>
@@ -73,8 +73,6 @@ nnoremap <silent> <C-k> :cprev<CR>
 " Git
 
 nnoremap <silent> <space>gg :LazyGit<CR>
-nnoremap <silent> <space>gh :diffget //2<CR>
-nnoremap <silent> <space>gl :diffget //3<CR>
 
 " Line reverse
 
@@ -84,8 +82,7 @@ vnoremap <silent> <space>lr :<C-u>'<,'>!tac<CR>
 
 nnoremap <C-s> :<C-u>%s/
 vnoremap <C-s> :<C-u>'<,'>s/
-nnoremap <c-o> :<c-u>Octo 
 
-" Undo tree
+" Terminal
 
-nnoremap <silent> <F5> :UndotreeToggle<CR>
+tnoremap <Esc> <C-\><C-n>
