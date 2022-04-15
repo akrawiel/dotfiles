@@ -16,10 +16,8 @@ return function(enabled_servers)
     buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
     buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
     buf_set_keymap('n', 'gk', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
     buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
     buf_set_keymap('n', '<space>cr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
     buf_set_keymap('n', '<space>cd', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
     buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
     buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
@@ -71,6 +69,13 @@ return function(enabled_servers)
     html = {
       name = 'html',
       on_attach = common_on_attach,
+    },
+    cssls = {
+      name = 'cssls',
+      on_attach = common_on_attach,
+      params = {
+        root_dir = javascript_root,
+      }
     },
     gopls = {
       name = 'gopls',
@@ -131,7 +136,7 @@ return function(enabled_servers)
         client.resolved_capabilities.document_formatting = true
         client.resolved_capabilities.code_action = true
 
-        vim.api.nvim_command[[autocmd BufWritePre <buffer> EslintFixAll]]
+        -- vim.api.nvim_command[[autocmd BufWritePre <buffer> EslintFixAll]]
       end,
     }
   }

@@ -49,15 +49,31 @@ return packer.startup(function()
       vim.g['nnn#layout'] = {
         window = { width = 0.8, height = 0.7, highlight = 'Debug' }
       }
-      vim.g['nnn#action'] = { ['<c-x>'] = 'split', ['<c-v>'] = 'vsplit' }
+      vim.g['nnn#action'] = {
+        ['<c-x>'] = 'split',
+        ['<c-v>'] = 'vsplit',
+        ['<esc>'] = 'close',
+      }
     end
   }
   use { 'mg979/vim-visual-multi', branch = 'master' }
   use {
     'mhartington/formatter.nvim',
     config = function()
+      local prettier = function()
+        return {
+          exe = "prettierd",
+          args = {vim.api.nvim_buf_get_name(0)},
+          stdin = true,
+        }
+      end
+
       require('formatter').setup {
         filetype = {
+          javascript = {prettier},
+          javascriptreact = {prettier},
+          typescript = {prettier},
+          typescriptreact = {prettier},
           rust = {
             function()
               return {
@@ -82,8 +98,9 @@ return packer.startup(function()
         -- 'omnisharp',
         -- 'svelte',
         -- 'vuels',
+        'cssls',
         'eslint',
-        'rust_analyzer',
+        -- 'rust_analyzer',
         'tsserver',
       }
     end

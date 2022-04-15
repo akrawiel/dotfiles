@@ -1,5 +1,7 @@
 local actions = require('telescope.actions')
+local action_state = require('telescope.actions.state')
 local previewers = require('telescope.previewers')
+local Path = require('plenary.path')
 
 require('telescope').setup {
   defaults = {
@@ -25,6 +27,16 @@ require('telescope').setup {
         ["<tab>"] = actions.toggle_selection + actions.move_selection_next,
         ["<M-a>"] = actions.toggle_all,
         ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+        ["<C-h>"] = actions.which_key,
+        ["<C-space>"] = function(prompt_bufnr, mode, target)
+          local picker = action_state.get_current_picker(prompt_bufnr)
+
+          actions.close(prompt_bufnr)
+
+          for _, entry in ipairs(picker:get_multi_selection()) do
+            pcall(vim.cmd, string.format("edit %s", entry.value))
+          end
+        end,
         ["<esc>"] = actions.close
       }
     }

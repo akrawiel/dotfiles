@@ -27,7 +27,7 @@ vim.opt.ruler = true
 vim.opt.showtabline = 2
 
 vim.opt.undofile = true
-vim.opt.undodir = '~/.config/nvim/undo'
+vim.opt.undodir = vim.fn.expand '~/.config/nvim/undo'
 vim.opt.undolevels = 100
 vim.opt.backspace = { 'indent' , 'eol' , 'start' }
 vim.opt.mouse = 'a'
