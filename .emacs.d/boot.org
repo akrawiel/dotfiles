@@ -524,16 +524,6 @@
   
 #+end_src
 
-* ActivityWatch
-
-#+begin_src emacs-lisp
-  
-  (use-package activity-watch-mode
-    :config
-    (global-activity-watch-mode))
-  
-#+end_src
-
 * Keybindings
 
 #+begin_src emacs-lisp
