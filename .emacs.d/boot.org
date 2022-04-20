@@ -40,11 +40,12 @@
   (tab-bar-mode 1)
   (setq tab-bar-show t)
   (setq enable-recursive-minibuffers t)
+  (setq byte-compile-warnings '(cl-functions))
   
   (setq-default tab-width 2)
   (setq whitespace-style '(face trailing tabs spaces tab-mark space-mark))
   (add-hook 'prog-mode-hook 'whitespace-mode)
-
+  
   (setq gc-cons-threshold (* 100 1024 1024)
    read-process-output-max (* 1024 1024))
   
@@ -56,15 +57,15 @@
   
   (defun akrw/set-font ()
     (set-face-attribute 'default nil
-                        :font "Cascadia Code PL"
+                        :font "Cascadia Code"
+                        :weight 'normal
                         :height 110))
   
   (if (daemonp)
       (add-hook 'server-after-make-frame-hook
-                (lambda (frame)
+                (lambda ()
                   (setq doom-modeline-icon t)
-                  (with-selected-frame frame
-                    (akrw/set-font))))
+                  (akrw/set-font)))
     (akrw/set-font))
   
 #+end_src
