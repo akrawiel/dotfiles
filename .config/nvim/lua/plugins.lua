@@ -27,15 +27,15 @@ return packer.startup(function()
   use { 'hrsh7th/vim-vsnip' }
   use { 'hrsh7th/vscode-langservers-extracted' }
   use { 'kyazdani42/nvim-web-devicons' }
-  use {
-    'ggandor/lightspeed.nvim',
-    config = function()
-      require 'lightspeed'.setup {
-        exit_after_idle_msecs = { labeled = nil, unlabeled = nil },
-        safe_labels = nil,
-      }
-    end
-  }
+  -- use {
+  --   'ggandor/lightspeed.nvim',
+  --   config = function()
+  --     require 'lightspeed'.setup {
+  --       exit_after_idle_msecs = { labeled = nil, unlabeled = nil },
+  --       safe_labels = nil,
+  --     }
+  --   end
+  -- }
   use {
     'machakann/vim-highlightedyank',
     config = function()
@@ -124,7 +124,11 @@ return packer.startup(function()
   use {
     'phaazon/hop.nvim',
     config = function()
-      require 'hop-config'
+      require('hop').setup {
+        char2_fallback_key = "<cr>",
+        jump_on_sole_occurrence = true,
+        teasing = false,
+      }
     end
   }
   use { 'romgrk/barbar.nvim' }
