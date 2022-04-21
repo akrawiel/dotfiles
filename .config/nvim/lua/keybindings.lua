@@ -63,8 +63,11 @@ nnoremapSilent('<F4>', '<cmd>NnnPicker %:p:h<CR>')
 -- Hop
 
 nnoremapSilent('<space>j0', '<cmd>HopLineStart<CR>')
-nnoremapSilent('<space>j/', '<cmd>HopPattern<CR>')
 nnoremapSilent('<space>jw', '<cmd>HopWordMW<CR>')
+
+nnoremapSilent('/', '<cmd>HopPattern<CR>')
+vnoremapSilent('/', '<cmd>HopPattern<CR>')
+onoremapSilent('/', '<cmd>HopPattern<CR>')
 
 local hopCommands = {
   f = [[<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = false, inclusive_jump = false })<cr>]],
