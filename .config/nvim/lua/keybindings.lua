@@ -87,8 +87,8 @@ nnoremapSilent('T', hopCommands.T)
 
 vnoremapSilent('f', hopCommands.f)
 vnoremapSilent('F', hopCommands.F)
-vnoremapSilent('s', hopCommands.s)
-vnoremapSilent('S', hopCommands.S)
+vnoremapSilent('z', hopCommands.s)
+vnoremapSilent('Z', hopCommands.S)
 vnoremapSilent('t', hopCommands.t)
 vnoremapSilent('T', hopCommands.T)
 
