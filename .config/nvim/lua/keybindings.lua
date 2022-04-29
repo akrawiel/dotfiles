@@ -62,7 +62,7 @@ nnoremapSilent('<F4>', '<cmd>NnnPicker %:p:h<CR>')
 
 -- Hop
 
-nnoremapSilent('<space>j0', '<cmd>HopLineStartMW<CR>')
+nnoremapSilent('<space>jj', '<cmd>HopLineStartMW<CR>')
 nnoremapSilent('<space>jw', '<cmd>HopWordMW<CR>')
 nnoremapSilent('<space>j/', '<cmd>HopPatternMW<CR>')
 
