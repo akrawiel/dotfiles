@@ -18,6 +18,7 @@ return function(enabled_servers)
     buf_set_keymap('n', 'gk', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
     buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
     buf_set_keymap('n', '<space>cr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    buf_set_keymap('n', '<space>cf', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
   end
 
   local function javascript_root(filename)
