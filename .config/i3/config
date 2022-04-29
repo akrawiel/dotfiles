@@ -112,6 +112,7 @@ bindsym $meh+m exec --no-startup-id "cat ~/music-commands | rofi -dmenu | nohup 
 bindsym $meh+t exec --no-startup-id "cat ~/tenor-commands | rofi -i -dmenu | cut -d'|' -f2 | sed 's/^ //' | xargs -r | xclip -sel clip"
 bindsym $meh+g exec --no-startup-id "alacritty -e nvim ~/.config/i3/config"
 bindsym $meh+x exec --no-startup-id "flatpak run com.github.liferooter.textpieces"
+bindsym $meh+period exec --no-startup-id "rofimoji"
 
 # xkill
 bindsym --release $meh+q exec xkill
