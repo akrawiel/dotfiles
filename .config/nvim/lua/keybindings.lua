@@ -32,7 +32,7 @@ local tnoremap = function(key, cmd)
   vim.api.nvim_set_keymap('t', key, cmd, { noremap = true, silent = false })
 end
 
--- Vim handling
+-- File handling
 
 nnoremap('<space>fs', '<cmd>w<CR>')
 nnoremap('<space>fS', '<cmd>wq<CR>')
@@ -43,12 +43,13 @@ nnoremap('<space>zz', '<cmd>wqa<CR>')
 
 nnoremapSilent('<space>bc', '<cmd>bufdo :BufferWipeout<CR>')
 nnoremapSilent('<space>bd', '<cmd>BufferClose<CR>')
+nnoremapSilent('<space>bD', '<cmd>BufferClose!<CR>')
+nnoremapSilent('<space>bp', '<cmd>BufferPin<CR>')
 nnoremapSilent('<space>bh', '<cmd>BufferMovePrevious<CR>')
 nnoremapSilent('<space>bl', '<cmd>BufferMoveNext<CR>')
 nnoremapSilent('<space>bo', '<cmd>BufferCloseAllButCurrent<CR>')
 nnoremapSilent('gt', '<cmd>BufferNext<CR>')
 nnoremapSilent('gT', '<cmd>BufferPrevious<CR>')
-nnoremapSilent('<space>T', '<cmd>tabnext<CR>')
 nnoremapSilent('<space><tab>', '<cmd>BufferPick<CR>')
 nnoremapSilent('<space>1', '<cmd>BufferGoto 1<CR>')
 nnoremapSilent('<space>2', '<cmd>BufferGoto 2<CR>')
@@ -100,6 +101,8 @@ onoremapSilent('T', hopCommands.T)
 
 nnoremapSilent('<leader>f', '<cmd>EslintFixAll<CR>')
 nnoremapSilent('<leader>p', '<cmd>Format<CR>')
+nnoremapSilent('<leader>t', '<cmd>terminal<CR>')
+nnoremapSilent('<leader>g', '<cmd>LazyGit<CR>')
 
 -- Telescope
 
@@ -169,4 +172,4 @@ vnoremap('<space>x', ':<C-u>')
 
 -- Terminal
 
-tnoremap('<Esc>', '<C-\\><C-n>')
+-- tnoremap('<Esc>', '<C-\\><C-n>')

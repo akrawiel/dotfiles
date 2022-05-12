@@ -14,7 +14,6 @@ return packer.startup(function()
   -- plugins
   use { 'arthurxavierx/vim-caser' }
   use { 'editorconfig/editorconfig-vim' }
-  use { 'famiu/bufdelete.nvim' }
   use { 'hrsh7th/cmp-buffer' }
   use { 'hrsh7th/cmp-nvim-lsp' }
   use { 'hrsh7th/cmp-vsnip' }
@@ -26,6 +25,12 @@ return packer.startup(function()
   }
   use { 'hrsh7th/vim-vsnip' }
   use { 'hrsh7th/vscode-langservers-extracted' }
+  use {
+    'kdheepak/lazygit.nvim',
+    config = function()
+      vim.g.lazygit_floating_window_use_plenary = 1
+    end
+  }
   use { 'kyazdani42/nvim-web-devicons' }
   -- use {
   --   'ggandor/lightspeed.nvim',
