@@ -34,8 +34,8 @@ return function(enabled_servers)
       on_attach = function(client, bufnr)
         common_on_attach(client, bufnr)
 
-        client.resolved_capabilities.document_formatting = false
-        client.resolved_capabilities.document_range_formatting = false
+        client.server_capabilities.document_formatting = false
+        client.server_capabilities.document_range_formatting = false
       end,
       params = {
         root_dir = javascript_root,
@@ -46,7 +46,7 @@ return function(enabled_servers)
       on_attach = function(client, bufnr)
         common_on_attach(client, bufnr)
 
-        client.resolved_capabilities.document_formatting = false
+        client.server_capabilities.document_formatting = false
       end,
       params = {
         root_dir = javascript_root,
@@ -57,7 +57,7 @@ return function(enabled_servers)
       on_attach = function(client, bufnr)
         common_on_attach(client, bufnr)
 
-        client.resolved_capabilities.document_formatting = false
+        client.server_capabilities.document_formatting = false
       end,
       params = {
         root_dir = javascript_root,
@@ -91,7 +91,7 @@ return function(enabled_servers)
       on_attach = function(client, bufnr)
         common_on_attach(client, bufnr)
 
-        client.resolved_capabilities.document_formatting = true
+        client.server_capabilities.document_formatting = true
 
         vim.api.nvim_command[[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 5000)]]
       end,
@@ -117,7 +117,7 @@ return function(enabled_servers)
       on_attach = function(client, bufnr)
         common_on_attach(client, bufnr)
 
-        client.resolved_capabilities.document_formatting = true
+        client.server_capabilities.document_formatting = true
 
         vim.api.nvim_command[[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 5000)]]
       end,
@@ -130,8 +130,8 @@ return function(enabled_servers)
       on_attach = function(client, bufnr)
         common_on_attach(client, bufnr)
 
-        client.resolved_capabilities.document_formatting = true
-        client.resolved_capabilities.code_action = true
+        client.server_capabilities.document_formatting = true
+        client.server_capabilities.code_action = true
 
         -- vim.api.nvim_command[[autocmd BufWritePre <buffer> EslintFixAll]]
       end,
