@@ -63,7 +63,7 @@ nnoremapSilent('<F4>', '<cmd>NnnPicker %:p:h<CR>')
 
 -- Hop
 
-nnoremapSilent('<space>jj', '<cmd>HopLineStartMW<CR>')
+nnoremapSilent('<space>jl', '<cmd>HopLineStartMW<CR>')
 nnoremapSilent('<space>jw', '<cmd>HopWordMW<CR>')
 nnoremapSilent('<space>j/', '<cmd>HopPatternMW<CR>')
 
@@ -104,12 +104,19 @@ nnoremapSilent('<leader>p', '<cmd>Format<CR>')
 nnoremapSilent('<leader>t', '<cmd>terminal<CR>')
 nnoremapSilent('<leader>g', '<cmd>LazyGit<CR>')
 
+-- External operations
+
+nnoremapSilent('<space>ky', '"+yy')
+vnoremapSilent('<space>ky', '"+y')
+nnoremapSilent('<space>kp', '"+p')
+vnoremapSilent('<space>kp', '"+p')
+
 -- Telescope
 
 nnoremapSilent('<F1>', [[<cmd>lua require('telescope.builtin').help_tags()<CR>]])
 nnoremapSilent('gd', [[<cmd>lua require('telescope.builtin').lsp_definitions()<CR>]])
 nnoremapSilent('gr', [[<cmd>lua require('telescope.builtin').lsp_references()<CR>]])
-nnoremapSilent('<space>ca', [[<cmd>lua require('telescope.builtin').lsp_code_actions()<CR>]])
+nnoremapSilent('<space>ca', [[<cmd>lua vim.lsp.buf.code_action()<CR>]])
 nnoremapSilent('<space>cd', [[<cmd>lua require('telescope.builtin').diagnostics({ bufnr = 0 })<CR>]])
 nnoremapSilent('<space>cD', [[<cmd>lua require('telescope.builtin').diagnostics()<CR>]])
 nnoremapSilent('<space>co', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]])
@@ -120,6 +127,11 @@ nnoremapSilent('<space>ff', [[<cmd>lua require('telescope.builtin').registers()<
 nnoremapSilent('<space>fg', [[<cmd>lua require('telescope.builtin').git_status()<CR>]])
 nnoremapSilent('<space>fp', [[<cmd>lua require('telescope-config').search_config()<CR>]])
 nnoremapSilent('<space>fr', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]])
+nnoremapSilent('<space>fq', [[<cmd>lua require('telescope.builtin').quickfix()<CR>]])
+nnoremapSilent('<space>fd', [[<cmd>lua require('telescope.builtin').treesitter()<CR>]])
+nnoremapSilent('<space>fo', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]])
+nnoremapSilent('<space>f/', [[<cmd>lua require('telescope.builtin').search_history()<CR>]])
+nnoremapSilent('<space>jj', [[<cmd>lua require('telescope.builtin').jumplist()<CR>]])
 nnoremapSilent('<space>/', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]])
 nnoremapSilent('<space><bs>', [[<cmd>lua require('telescope.builtin').resume()<CR>]])
 nnoremapSilent('<space><return>', [[<cmd>lua require('telescope.builtin').commands()<CR>]])
@@ -163,10 +175,14 @@ nnoremapSilent('<C-k>', '<cmd>cprev<CR>')
 vnoremapSilent('<space>tr', '!tac<CR>')
 vnoremapSilent('<space>ts', '!sort<CR>')
 
--- Ex commands to fill
+-- Ex commands
 
 nnoremap('<space>ss', ':<C-u>%s/')
 vnoremap('<space>ss', ':<C-u>\'<,\'>s/')
+
+nnoremap('<space>so', [[:<C-u>so<CR>]])
+vnoremap('<space>so', [[:<C-u>'<,'>so<CR>]])
+
 nnoremap('<space>x', ':<C-u>')
 vnoremap('<space>x', ':<C-u>')
 
