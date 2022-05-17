@@ -30,4 +30,5 @@ nm-applet &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 solaar -w hide &
 xfsettingsd --daemon &
+xfce4-power-manager --daemon &
 nitrogen --restore &
