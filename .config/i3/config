@@ -3,7 +3,8 @@ set $mod Mod4
 set $meh Mod1+Ctrl+Shift
 set $hyper Mod1+Mod4+Ctrl+Shift
 
-font pango: DM Mono 10
+# font pango: CaskaydiaCove Nerd Font Mono 11
+font pango: JetBrainsMono Nerd Font Mono 11
 
 exec_always --no-startup-id ~/autostart.sh
 
@@ -31,6 +32,13 @@ bindsym $mod+Ctrl+Down exec --no-startup-id "playerctl -a play-pause"
 bindsym $mod+Ctrl+Up exec --no-startup-id "playerctl -a play-pause"
 
 bindsym Print exec --no-startup-id "flameshot gui"
+
+# Project booters
+bindsym $meh+1 exec --no-startup-id "zsh ~/Scripts/project-selector.sh"
+bindsym $meh+0 exec --no-startup-id "zsh ~/Scripts/kill-projects.sh"
+
+# Script booter
+bindsym $meh+Tab exec --no-startup-id "zsh ~/Scripts/script-selector.sh"
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -223,14 +231,14 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 bar {
-  status_command bumblebee-status -m cpu memory battery pasink pasource datetime -t default -p \
-    memory.format='{percent:.0f}%' cpu.format='{:.0f}%' datetime.format='%a, %-d %b %y | %X'
+  status_command bumblebee-status -m cpu memory pasink pasource datetime -t iceberg-contrast -p \
+    memory.format='{percent:.0f}%' cpu.format='{:.0f}%' datetime.format='%a, %-d %b %y %X'
 
   colors {
     separator  #888888
-    background #333333
+    # background #333333
     statusline #FFFFFF
-    focused_workspace  #4E9C00 #4E9C00 #FFFFFF
+    focused_workspace  #AC70FF #AC70FF #FFFFFF
     active_workspace   #333333 #333333 #FFFFFF
     inactive_workspace #333333 #333333 #888888
     urgent_workspace   #C20000 #C20000 #FFFFFF
@@ -239,19 +247,19 @@ bar {
   position top
 }
 
-client.focused          #9C9C00 #9C9C00 #FFFFFF #FFFFFF
-client.focused_inactive #363600 #363600 #888888 #FFFFFF
+client.focused          #AC70FF #AC70FF #FFFFFF #FFFFFF
+client.focused_inactive #563880 #563880 #888888 #FFFFFF
 client.unfocused        #333333 #333333 #888888 #FFFFFF
 client.urgent           #C20000 #C20000 #FFFFFF #FFFFFF
 
 # Global options
-default_border pixel 2
-default_orientation vertical
+default_border pixel 3
+default_orientation auto
 focus_follows_mouse yes
 mouse_warping output
 workspace_auto_back_and_forth yes
 
-# Specific indow options
+# Specific window options
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
 
@@ -260,6 +268,7 @@ for_window [class="Emacs" title="^Helm$"] floating enable, move position center;
 for_window [class="re.sonny.Junction"] floating enable
 for_window [class="Spotify" workspace="(?!^10$)^.+$"] move to workspace 10
 for_window [class="systemsettings"] floating enable
+for_window [class="Gcolor3"] floating enable
 
 for_window [title="Android Emulator.*"] move window to workspace 4, floating enable, resize set height 1000 px, move position center;
 for_window [title="win7"] floating enable; border none
@@ -275,7 +284,11 @@ assign [class="Joplin"] → 6
 assign [class="Slack"] → F1
 assign [class="Spotify"] → 10
 assign [class="vlc"] → 10
+
 assign [title="Android Emulator.*"] → 4
+
+assign [instance="EditorAlacritty"] → 1
+assign [instance="ProjectAlacritty"] → 2
 
 # Workspace monitor configuration
 
