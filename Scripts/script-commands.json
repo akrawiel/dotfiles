@@ -1,0 +1,4 @@
+[
+  { "name": "CPU powersave governor", "script": "pkexec ~/Scripts/cpu-governor-powersave.sh" },
+  { "name": "CPU performance governor", "script": "pkexec ~/Scripts/cpu-governor-performance.sh" }
+]
