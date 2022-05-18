@@ -64,43 +64,19 @@ nnoremapSilent('<F4>', '<cmd>NnnPicker %:p:h<CR>')
 -- Hop
 
 nnoremapSilent('<space>jl', '<cmd>HopLineStartMW<CR>')
-nnoremapSilent('<space>jw', '<cmd>HopWordMW<CR>')
+nnoremapSilent('<space>jj', '<cmd>HopWordMW<CR>')
 nnoremapSilent('<space>j/', '<cmd>HopPatternMW<CR>')
 
-local hopCommands = {
-  f = [[<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = false, inclusive_jump = false })<cr>]],
-  F = [[<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = false, inclusive_jump = false })<cr>]],
-  s = [[<cmd>lua require'hop'.hint_char2({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = false, inclusive_jump = true })<cr>]],
-  S = [[<cmd>lua require'hop'.hint_char2({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = false, inclusive_jump = true })<cr>]], 
-  t = [[<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = false, inclusive_jump = true })<cr>]],
-  T = [[<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = false, inclusive_jump = true })<cr>]],
-}
+-- Pounce
 
-nnoremapSilent('f', hopCommands.f)
-nnoremapSilent('F', hopCommands.F)
-nnoremapSilent('s', hopCommands.s)
-nnoremapSilent('S', hopCommands.S)
-nnoremapSilent('t', hopCommands.t)
-nnoremapSilent('T', hopCommands.T)
-
-vnoremapSilent('f', hopCommands.f)
-vnoremapSilent('F', hopCommands.F)
-vnoremapSilent('z', hopCommands.s)
-vnoremapSilent('Z', hopCommands.S)
-vnoremapSilent('t', hopCommands.t)
-vnoremapSilent('T', hopCommands.T)
-
-onoremapSilent('f', hopCommands.f)
-onoremapSilent('F', hopCommands.F)
-onoremapSilent('z', hopCommands.s)
-onoremapSilent('Z', hopCommands.S)
-onoremapSilent('t', hopCommands.t)
-onoremapSilent('T', hopCommands.T)
+nnoremapSilent('s', [[<cmd>Pounce<CR>]])
+nnoremapSilent('S', [[<cmd>PounceRepeat<CR>]])
+vnoremapSilent('s', [[<cmd>Pounce<CR>]])
+onoremapSilent('z', [[<cmd>Pounce<CR>]])
 
 -- Leader operations
 
-nnoremapSilent('<leader>f', '<cmd>EslintFixAll<CR>')
-nnoremapSilent('<leader>p', '<cmd>Format<CR>')
+nnoremapSilent('<leader>p', [[<cmd>lua vim.lsp.buf.format { async = true }<CR>]])
 nnoremapSilent('<leader>t', '<cmd>terminal<CR>')
 nnoremapSilent('<leader>g', '<cmd>LazyGit<CR>')
 
@@ -131,7 +107,6 @@ nnoremapSilent('<space>fq', [[<cmd>lua require('telescope.builtin').quickfix()<C
 nnoremapSilent('<space>fd', [[<cmd>lua require('telescope.builtin').treesitter()<CR>]])
 nnoremapSilent('<space>fo', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]])
 nnoremapSilent('<space>f/', [[<cmd>lua require('telescope.builtin').search_history()<CR>]])
-nnoremapSilent('<space>jj', [[<cmd>lua require('telescope.builtin').jumplist()<CR>]])
 nnoremapSilent('<space>/', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]])
 nnoremapSilent('<space><bs>', [[<cmd>lua require('telescope.builtin').resume()<CR>]])
 nnoremapSilent('<space><return>', [[<cmd>lua require('telescope.builtin').commands()<CR>]])

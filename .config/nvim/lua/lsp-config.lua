@@ -125,17 +125,6 @@ return function(enabled_servers)
         cmd = { '/usr/bin/omnisharp', '--languageserver', '--hostPID', tostring(pid) }
       }
     },
-    eslint = {
-      name = 'eslint',
-      on_attach = function(client, bufnr)
-        common_on_attach(client, bufnr)
-
-        client.server_capabilities.document_formatting = true
-        client.server_capabilities.code_action = true
-
-        -- vim.api.nvim_command[[autocmd BufWritePre <buffer> EslintFixAll]]
-      end,
-    }
   }
 
   local capabilities = vim.lsp.protocol.make_client_capabilities()

@@ -14,6 +14,18 @@ return packer.startup(function()
   -- plugins
   use { 'arthurxavierx/vim-caser' }
   use { 'editorconfig/editorconfig-vim' }
+  use {
+    'ggandor/lightspeed.nvim',
+    config = function()
+      require 'lightspeed'.setup {
+        exit_after_idle_msecs = { labeled = nil, unlabeled = nil },
+        safe_labels = nil,
+        limit_ft_matches = 10,
+      }
+
+      vim.cmd 'highlight LightspeedOneCharMatch guifg=Black guibg=#b0b0ff gui=bold'
+    end
+  }
   use { 'hrsh7th/cmp-buffer' }
   use { 'hrsh7th/cmp-nvim-lsp' }
   use { 'hrsh7th/cmp-vsnip' }
@@ -24,7 +36,21 @@ return packer.startup(function()
     end
   }
   use { 'hrsh7th/vim-vsnip' }
-  use { 'hrsh7th/vscode-langservers-extracted' }
+  -- use { 'hrsh7th/vscode-langservers-extracted' }
+  use {
+    'jose-elias-alvarez/null-ls.nvim',
+    config = function()
+      require("null-ls").setup({
+        sources = {
+          require("null-ls").builtins.code_actions.eslint_d,
+          require("null-ls").builtins.diagnostics.eslint_d,
+          require("null-ls").builtins.diagnostics.jsonlint,
+          require("null-ls").builtins.formatting.eslint_d,
+          require("null-ls").builtins.formatting.prettier,
+        },
+      })
+    end,
+  }
   use {
     'kdheepak/lazygit.nvim',
     config = function()
@@ -32,15 +58,6 @@ return packer.startup(function()
     end
   }
   use { 'kyazdani42/nvim-web-devicons' }
-  -- use {
-  --   'ggandor/lightspeed.nvim',
-  --   config = function()
-  --     require 'lightspeed'.setup {
-  --       exit_after_idle_msecs = { labeled = nil, unlabeled = nil },
-  --       safe_labels = nil,
-  --     }
-  --   end
-  -- }
   use {
     'machakann/vim-highlightedyank',
     config = function()
@@ -63,36 +80,6 @@ return packer.startup(function()
   }
   use { 'mg979/vim-visual-multi', branch = 'master' }
   use {
-    'mhartington/formatter.nvim',
-    config = function()
-      local prettier = function()
-        return {
-          exe = "prettierd",
-          args = {vim.api.nvim_buf_get_name(0)},
-          stdin = true,
-        }
-      end
-
-      require('formatter').setup {
-        filetype = {
-          javascript = {prettier},
-          javascriptreact = {prettier},
-          typescript = {prettier},
-          typescriptreact = {prettier},
-          rust = {
-            function()
-              return {
-                exe = "rustfmt",
-                args = {"--emit=stdout"},
-                stdin = true
-              }
-            end
-          },
-        }
-      }
-    end
-  }
-  use {
     'neovim/nvim-lspconfig',
     config = function()
       require 'lsp-config' {
@@ -108,6 +95,12 @@ return packer.startup(function()
         -- 'rust_analyzer',
         'tsserver',
       }
+    end
+  }
+  use {
+    'numToStr/Comment.nvim',
+    config = function()
+      require('Comment').setup()
     end
   }
   use { 'nvim-lua/plenary.nvim' }
@@ -135,21 +128,34 @@ return packer.startup(function()
         jump_on_sole_occurrence = true,
         teasing = false,
       }
-    end
+    end,
   }
   use { 'romgrk/barbar.nvim' }
-  use { 'Shougo/context_filetype.vim' }
+  use {
+    'rlane/pounce.nvim',
+    config = function()
+      vim.cmd 'highlight PounceMatch guifg=Black guibg=#8080ff gui=bold'
+      vim.cmd 'highlight PounceAccept guifg=Black guibg=#b0b0ff gui=bold'
+      vim.cmd 'highlight PounceAcceptBest guifg=Black guibg=#e0e0ff gui=bold'
+      vim.cmd 'highlight PounceGap guifg=Black guibg=#4040ff gui=bold'
+    end,
+  }
   use { 'tpope/vim-repeat' }
   use { 'tpope/vim-speeddating' }
   use { 'tpope/vim-surround' }
-  use { 'tyru/caw.vim' }
   use { 'vim-airline/vim-airline' }
 
   -- colorschemes
   use {
-    'chriskempson/base16-vim',
+    'dracula/vim',
     config = function()
-      vim.cmd 'colorscheme base16-dracula'
+      -- vim.cmd 'colorscheme dracula'
+    end
+  }
+  use {
+    'phha/zenburn.nvim',
+    config = function()
+      vim.cmd 'colorscheme zenburn'
     end
   }
 
