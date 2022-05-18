@@ -238,8 +238,8 @@ bar {
     separator  #888888
     # background #333333
     statusline #FFFFFF
-    focused_workspace  #AC70FF #AC70FF #FFFFFF
-    active_workspace   #333333 #333333 #FFFFFF
+    focused_workspace  #DCDCCC #DCDCCC #000000
+    active_workspace   #DCDCCC #DCDCCC #000000
     inactive_workspace #333333 #333333 #888888
     urgent_workspace   #C20000 #C20000 #FFFFFF
   }
@@ -247,8 +247,8 @@ bar {
   position top
 }
 
-client.focused          #AC70FF #AC70FF #FFFFFF #FFFFFF
-client.focused_inactive #563880 #563880 #888888 #FFFFFF
+client.focused          #DCDCCC #DCDCCC #000000 #000000
+client.focused_inactive #383838 #383838 #888888 #FFFFFF
 client.unfocused        #333333 #333333 #888888 #FFFFFF
 client.urgent           #C20000 #C20000 #FFFFFF #FFFFFF
 
