@@ -45,8 +45,12 @@ return packer.startup(function()
           require("null-ls").builtins.code_actions.eslint_d,
           require("null-ls").builtins.diagnostics.eslint_d,
           require("null-ls").builtins.diagnostics.jsonlint,
-          require("null-ls").builtins.formatting.eslint_d,
-          require("null-ls").builtins.formatting.prettier,
+          require("null-ls").builtins.formatting.eslint_d.with {
+            to_temp_file = false
+          },
+          require("null-ls").builtins.formatting.prettierd.with {
+            to_temp_file = false
+          },
         },
       })
     end,
