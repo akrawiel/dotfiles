@@ -107,6 +107,7 @@ nnoremapSilent('<space>fq', [[<cmd>lua require('telescope.builtin').quickfix()<C
 nnoremapSilent('<space>fd', [[<cmd>lua require('telescope.builtin').treesitter()<CR>]])
 nnoremapSilent('<space>fo', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]])
 nnoremapSilent('<space>f/', [[<cmd>lua require('telescope.builtin').search_history()<CR>]])
+nnoremapSilent('<space>.', [[<cmd>lua require('telescope.builtin').find_files({ hidden = true, follow = true, cwd = require('telescope.utils').buffer_dir('.') })<CR>]])
 nnoremapSilent('<space>/', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]])
 nnoremapSilent('<space><bs>', [[<cmd>lua require('telescope.builtin').resume()<CR>]])
 nnoremapSilent('<space><return>', [[<cmd>lua require('telescope.builtin').commands()<CR>]])
