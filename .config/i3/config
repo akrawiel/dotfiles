@@ -34,7 +34,6 @@ bindsym $mod+Ctrl+Up exec --no-startup-id "playerctl -a play-pause"
 bindsym Print exec --no-startup-id "flameshot gui"
 
 # Project booters
-bindsym $meh+1 exec --no-startup-id "zsh ~/Scripts/project-selector.sh"
 bindsym $meh+0 exec --no-startup-id "zsh ~/Projects/kill-projects.sh"
 
 # Script booter
