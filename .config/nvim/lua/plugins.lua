@@ -59,6 +59,7 @@ return packer.startup(function()
     'kdheepak/lazygit.nvim',
     config = function()
       vim.g.lazygit_floating_window_use_plenary = 1
+      vim.g.lazygit_floating_window_winblend = 1
     end
   }
   use { 'kyazdani42/nvim-web-devicons' }
@@ -151,12 +152,6 @@ return packer.startup(function()
 
   -- colorschemes
   use {
-    'dracula/vim',
-    config = function()
-      -- vim.cmd 'colorscheme dracula'
-    end
-  }
-  use {
     'phha/zenburn.nvim',
     config = function()
       vim.cmd 'colorscheme zenburn'
@@ -164,36 +159,5 @@ return packer.startup(function()
   }
 
   -- language highlighting
-  use {
-    'ElmCast/elm-vim',
-    config = function()
-      vim.g.elm_setup_keybindings = 0
-    end
-  }
-  use { 'HerringtonDarkholme/yats.vim' }
-  use { 'cespare/vim-toml' }
-  use {
-    'elzr/vim-json',
-    config = function()
-      vim.g.vim_json_syntax_conceal = 0
-    end
-  }
-  use { 'habamax/vim-godot' }
   use { 'ionide/Ionide-vim', run = 'make fsautocomplete' }
-  use {
-    'leafOfTree/vim-svelte-plugin',
-    config = function()
-      vim.g.vim_svelte_plugin_use_typescript = 1
-      vim.g.vim_svelte_plugin_use_sass = 1
-    end
-  }
-  use { 'pangloss/vim-javascript' }
-  use {
-    'posva/vim-vue',
-    config = function()
-      vim.g.vue_pre_processors = {}
-    end
-  }
-  use { 'rust-lang/rust.vim' }
-  use { 'tbastos/vim-lua' }
 end)
