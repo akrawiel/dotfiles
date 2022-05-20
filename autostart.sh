@@ -12,9 +12,9 @@ pkill redshift-gtk &
 pkill nitrogen &
 pkill nm-applet &
 pkill polkit-gnome-au &
-pkill xfce4-power-man &
 pkill solaar &
 pkill xfsettingsd &
+pkill xfce4-power-man &
 pkill picom &
 
 sleep 1
