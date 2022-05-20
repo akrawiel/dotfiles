@@ -82,10 +82,8 @@ nnoremapSilent('<leader>g', '<cmd>LazyGit<CR>')
 
 -- External operations
 
-nnoremapSilent('<space>ky', '"+yy')
-vnoremapSilent('<space>ky', '"+y')
-nnoremapSilent('<space>kp', '"+p')
-vnoremapSilent('<space>kp', '"+p')
+nnoremapSilent('<space>k', '"+')
+vnoremapSilent('<space>k', '"+')
 
 -- Telescope
 
