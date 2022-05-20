@@ -1,10 +1,12 @@
 #!/bin/zsh
 
-name="$(cat ~/Scripts/script-commands.json | jq -r '.[] | .name' | rofi -i -dmenu)"
+name="$(cat ~/Scripts/commands.json | jq -r 'sort_by(.name) | sort_by(.type) | .[] | .type + ": " + .name' | rofi -i -dmenu)"
 
 if [ -n "$name" ]
 then
-  spawnScript=$(cat ~/Scripts/script-commands.json | jq -r ".[] | select (.name == \"$name\") | .script")
+  command1='.[] | select ((.type + ": " + .name) == "'
+  command2='") | .script'
+  spawnScript=$(cat ~/Scripts/commands.json | jq -r "$command1$name$command2")
   echo "$spawnScript"
   zsh -c "$spawnScript"
 fi
