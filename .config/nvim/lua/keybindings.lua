@@ -125,6 +125,10 @@ nnoremapSilent('<space>wL', '<C-w>L')
 nnoremapSilent('<space>wq', '<C-w>q')
 nnoremapSilent('<space>ww', '<C-w>w')
 
+-- Packer
+
+nnoremapSilent('<space>Ps', [[<cmd>PackerSync<CR>]])
+
 -- Undo markers
 
 inoremapSilent('!', '!<C-g>u')
