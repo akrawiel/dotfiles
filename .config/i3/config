@@ -43,7 +43,8 @@ bindsym $meh+Tab exec --no-startup-id "zsh ~/Scripts/script-selector.sh"
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec --no-startup-id i3-sensible-terminal
+bindsym $meh+Return exec --no-startup-id i3-sensible-terminal --class "EditorAlacritty"
 
 # start nnn file manager in ~
 bindsym $meh+f exec i3-sensible-terminal -e nnn
@@ -238,7 +239,7 @@ bar {
     # background #333333
     statusline #FFFFFF
     focused_workspace  #DCDCCC #DCDCCC #000000
-    active_workspace   #DCDCCC #DCDCCC #000000
+    active_workspace   #939365 #939365 #FFFFFF
     inactive_workspace #333333 #333333 #888888
     urgent_workspace   #C20000 #C20000 #FFFFFF
   }
@@ -247,7 +248,7 @@ bar {
 }
 
 client.focused          #DCDCCC #DCDCCC #000000 #000000
-client.focused_inactive #383838 #383838 #888888 #FFFFFF
+client.focused_inactive #939365 #939365 #FFFFFF #000000
 client.unfocused        #333333 #333333 #888888 #FFFFFF
 client.urgent           #C20000 #C20000 #FFFFFF #FFFFFF
 
@@ -275,7 +276,7 @@ for_window [title="win7"] floating enable; border none
 # Window workspace assignments
 assign [class="Brave-browser"] → 4
 assign [class="easyeffects"] → 10
-assign [class="Emacs"] → 1
+assign [class="Emacs"] → 7
 assign [class="^firefox$"] → 5
 assign [class="^firefoxdeveloperedition$"] → 3
 assign [class="(?i)evolution"] → F2
@@ -283,6 +284,9 @@ assign [class="Joplin"] → 6
 assign [class="Slack"] → F1
 assign [class="Spotify"] → 10
 assign [class="vlc"] → 10
+assign [class="(?i)caprine"] → F3
+assign [class="(?i)telegram-desktop"] → F3
+assign [class="(?i)telegramdesktop"] → F3
 
 assign [title="Android Emulator.*"] → 4
 
