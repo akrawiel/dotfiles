@@ -53,7 +53,7 @@ vim.opt.completeopt = { 'menuone', 'noselect' , 'noinsert' }
 vim.opt.scrolloff = 4
 vim.opt.cursorline = true
 vim.opt.laststatus = 3
-vim.opt.statusline = "%-24.24(%m%) %= %#StatusLineBold# %f %#StatusLine# %= %24.24(%h%w%r%q%)"
+vim.opt.statusline = "%-10.10(%m%) %= %#StatusLineBold# %0.80f %#StatusLine# %= %10.10(%H%W%R%)"
 
 vim.cmd [[
   au BufNew,BufReadPost,BufReadPre,BufEnter *.md setlocal tw=80
