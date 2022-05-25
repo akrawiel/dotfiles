@@ -26,6 +26,12 @@ return packer.startup(function()
       vim.cmd 'highlight LightspeedOneCharMatch guifg=Black guibg=#b0b0ff gui=bold'
     end
   }
+  use {
+    'folke/which-key.nvim',
+    config = function()
+      require 'which-key'.setup {}
+    end
+  }
   use { 'hrsh7th/cmp-buffer' }
   use { 'hrsh7th/cmp-nvim-lsp' }
   use { 'hrsh7th/cmp-vsnip' }
@@ -36,7 +42,6 @@ return packer.startup(function()
     end
   }
   use { 'hrsh7th/vim-vsnip' }
-  -- use { 'hrsh7th/vscode-langservers-extracted' }
   use {
     'jose-elias-alvarez/null-ls.nvim',
     config = function()
