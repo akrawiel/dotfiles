@@ -2,8 +2,6 @@ vim.api.nvim_command [[:syntax on]]
 vim.api.nvim_command [[:filetype plugin indent on]]
 
 vim.api.nvim_command [[:highlight StatusLineBold guifg=#313633 guibg=#ccdc90 gui=bold]]
-vim.api.nvim_command [[:highlight Search guifg=#313633 guibg=#a0bb3b]]
-vim.api.nvim_command [[:highlight CurSearch guifg=#313633 guibg=#a0bb3b gui=bold]]
 
 vim.opt.compatible = false
 

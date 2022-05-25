@@ -158,7 +158,9 @@ return packer.startup(function()
   use {
     'phha/zenburn.nvim',
     config = function()
-      vim.cmd 'colorscheme zenburn'
+      vim.api.nvim_command [[:colorscheme zenburn]]
+      vim.api.nvim_command [[:highlight Search guifg=#313633 guibg=#6d7f28]]
+      vim.api.nvim_command [[:highlight CurSearch guifg=#313633 guibg=#aac445 gui=bold]]
     end
   }
 
