@@ -287,6 +287,7 @@ assign [class="vlc"] → 10
 assign [class="(?i)caprine"] → F3
 assign [class="(?i)telegram-desktop"] → F3
 assign [class="(?i)telegramdesktop"] → F3
+assign [class="(?i)ferdi"] → F3
 
 assign [title="Android Emulator.*"] → 4
 
