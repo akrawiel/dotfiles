@@ -1,5 +1,6 @@
-vim.api.nvim_command ':syntax on'
-vim.api.nvim_command ':filetype plugin indent on'
+vim.api.nvim_command [[:syntax on]]
+vim.api.nvim_command [[:filetype plugin indent on]]
+vim.api.nvim_command [[:highlight StatusLineBold guifg=#313633 guibg=#ccdc90 gui=bold]]
 
 vim.opt.compatible = false
 
@@ -50,6 +51,8 @@ vim.opt.lcs = { 'tab:| ' }
 vim.opt.completeopt = { 'menuone', 'noselect' , 'noinsert' }
 vim.opt.scrolloff = 4
 vim.opt.cursorline = true
+vim.opt.laststatus = 3
+vim.opt.statusline = "%-24.24(%m%) %= %#StatusLineBold# %f %#StatusLine# %= %24.24(%h%w%r%q%)"
 
 vim.cmd([[
   au BufNew,BufReadPost,BufReadPre,BufEnter *.md setlocal tw=80
