@@ -586,6 +586,7 @@
     "wh" '(evil-window-left :wk "focus window on left")
     "wj" '(evil-window-down :wk "focus window on bottom")
     "wk" '(evil-window-up :wk "focus window on top")
+    "ww" '(evil-window-next :wk "focus next window")
     "wl" '(evil-window-right :wk "focus window on right")
     "wH" '(evil-window-move-far-left :wk "move window to left")
     "wJ" '(evil-window-move-very-bottom :wk "move window to bottom")
