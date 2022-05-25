@@ -148,7 +148,6 @@ return packer.startup(function()
   use { 'tpope/vim-repeat' }
   use { 'tpope/vim-speeddating' }
   use { 'tpope/vim-surround' }
-  use { 'vim-airline/vim-airline' }
 
   -- colorschemes
   use {
