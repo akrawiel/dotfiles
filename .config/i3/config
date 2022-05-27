@@ -274,7 +274,6 @@ for_window [title="Android Emulator.*"] move window to workspace 4, floating ena
 for_window [title="win7"] floating enable; border none
 
 # Window workspace assignments
-assign [class="Brave-browser"] → 4
 assign [class="easyeffects"] → 10
 assign [class="Emacs"] → 7
 assign [class="^firefox$"] → 5
