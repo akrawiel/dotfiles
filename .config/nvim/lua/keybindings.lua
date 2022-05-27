@@ -34,38 +34,38 @@ end
 
 -- File handling
 
-nnoremap('<space>fs', '<cmd>w<CR>')
-nnoremap('<space>fS', '<cmd>wq<CR>')
-nnoremap('<space>qq', '<cmd>qa<CR>')
-nnoremap('<space>zz', '<cmd>wqa<CR>')
+nnoremap('<space>fs', [[<cmd>w<CR>]])
+nnoremap('<space>fS', [[<cmd>wq<CR>]])
+nnoremap('<space>qq', [[<cmd>qa<CR>]])
+nnoremap('<space>zz', [[<cmd>wqa<CR>]])
 
 -- Barbar
 
-nnoremapSilent('<space>bc', '<cmd>bufdo :BufferWipeout<CR>')
-nnoremapSilent('<space>bd', '<cmd>BufferWipeout<CR>')
-nnoremapSilent('<space>bD', '<cmd>BufferWipeout!<CR>')
-nnoremapSilent('<space>bp', '<cmd>BufferPin<CR>')
-nnoremapSilent('<space>bh', '<cmd>BufferMovePrevious<CR>')
-nnoremapSilent('<space>bl', '<cmd>BufferMoveNext<CR>')
-nnoremapSilent('<space>bo', '<cmd>BufferCloseAllButCurrent<CR>')
-nnoremapSilent('gt', '<cmd>BufferNext<CR>')
-nnoremapSilent('gT', '<cmd>BufferPrevious<CR>')
-nnoremapSilent('<space><tab>', '<cmd>BufferPick<CR>')
-nnoremapSilent('<space>1', '<cmd>BufferGoto 1<CR>')
-nnoremapSilent('<space>2', '<cmd>BufferGoto 2<CR>')
-nnoremapSilent('<space>3', '<cmd>BufferGoto 3<CR>')
-nnoremapSilent('<space>4', '<cmd>BufferGoto 4<CR>')
+nnoremapSilent('<space>bc', [[<cmd>bufdo :BufferWipeout<CR>]])
+nnoremapSilent('<space>bd', [[<cmd>BufferWipeout<CR>]])
+nnoremapSilent('<space>bD', [[<cmd>BufferWipeout!<CR>]])
+nnoremapSilent('<space>bp', [[<cmd>BufferPin<CR>]])
+nnoremapSilent('<space>bh', [[<cmd>BufferMovePrevious<CR>]])
+nnoremapSilent('<space>bl', [[<cmd>BufferMoveNext<CR>]])
+nnoremapSilent('<space>bo', [[<cmd>BufferCloseAllButCurrent<CR>]])
+nnoremapSilent('gt', [[<cmd>BufferNext<CR>]])
+nnoremapSilent('gT', [[<cmd>BufferPrevious<CR>]])
+nnoremapSilent('<space><tab>', [[<cmd>BufferPick<CR>]])
+nnoremapSilent('<space>1', [[<cmd>BufferGoto 1<CR>]])
+nnoremapSilent('<space>2', [[<cmd>BufferGoto 2<CR>]])
+nnoremapSilent('<space>3', [[<cmd>BufferGoto 3<CR>]])
+nnoremapSilent('<space>4', [[<cmd>BufferGoto 4<CR>]])
 
 -- Function keys
 
-nnoremapSilent('<F3>', '<cmd>noh<CR>')
-nnoremapSilent('<F4>', '<cmd>NnnPicker %:p:h<CR>')
+nnoremapSilent('<F3>', [[<cmd>noh<CR>]])
+nnoremapSilent('<F4>', [[<cmd>NnnPicker %:p:h<CR>]])
 
 -- Hop
 
-nnoremapSilent('<space>jl', '<cmd>HopLineStartMW<CR>')
-nnoremapSilent('<space>jj', '<cmd>HopWordMW<CR>')
-nnoremapSilent('<space>j/', '<cmd>HopPatternMW<CR>')
+nnoremapSilent('<space>jl', [[<cmd>HopLineStartMW<CR>]])
+nnoremapSilent('<space>jj', [[<cmd>HopWordMW<CR>]])
+nnoremapSilent('<space>j/', [[<cmd>HopPatternMW<CR>]])
 
 -- Pounce
 
@@ -77,8 +77,8 @@ onoremapSilent('z', [[<cmd>Pounce<CR>]])
 -- Leader operations
 
 nnoremapSilent('<leader>p', [[<cmd>lua vim.lsp.buf.format { async = true }<CR>]])
-nnoremapSilent('<leader>t', '<cmd>terminal<CR>')
-nnoremapSilent('<leader>g', '<cmd>LazyGit<CR>')
+nnoremapSilent('<leader>t', [[<cmd>terminal zsh<CR>]])
+nnoremapSilent('<leader>g', [[<cmd>LazyGit<CR>]])
 
 -- External operations
 
@@ -134,36 +134,45 @@ nnoremapSilent('<space>Ps', [[<cmd>PackerSync<CR>]])
 inoremapSilent('!', '!<C-g>u')
 inoremapSilent(',', ',<C-g>u')
 inoremapSilent('.', '.<C-g>u')
+inoremapSilent(':', ':<C-g>u')
+inoremapSilent('-', '-<C-g>u')
+inoremapSilent('_', '_<C-g>u')
 inoremapSilent('?', '?<C-g>u')
 
 -- Line moving
 
-vnoremapSilent('<M-j>', ':m \'>+1<CR>gv=gv')
-vnoremapSilent('<M-k>', ':m \'<-2<CR>gv=gv')
-nnoremapSilent('<M-j>', ':m .+1<CR>==')
-nnoremapSilent('<M-k>', ':m .-2<CR>==')
+vnoremapSilent('<M-j>', [[:m \'>+1<CR>gv=gv]])
+vnoremapSilent('<M-k>', [[:m \'<-2<CR>gv=gv]])
+nnoremapSilent('<M-j>', [[:m .+1<CR>==]])
+nnoremapSilent('<M-k>', [[:m .-2<CR>==]])
 
 -- Quicklist
 
-nnoremapSilent('<C-j>', '<cmd>cnext<CR>')
-nnoremapSilent('<C-k>', '<cmd>cprev<CR>')
+nnoremapSilent('<C-j>', [[<cmd>cnext<CR>]])
+nnoremapSilent('<C-k>', [[<cmd>cprev<CR>]])
 
 -- Text operations
 
-vnoremapSilent('<space>tr', '!tac<CR>')
-vnoremapSilent('<space>ts', '!sort<CR>')
+vnoremapSilent('<space>tr', [[:!tac<CR>]])
+vnoremapSilent('<space>ts', [[:!sort<CR>]])
 
 -- Ex commands
 
-nnoremap('<space>ss', ':<C-u>%s/')
-vnoremap('<space>ss', ':<C-u>\'<,\'>s/')
+nnoremap('<space>ss', [[:<C-u>%s/]])
+vnoremap('<space>ss', [[:<C-u>\'<,\'>s/]])
 
 nnoremap('<space>so', [[:<C-u>so<CR>]])
 vnoremap('<space>so', [[:<C-u>'<,'>so<CR>]])
 
-nnoremap('<space>x', ':<C-u>')
-vnoremap('<space>x', ':<C-u>')
+nnoremap('<space>x', [[:<C-u>]])
+vnoremap('<space>x', [[:<C-u>]])
 
--- Terminal
+-- Auto keybindings reload
 
--- tnoremap('<Esc>', '<C-\\><C-n>')
+vim.cmd [[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost keybindings.lua source <afile>
+  augroup end
+]]
+
