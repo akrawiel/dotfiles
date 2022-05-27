@@ -1,38 +1,48 @@
-local fn = vim.fn
+local install_path = vim.fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+  print 'Downloading packer.nvim...'
 
-if fn.empty(fn.glob(install_path)) > 0 then
-  print 'Downloading packer.nvim'
+  packer_bootstrap = vim.fn.system {
+    'git',
+    'clone',
+    '--depth',
+    '1',
+    'https://github.com/wbthomason/packer.nvim',
+    install_path,
+  }
 
-  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+  print(packer_bootstrap)
 
+  print 'Packer.nvim installed'
   print 'Restart neovim now'
 
   vim.cmd [[2sleep]]
-
   vim.cmd [[qa]]
 end
 
-return require('packer').startup(function()
-  vim.cmd([[
+return require 'packer'.startup(function()
+  vim.cmd [[
     augroup packer_user_config
       autocmd!
       autocmd BufWritePost plugins.lua source <afile> | PackerCompile
     augroup end
-  ]])
+  ]]
 
   -- base packer
-  use { 'wbthomason/packer.nvim' }
+  use 'wbthomason/packer.nvim'
 
   -- plugins
-  use { 'arthurxavierx/vim-caser' }
-  use { 'editorconfig/editorconfig-vim' }
+  use 'arthurxavierx/vim-caser'
+  use 'editorconfig/editorconfig-vim'
   use {
     'ggandor/lightspeed.nvim',
     config = function()
       require 'lightspeed'.setup {
-        exit_after_idle_msecs = { labeled = nil, unlabeled = nil },
+        exit_after_idle_msecs = {
+          labeled = nil,
+          unlabeled = nil
+        },
         safe_labels = nil,
         limit_ft_matches = 10,
       }
@@ -43,35 +53,35 @@ return require('packer').startup(function()
   use {
     'folke/which-key.nvim',
     config = function()
-      require 'which-key'.setup {}
+      require 'which-key'.setup()
     end
   }
-  use { 'hrsh7th/cmp-buffer' }
-  use { 'hrsh7th/cmp-nvim-lsp' }
-  use { 'hrsh7th/cmp-vsnip' }
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-vsnip'
   use { 
     'hrsh7th/nvim-cmp',
     config = function()
       require 'cmp-config'
     end
   }
-  use { 'hrsh7th/vim-vsnip' }
+  use 'hrsh7th/vim-vsnip'
   use {
     'jose-elias-alvarez/null-ls.nvim',
     config = function()
-      require("null-ls").setup({
+      require 'null-ls'.setup {
         sources = {
-          require("null-ls").builtins.code_actions.eslint_d,
-          require("null-ls").builtins.diagnostics.eslint_d,
-          require("null-ls").builtins.diagnostics.jsonlint,
-          require("null-ls").builtins.formatting.prettierd.with {
+          require 'null-ls'.builtins.code_actions.eslint_d,
+          require 'null-ls'.builtins.diagnostics.eslint_d,
+          require 'null-ls'.builtins.diagnostics.jsonlint,
+          require 'null-ls'.builtins.formatting.prettierd.with {
             to_temp_file = false
           },
-          require("null-ls").builtins.formatting.eslint_d.with {
+          require 'null-ls'.builtins.formatting.eslint_d.with {
             to_temp_file = false
           },
         },
-      })
+      }
     end,
   }
   use {
@@ -81,7 +91,7 @@ return require('packer').startup(function()
       vim.g.lazygit_floating_window_winblend = 1
     end
   }
-  use { 'kyazdani42/nvim-web-devicons' }
+  use 'kyazdani42/nvim-web-devicons'
   use {
     'machakann/vim-highlightedyank',
     config = function()
@@ -93,7 +103,11 @@ return require('packer').startup(function()
     config = function()
       vim.g['nnn#set_default_mappings'] = 0
       vim.g['nnn#layout'] = {
-        window = { width = 0.8, height = 0.7, highlight = 'Debug' }
+        window = {
+          width = 0.8,
+          height = 0.7,
+          highlight = 'Debug'
+        }
       }
       vim.g['nnn#action'] = {
         ['<c-x>'] = 'split',
@@ -102,7 +116,10 @@ return require('packer').startup(function()
       }
     end
   }
-  use { 'mg979/vim-visual-multi', branch = 'master' }
+  use {
+    'mg979/vim-visual-multi',
+    branch = 'master'
+  }
   use {
     'neovim/nvim-lspconfig',
     config = function()
@@ -124,12 +141,23 @@ return require('packer').startup(function()
   use {
     'numToStr/Comment.nvim',
     config = function()
-      require('Comment').setup()
+      require 'Comment'.setup()
     end
   }
-  use { 'nvim-lua/plenary.nvim' }
-  use { 'nvim-telescope/telescope-ui-select.nvim' }
-  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+  use 'nvim-lua/plenary.nvim'
+  use {
+    'nvim-neorg/neorg',
+    config = function()
+      require 'neorg'.setup {
+      }
+    end,
+    requires = 'nvim-lua/plenary.nvim'
+  }
+  use 'nvim-telescope/telescope-ui-select.nvim'
+  use {
+    'nvim-telescope/telescope-fzf-native.nvim',
+    run = 'make'
+  }
   use {
     'nvim-telescope/telescope.nvim',
     config = function()
@@ -143,18 +171,18 @@ return require('packer').startup(function()
       require 'treesitter-config'
     end
   }
-  use { 'nvim-treesitter/nvim-treesitter-textobjects' }
+  use 'nvim-treesitter/nvim-treesitter-textobjects'
   use {
     'phaazon/hop.nvim',
     config = function()
-      require('hop').setup {
+      require 'hop'.setup {
         char2_fallback_key = "<cr>",
         jump_on_sole_occurrence = true,
         teasing = false,
       }
     end,
   }
-  use { 'romgrk/barbar.nvim' }
+  use 'romgrk/barbar.nvim'
   use {
     'rlane/pounce.nvim',
     config = function()
@@ -164,9 +192,9 @@ return require('packer').startup(function()
       vim.cmd 'highlight PounceGap guifg=Black guibg=#4040ff gui=bold'
     end,
   }
-  use { 'tpope/vim-repeat' }
-  use { 'tpope/vim-speeddating' }
-  use { 'tpope/vim-surround' }
+  use 'tpope/vim-repeat'
+  use 'tpope/vim-speeddating'
+  use 'tpope/vim-surround'
 
   -- colorschemes
   use {
@@ -179,10 +207,13 @@ return require('packer').startup(function()
   }
 
   -- language highlighting
-  use { 'ionide/Ionide-vim', run = 'make fsautocomplete' }
+  use {
+    'ionide/Ionide-vim',
+    run = 'make fsautocomplete'
+  }
 
   -- bootstrap sync check
   if packer_bootstrap then
-    require('packer').sync()
+    require 'packer'.sync()
   end
 end)
