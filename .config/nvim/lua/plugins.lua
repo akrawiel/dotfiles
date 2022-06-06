@@ -101,18 +101,21 @@ return require 'packer'.startup(function()
   use {
     'mcchrish/nnn.vim',
     config = function()
-      vim.g['nnn#set_default_mappings'] = 0
-      vim.g['nnn#layout'] = {
-        window = {
-          width = 0.8,
-          height = 0.7,
-          highlight = 'Debug'
-        }
-      }
-      vim.g['nnn#action'] = {
-        ['<c-x>'] = 'split',
-        ['<c-v>'] = 'vsplit',
-        ['<esc>'] = 'close',
+      require 'nnn'.setup {
+        action = {
+          ['<c-x>'] = 'split',
+          ['<c-v>'] = 'vsplit',
+          ['<esc>'] = 'close',
+        },
+        layout = {
+          window = {
+            width = 0.8,
+            height = 0.7,
+            highlight = 'Debug'
+          },
+        },
+        replace_netrw = 1,
+        set_default_mappings = 0,
       }
     end
   }
@@ -149,20 +152,54 @@ return require 'packer'.startup(function()
     'nvim-neorg/neorg',
     config = function()
       require 'neorg'.setup {
+        load = {
+          ['core.defaults'] = {},
+          ['core.gtd.base'] = {
+            config = {
+              workspace = 'gtd',
+            }
+          },
+          ['core.norg.completion'] = {},
+          ['core.norg.dirman'] = {
+            config = {
+              autochdir = false,
+              default_workspace = 'notes',
+              workspaces = {
+                gtd = '~/NorgSync/gtd',
+                journal = '~/NorgSync/journal',
+                notes = '~/NorgSync/notes',
+              },
+            },
+          },
+          ['core.norg.journal'] = {
+            config = {
+              strategy = 'nested',
+              workspace = 'journal',
+            },
+          },
+          ['core.norg.manoeuvre'] = {},
+        }
       }
     end,
     requires = 'nvim-lua/plenary.nvim'
-  }
-  use 'nvim-telescope/telescope-ui-select.nvim'
-  use {
-    'nvim-telescope/telescope-fzf-native.nvim',
-    run = 'make'
   }
   use {
     'nvim-telescope/telescope.nvim',
     config = function()
       require 'telescope-config'
     end
+  }
+  use {
+    'nvim-telescope/telescope-frecency.nvim',
+    config = function()
+      require 'telescope'.load_extension 'frecency'
+    end,
+    requires = { 'tami5/sqlite.lua' }
+  }
+  use 'nvim-telescope/telescope-ui-select.nvim'
+  use {
+    'nvim-telescope/telescope-fzf-native.nvim',
+    run = 'make'
   }
   use {
     'nvim-treesitter/nvim-treesitter',
