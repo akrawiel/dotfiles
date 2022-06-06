@@ -110,6 +110,7 @@ nnoremapSilent('<space>/', [[<cmd>lua require('telescope.builtin').current_buffe
 nnoremapSilent('<space><bs>', [[<cmd>lua require('telescope.builtin').resume()<CR>]])
 nnoremapSilent('<space><return>', [[<cmd>lua require('telescope.builtin').commands()<CR>]])
 nnoremapSilent('<space><space>', [[<cmd>lua require('telescope.builtin').find_files({ find_command = { 'fd', '--type', 'f', '--hidden', '--exclude', '.git' } })<CR>]])
+nnoremapSilent('<leader><space>', [[<cmd>lua require('telescope').extensions.frecency.frecency()<CR>]])
 
 -- Windows
 
