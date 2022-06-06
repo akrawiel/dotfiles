@@ -9,6 +9,7 @@ require'nvim-treesitter.configs'.setup {
     "json",
     "lua",
     "norg",
+    "regex",
     "rust",
     "scss",
     "svelte",
