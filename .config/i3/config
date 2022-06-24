@@ -267,6 +267,7 @@ for_window [class="easyeffects" workspace="(?!^10$)^.+$"] move to workspace 10
 for_window [class="Emacs" title="^Helm$"] floating enable, move position center;
 for_window [class="re.sonny.Junction"] floating enable
 for_window [class="Spotify" workspace="(?!^10$)^.+$"] move to workspace 10
+for_window [title="(?i)^shortwave$" workspace="(?!^10$)^.+$"] move to workspace 10
 for_window [class="systemsettings"] floating enable
 for_window [class="Gcolor3"] floating enable
 
@@ -283,6 +284,7 @@ assign [class="Joplin"] → 6
 assign [class="Slack"] → F1
 assign [class="Spotify"] → 10
 assign [class="vlc"] → 10
+assign [class="(?i)de.haeckerfelix.shortwave"] → 10
 assign [class="(?i)caprine"] → F3
 assign [class="(?i)telegram-desktop"] → F3
 assign [class="(?i)telegramdesktop"] → F3
