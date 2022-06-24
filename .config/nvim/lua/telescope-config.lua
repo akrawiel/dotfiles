@@ -8,12 +8,14 @@ require('telescope').setup {
     prompt_prefix = '> ',
     disable_devicons = false,
     color_devicons = true,
-    use_less = true,
 
+    layout_strategy = 'flex',
     layout_config = {
       horizontal = {
         height = 0.5,
-        width = 0.9,
+        width = 0.95,
+        anchor = 'N',
+        prompt_position = 'bottom',
       },
     },
 
@@ -37,7 +39,14 @@ require('telescope').setup {
             pcall(vim.cmd, string.format("edit %s", entry.value))
           end
         end,
-        ["<esc>"] = actions.close
+        ["<esc>"] = function(prompt_bufnr, mode, target)
+          actions.close(prompt_bufnr, mode, target)
+          vim.cmd[[stopinsert]]
+        end,
+        ["<CR>"] = function(prompt_bufnr, mode, target)
+          actions.select_default(prompt_bufnr, mode, target)
+          vim.cmd[[stopinsert]]
+        end,
       }
     }
   },
