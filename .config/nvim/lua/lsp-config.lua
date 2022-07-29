@@ -125,6 +125,13 @@ return function(enabled_servers)
         cmd = { '/usr/bin/omnisharp', '--languageserver', '--hostPID', tostring(pid) }
       }
     },
+    emmet_ls = {
+      name = 'emmet_ls',
+      on_attach = common_on_attach,
+      params = {
+        filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less', 'vue' },
+      },
+    }
   }
 
   local capabilities = vim.lsp.protocol.make_client_capabilities()
