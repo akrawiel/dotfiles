@@ -132,12 +132,13 @@ return require 'packer'.startup(function()
         -- 'gopls',
         -- 'html',
         -- 'omnisharp',
-        -- 'svelte',
-        -- 'vuels',
-        'cssls',
-        'eslint',
         -- 'rust_analyzer',
+        -- 'svelte',
+        'cssls',
+        'emmet_ls',
+        'eslint',
         'tsserver',
+        'vuels',
       }
     end
   }
