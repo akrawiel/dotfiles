@@ -15,12 +15,10 @@ pkill polkit-gnome-au &
 pkill solaar &
 pkill xfsettingsd &
 pkill xfce4-power-man &
-pkill picom &
 
 sleep 1
 
 setxkbmap pl -option caps:ctrl_modifier &
-picom &
 xset s off &
 dunst &
 numlockx &
