@@ -8,11 +8,13 @@ font pango: JetBrainsMono Nerd Font Mono 11
 
 exec_always --no-startup-id ~/autostart.sh
 
-# run dropdown alacritty
-for_window [instance="DropdownAlacritty"] floating enable
-for_window [instance="DropdownAlacritty"] move scratchpad
-exec --no-startup-id alacritty --class "DropdownAlacritty"
-bindsym F10 [instance="DropdownAlacritty"] scratchpad show; [instance="DropdownAlacritty"] resize set 960 480; [instance="DropdownAlacritty"] move position center; 
+# run dropdown kitty terminal
+for_window [instance="DropdownKitty"] floating enable
+for_window [instance="DropdownKitty"] move scratchpad
+exec --no-startup-id kitty --class "DropdownKitty"
+bindsym F10 [instance="DropdownKitty"] scratchpad show; [instance="DropdownKitty"] resize set 960 480; [instance="DropdownKitty"] move position center; 
+
+for_window [class="(?i)mullvad vpn"] floating disable, border pixel 3
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -25,11 +27,12 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 bindsym XF86AudioPrev exec --no-startup-id "playerctl -a previous"
 bindsym XF86AudioNext exec --no-startup-id "playerctl -a next"
 bindsym XF86AudioPlay exec --no-startup-id "playerctl -a play-pause"
+bindsym XF86AudioStop exec --no-startup-id "playerctl -a stop"
 
 bindsym $mod+Ctrl+Left exec --no-startup-id "playerctl -a previous"
 bindsym $mod+Ctrl+Right exec --no-startup-id "playerctl -a next"
 bindsym $mod+Ctrl+Down exec --no-startup-id "playerctl -a play-pause"
-bindsym $mod+Ctrl+Up exec --no-startup-id "playerctl -a play-pause"
+bindsym $mod+Ctrl+Up exec --no-startup-id "playerctl -a stop"
 
 bindsym Print exec --no-startup-id "flameshot gui"
 
@@ -37,7 +40,7 @@ bindsym Print exec --no-startup-id "flameshot gui"
 bindsym $meh+0 exec --no-startup-id "zsh ~/Projects/kill-projects.sh"
 
 # Script booter
-bindsym $meh+Tab exec --no-startup-id "zsh ~/Scripts/script-selector.sh"
+bindsym $meh+Tab exec --no-startup-id "zsh ~/Scripts/script-selector.sh"; mode "default"
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -49,8 +52,8 @@ bindsym $meh+Return exec --no-startup-id i3-sensible-terminal --class "EditorAla
 # start nnn file manager in ~
 bindsym $meh+f exec i3-sensible-terminal -e nnn
 
-# rerun dropdown alacritty
-bindsym $meh+y exec --no-startup-id alacritty --class "DropdownAlacritty"
+# rerun dropdown kitty 
+bindsym $meh+y exec --no-startup-id kitty --class "DropdownKitty"
 
 # kill focused window
 bindsym $mod+w kill
@@ -119,8 +122,7 @@ bindsym $meh+c exec --no-startup-id "qalculate-gtk"
 bindsym $meh+m exec --no-startup-id "cat ~/music-commands | rofi -dmenu | nohup bash > /dev/null & disown"
 bindsym $meh+t exec --no-startup-id "cat ~/tenor-commands | rofi -i -dmenu | cut -d'|' -f2 | sed 's/^ //' | xargs -r | xclip -sel clip"
 bindsym $meh+g exec --no-startup-id "alacritty -e nvim ~/.config/i3/config"
-bindsym $meh+x exec --no-startup-id "flatpak run com.github.liferooter.textpieces"
-bindsym $meh+period exec --no-startup-id "rofimoji"
+bindsym $meh+period exec --no-startup-id "rofimoji -s neutral"
 
 # xkill
 bindsym --release $meh+q exec xkill
@@ -231,12 +233,14 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 bar {
-  status_command bumblebee-status -m cpu memory pasink pasource datetime -t iceberg-contrast -p \
-    memory.format='{percent:.0f}%' cpu.format='{:.0f}%' datetime.format='%a, %-d %b %y %X'
+  status_command bumblebee-status -m sensors2 cpu memory pasink pasource datetime -t iceberg-contrast -p \
+    memory.format='{percent:.0f}%' cpu.format='{:.0f}%' datetime.format='%a, %-d %b %y %X' \
+    sensors2.showfan=false sensors2.showcpu=false sensors2.chip='coretemp-isa-0000' \
+    sensors2.chip_field_include='coretemp-isa-0000.temp1'
 
   colors {
     separator  #888888
-    # background #333333
+    background #161821
     statusline #FFFFFF
     focused_workspace  #DCDCCC #DCDCCC #000000
     active_workspace   #939365 #939365 #FFFFFF
@@ -270,9 +274,10 @@ for_window [class="Spotify" workspace="(?!^10$)^.+$"] move to workspace 10
 for_window [title="(?i)^shortwave$" workspace="(?!^10$)^.+$"] move to workspace 10
 for_window [class="systemsettings"] floating enable
 for_window [class="Gcolor3"] floating enable
+for_window [class="^join\?action=join"] floating enable;
 
 for_window [title="Android Emulator.*"] move window to workspace 4, floating enable, resize set height 1000 px, move position center;
-for_window [title="win7"] floating enable; border none
+for_window [title="win7"] floating enable; border pixel 3
 
 # Window workspace assignments
 assign [class="easyeffects"] → 10
