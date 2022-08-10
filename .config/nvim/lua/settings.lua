@@ -53,10 +53,17 @@ vim.opt.completeopt = { 'menuone', 'noselect' , 'noinsert' }
 vim.opt.scrolloff = 4
 vim.opt.cursorline = true
 vim.opt.laststatus = 3
-vim.opt.statusline = "%-10.10(%#StatusLineBold#%{mode()}%#StatusLine# %m%) %= %#StatusLineBold# %0.80f %#StatusLine# %= %10.10(%H%W%R%)"
+vim.opt.statusline = '%-10.10(%#StatusLineBold#%{mode()}%#StatusLine# %m%) %= %#StatusLineBold# %0.80f %#StatusLine# %= %10.10(%H%W%R%)'
 
 vim.cmd [[
   au BufNew,BufReadPost,BufReadPre,BufEnter *.md setlocal tw=80
   au BufNew,BufReadPost,BufReadPre,BufEnter *.md setlocal colorcolumn=80
   au BufNew,BufReadPost,BufReadPre,BufEnter * setlocal conceallevel=0
 ]]
+
+vim.api.nvim_create_autocmd('TermOpen', { command = 'startinsert', pattern = '*' })
+vim.api.nvim_create_autocmd('TermClose', { callback = function(event)
+  if not event.status then
+    vim.api.nvim_input('<CR>')
+  end
+end, pattern = '*' })
