@@ -84,13 +84,6 @@ return require 'packer'.startup(function()
       }
     end,
   }
-  use {
-    'kdheepak/lazygit.nvim',
-    config = function()
-      vim.g.lazygit_floating_window_use_plenary = 1
-      vim.g.lazygit_floating_window_winblend = 1
-    end
-  }
   use 'kyazdani42/nvim-web-devicons'
   use {
     'machakann/vim-highlightedyank',
