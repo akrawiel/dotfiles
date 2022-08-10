@@ -77,8 +77,8 @@ onoremapSilent('z', [[<cmd>Pounce<CR>]])
 -- Leader operations
 
 nnoremapSilent('<leader>p', [[<cmd>lua vim.lsp.buf.format { async = true }<CR>]])
-nnoremapSilent('<leader>t', [[<cmd>terminal zsh<CR>]])
-nnoremapSilent('<leader>g', [[<cmd>LazyGit<CR>]])
+nnoremapSilent('<leader>t', [[<cmd>lua vim.cmd "terminal zsh" vim.cmd "norm A" <CR>]])
+nnoremapSilent('<leader>g', [[<cmd>lua vim.cmd "terminal lazygit" vim.cmd "norm A" <CR>]])
 
 -- External operations
 
