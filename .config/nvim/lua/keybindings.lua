@@ -99,6 +99,7 @@ nnoremapSilent('<space>ct', [[<cmd>lua require('telescope.builtin').lsp_type_def
 nnoremapSilent('<space>fb', [[<cmd>lua require('telescope.builtin').buffers()<CR>]])
 nnoremapSilent('<space>ff', [[<cmd>lua require('telescope.builtin').registers()<CR>]])
 nnoremapSilent('<space>fg', [[<cmd>lua require('telescope.builtin').git_status()<CR>]])
+nnoremapSilent('<space>fG', [[<cmd>lua require('telescope.builtin').grep_string({ search = "<<<<<<<" })<CR>]])
 nnoremapSilent('<space>fp', [[<cmd>lua require('telescope-config').search_config()<CR>]])
 nnoremapSilent('<space>fr', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]])
 nnoremapSilent('<space>fq', [[<cmd>lua require('telescope.builtin').quickfix()<CR>]])
@@ -167,6 +168,11 @@ vnoremap('<space>so', [[:<C-u>'<,'>so<CR>]])
 
 nnoremap('<space>x', [[:<C-u>]])
 vnoremap('<space>x', [[:<C-u>]])
+
+-- Default keys remap
+
+nnoremap('/', '/\\v')
+vnoremap('/', '/\\v')
 
 -- Auto keybindings reload
 
