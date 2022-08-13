@@ -24,10 +24,14 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 # Audio player controls
-bindsym XF86AudioPrev exec --no-startup-id "playerctl -a previous"
-bindsym XF86AudioNext exec --no-startup-id "playerctl -a next"
-bindsym XF86AudioPlay exec --no-startup-id "playerctl -a play-pause"
+bindsym XF86AudioPrev exec --no-startup-id "playerctl -p $(playerctl -l | rofi -dmenu -auto-select) previous"
+bindsym XF86AudioNext exec --no-startup-id "playerctl -p $(playerctl -l | rofi -dmenu -auto-select) next"
+bindsym XF86AudioPlay exec --no-startup-id "playerctl -p $(playerctl -l | rofi -dmenu -auto-select) play-pause"
 bindsym XF86AudioStop exec --no-startup-id "playerctl -a stop"
+
+bindsym shift+XF86AudioPrev exec --no-startup-id "playerctl -a previous"
+bindsym shift+XF86AudioNext exec --no-startup-id "playerctl -a next"
+bindsym shift+XF86AudioPlay exec --no-startup-id "playerctl -a play-pause"
 
 bindsym $mod+Ctrl+Left exec --no-startup-id "playerctl -a previous"
 bindsym $mod+Ctrl+Right exec --no-startup-id "playerctl -a next"
