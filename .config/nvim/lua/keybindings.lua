@@ -34,7 +34,7 @@ end
 
 -- File handling
 
-nnoremap('<space>fs', [[<cmd>w<CR>]])
+nnoremap('<space>fs', [[<cmd>update<CR>]])
 nnoremap('<space>fS', [[<cmd>wq<CR>]])
 nnoremap('<space>qq', [[<cmd>qa<CR>]])
 nnoremap('<space>zz', [[<cmd>wqa<CR>]])
@@ -77,8 +77,8 @@ onoremapSilent('z', [[<cmd>Pounce<CR>]])
 -- Leader operations
 
 nnoremapSilent('<leader>p', [[<cmd>lua vim.lsp.buf.format { async = true }<CR>]])
-nnoremapSilent('<leader>t', [[<cmd>terminal zsh<CR>]])
-nnoremapSilent('<leader>g', [[<cmd>terminal lazygit<CR>]])
+nnoremapSilent('<leader>t', [[<cmd>terminal fish<CR>]])
+nnoremapSilent('<leader>g', [[<cmd>terminal fish -c lazygit<CR>]])
 
 -- External operations
 
