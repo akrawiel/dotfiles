@@ -157,6 +157,7 @@ nnoremapSilent('<C-k>', [[<cmd>cprev<CR>]])
 
 vnoremapSilent('<space>tr', [[:!tac<CR>]])
 vnoremapSilent('<space>ts', [[:!sort<CR>]])
+vnoremapSilent('<space>tu', [[:!uniq<CR>]])
 
 -- Ex commands
 

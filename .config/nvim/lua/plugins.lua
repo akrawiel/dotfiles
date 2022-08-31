@@ -126,7 +126,7 @@ return require 'packer'.startup(function()
         -- 'html',
         -- 'omnisharp',
         -- 'rust_analyzer',
-        -- 'svelte',
+        'svelte',
         'cssls',
         'emmet_ls',
         'eslint',
@@ -142,41 +142,6 @@ return require 'packer'.startup(function()
     end
   }
   use 'nvim-lua/plenary.nvim'
-  use {
-    'nvim-neorg/neorg',
-    config = function()
-      require 'neorg'.setup {
-        load = {
-          ['core.defaults'] = {},
-          ['core.gtd.base'] = {
-            config = {
-              workspace = 'gtd',
-            }
-          },
-          ['core.norg.completion'] = {},
-          ['core.norg.dirman'] = {
-            config = {
-              autochdir = false,
-              default_workspace = 'notes',
-              workspaces = {
-                gtd = '~/NorgSync/gtd',
-                journal = '~/NorgSync/journal',
-                notes = '~/NorgSync/notes',
-              },
-            },
-          },
-          ['core.norg.journal'] = {
-            config = {
-              strategy = 'nested',
-              workspace = 'journal',
-            },
-          },
-          ['core.norg.manoeuvre'] = {},
-        }
-      }
-    end,
-    requires = 'nvim-lua/plenary.nvim'
-  }
   use {
     'nvim-telescope/telescope.nvim',
     config = function()
