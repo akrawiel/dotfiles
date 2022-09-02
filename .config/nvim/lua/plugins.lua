@@ -1,4 +1,6 @@
-local install_path = vim.fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+
+local packer_bootstrap
 
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   print 'Downloading packer.nvim...'
@@ -21,7 +23,7 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   vim.cmd [[qa]]
 end
 
-return require 'packer'.startup(function()
+return require 'packer'.startup(function(use)
   vim.cmd [[
     augroup packer_user_config
       autocmd!
@@ -59,7 +61,7 @@ return require 'packer'.startup(function()
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-vsnip'
-  use { 
+  use {
     'hrsh7th/nvim-cmp',
     config = function()
       require 'cmp-config'
@@ -98,11 +100,10 @@ return require 'packer'.startup(function()
         action = {
           ['<c-x>'] = 'split',
           ['<c-v>'] = 'vsplit',
-          ['<esc>'] = 'close',
         },
         layout = {
           window = {
-            width = 0.8,
+            width = 0.9,
             height = 0.7,
             highlight = 'Debug'
           },
@@ -119,20 +120,7 @@ return require 'packer'.startup(function()
   use {
     'neovim/nvim-lspconfig',
     config = function()
-      require 'lsp-config' {
-        -- 'dartls',
-        -- 'gdscript',
-        -- 'gopls',
-        -- 'html',
-        -- 'omnisharp',
-        -- 'rust_analyzer',
-        'svelte',
-        'cssls',
-        'emmet_ls',
-        'eslint',
-        'tsserver',
-        'vuels',
-      }
+      require('lsp-config')()
     end
   }
   use {

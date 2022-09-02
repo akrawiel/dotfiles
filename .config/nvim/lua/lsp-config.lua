@@ -24,6 +24,7 @@ return function(enabled_servers)
   local function javascript_root(filename)
     return util.root_pattern(".eslintrc")(filename)
       or util.root_pattern(".eslintrc.js")(filename)
+      or util.root_pattern(".eslintrc.json")(filename)
       or util.root_pattern("package.json")(filename)
       or util.root_pattern(".git")(filename)
   end
@@ -82,10 +83,6 @@ return function(enabled_servers)
       name = 'dartls',
       on_attach = common_on_attach,
     },
-    gdscript = {
-      name = 'gdscript',
-      on_attach = common_on_attach,
-    },
     rust_analyzer = {
       name = 'rust_analyzer',
       on_attach = function(client, bufnr)
@@ -111,19 +108,6 @@ return function(enabled_servers)
           },
         },
       },
-    },
-    omnisharp = {
-      name = 'omnisharp',
-      on_attach = function(client, bufnr)
-        common_on_attach(client, bufnr)
-
-        client.server_capabilities.document_formatting = true
-
-        vim.api.nvim_command[[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 5000)]]
-      end,
-      params = {
-        cmd = { '/usr/bin/omnisharp', '--languageserver', '--hostPID', tostring(pid) }
-      }
     },
     emmet_ls = {
       name = 'emmet_ls',
