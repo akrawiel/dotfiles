@@ -5,6 +5,7 @@ fish_add_path $HOME/.yarn/bin
 fish_add_path $HOME/go/bin
 fish_add_path $HOME/Applications
 fish_add_path $HOME/.local/bin
+fish_add_path $HOME/.volta/bin
 fish_add_path /opt/applications
 fish_add_path /opt/android-sdk/platform-tools
 fish_add_path /opt/android-sdk/tools
@@ -22,6 +23,7 @@ set -gx LC_ALL C
 set -gx NNN_PLUG 'z:autojump;G:getplugs;R:gitroot;r:renamer'
 set -gx PROJECT_PATHS $HOME/Projects
 set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+set -gx VOLTA_HOME "$HOME/.volta"
 set -gx XDG_CONFIG_HOME $HOME/.config
 
 set -U FZF_COMPLETE 0
