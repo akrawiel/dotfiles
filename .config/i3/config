@@ -11,7 +11,7 @@ exec_always --no-startup-id ~/autostart.sh
 # run dropdown kitty terminal
 for_window [instance="DropdownKitty"] floating enable
 for_window [instance="DropdownKitty"] move scratchpad
-exec --no-startup-id i3-sensible-terminal --class "DropdownKitty" -e "fish" 
+exec --no-startup-id kitty --class "DropdownKitty" -e "fish" 
 bindsym F10 [instance="DropdownKitty"] scratchpad show; [instance="DropdownKitty"] resize set 960 480; [instance="DropdownKitty"] move position center; 
 
 for_window [class="(?i)mullvad vpn"] floating disable, border pixel 3
@@ -44,7 +44,7 @@ bindsym Print exec --no-startup-id "flameshot gui"
 bindsym $meh+0 exec --no-startup-id "zsh ~/Projects/kill-projects.sh"
 
 # Script booter
-bindsym $meh+Tab exec --no-startup-id "zsh ~/Scripts/script-selector.sh"; mode "default"
+bindsym $meh+Tab exec --no-startup-id "fish ~/Scripts/run-chorder.sh"
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -57,7 +57,7 @@ bindsym $meh+Return exec --no-startup-id i3-sensible-terminal --class "EditorAla
 bindsym $meh+f exec i3-sensible-terminal -e nnn
 
 # rerun dropdown kitty 
-bindsym $meh+y exec --no-startup-id i3-sensible-terminal --class "DropdownKitty" -e "fish"
+bindsym $meh+y exec --no-startup-id kitty --class "DropdownKitty" -e "fish"
 
 # kill focused window
 bindsym $mod+w kill
@@ -293,6 +293,7 @@ assign [class="Joplin"] → 6
 assign [class="Slack"] → F1
 assign [class="Spotify"] → 10
 assign [class="vlc"] → 10
+assign [class="smplayer"] → 10
 assign [class="(?i)de.haeckerfelix.shortwave"] → 10
 assign [class="(?i)caprine"] → F3
 assign [class="(?i)telegram-desktop"] → F3
