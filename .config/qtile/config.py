@@ -1,8 +1,9 @@
 import os
+import re
 import subprocess
 
-from libqtile import bar, hook, layout, widget
-from libqtile.config import Click, Drag, DropDown, EzKey, Group, Key, KeyChord, Match, Screen, ScratchPad
+from libqtile import bar, extension, hook, layout, widget
+from libqtile.config import Click, Drag, DropDown, EzKey, Group, Key, KeyChord, Match, Rule, Screen, ScratchPad
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from Xlib.ext.randr import ScreenChangeNotify
@@ -82,6 +83,20 @@ keys = [
     EzKey("M-A-C-S-r", lazy.restart(), desc="Restart Qtile"),
     EzKey("M-A-C-S-q", lazy.shutdown(), desc="Shutdown Qtile"),
 
+    EzKey("A-<F2>", lazy.spawncmd()),
+    EzKey(
+        "M-m",
+        lazy.run_extension(
+            extension.CommandSet(
+                dmenu_command='rofi -dmenu',
+                commands={
+                    'test': 'firefox-developer-edition',
+                    'hello': 'echo hello world',
+                },
+            ),
+        ),
+    ),
+
     EzKey("<F10>", lazy.group["scratchpad"].dropdown_toggle("term"), desc="Toggle scratchpad terminal"),
 
     KeyChord(
@@ -139,6 +154,7 @@ groups.extend(
 layouts = [
     layout.MonadTall(
         border_focus="#80ff00",
+        border_width=3,
         ratio=0.6,
     ),
 ]
@@ -146,48 +162,43 @@ layouts = [
 widget_defaults = dict(
     font="monospace",
     fontsize=12,
-    padding=2,
+    padding=4,
 )
 
 extension_defaults = widget_defaults.copy()
 
 screens = [
     Screen(
-        bottom=bar.Bar(
+        top=bar.Bar(
             [
                 widget.GroupBox(
                     inactive="#000000",
                     hide_unused=True,
                     highlight_method="block",
                 ),
+                widget.Spacer(),
+                widget.Prompt(),
                 widget.Chord(
                     chords_colors={
                         "launch": ("#ff0000", "#ffffff"),
                     },
                     name_transform=lambda name: name.upper(),
                 ),
-                widget.Prompt(),
-                widget.WindowName(),
+                widget.Spacer(),
                 widget.Memory(
                     format="MEM {MemPercent:5.1f}%",
                 ),
-                widget.Sep(),
                 widget.CPU(
                     format="CPU {load_percent:5.1f}%",
                 ),
-                widget.Sep(),
                 widget.Systray(),
-                widget.Sep(),
                 widget.Volume(
                     emoji=False,
                     step=5,
                 ),
-                widget.Sep(),
                 widget.Clock(format="%x, %a %H:%M"),
             ],
             24,
-            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
     ),
 ]
@@ -200,11 +211,18 @@ mouse = [
 ]
 
 dgroups_key_binder = None
-dgroups_app_rules = []  # type: list
+dgroups_app_rules = [
+    Rule(
+        Match(wm_class=re.compile(r"ferdium|Ferdium")),
+        group="F3"
+    ),
+]
 follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
 floating_layout = layout.Floating(
+    border_focus="#0080ff",
+    border_width=3,
     float_rules=[
         *layout.Floating.default_float_rules,
         Match(wm_class="confirmreset"),
