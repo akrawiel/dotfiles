@@ -5,7 +5,6 @@ import subprocess
 from libqtile import bar, extension, hook, layout, widget
 from libqtile.config import Click, Drag, DropDown, EzKey, Group, Key, KeyChord, Match, Rule, Screen, ScratchPad
 from libqtile.lazy import lazy
-from libqtile.utils import guess_terminal
 from Xlib.ext.randr import ScreenChangeNotify
 
 from pprint import pprint
@@ -35,6 +34,7 @@ keys = [
     EzKey("M-S-j", lazy.layout.shuffle_down(), desc="Move window down"),
     EzKey("M-S-k", lazy.layout.shuffle_up(), desc="Move window up"),
 
+    EzKey("M-e", lazy.next_layout(), desc="Toggle layout"),
     EzKey("M-n", lazy.layout.normalize(), desc="Reset all window sizes"),
     EzKey("M-f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen"),
     EzKey("M-w", lazy.window.kill(), desc="Kill focused window"),
@@ -66,19 +66,19 @@ keys = [
 
     EzKey("<Print>", lazy.spawn("flameshot gui")),
 
-    EzKey("M-C-S-0", lazy.spawn("zsh ~/Projects/kill-projects.sh")),
-    EzKey("M-C-S-s", lazy.spawn("xfce4-settings-manager")),
-    EzKey("M-C-S-a", lazy.spawn("arandr")),
-    EzKey("M-C-S-v", lazy.spawn("pavucontrol")),
-    EzKey("M-C-S-c", lazy.spawn("qalculate-gtk")),
-    EzKey("M-C-S-m", lazy.spawn("cat ~/music-commands | rofi -dmenu | nohup bash > /dev/null & disown")),
-    EzKey("M-C-S-t", lazy.spawn("cat ~/tenor-commands | rofi -i -dmenu | cut -d'|' -f2 | sed 's/^ //' | xargs -r | xclip -sel clip")),
-    EzKey("M-C-S-g", lazy.spawn(f"{terminal} -e nvim ~/.config/i3/config")),
-    EzKey("M-C-S-<period>", lazy.spawn("rofimoji -s neutral")),
-    EzKey("M-C-S-q", lazy.spawn("xkill")),
+    EzKey("A-C-S-0", lazy.spawn("zsh ~/Projects/kill-projects.sh")),
+    EzKey("A-C-S-s", lazy.spawn("xfce4-settings-manager")),
+    EzKey("A-C-S-a", lazy.spawn("arandr")),
+    EzKey("A-C-S-v", lazy.spawn("pavucontrol")),
+    EzKey("A-C-S-c", lazy.spawn("qalculate-gtk")),
+    EzKey("A-C-S-m", lazy.spawn("cat ~/music-commands | rofi -dmenu | nohup bash > /dev/null & disown")),
+    EzKey("A-C-S-t", lazy.spawn("cat ~/tenor-commands | rofi -i -dmenu | cut -d'|' -f2 | sed 's/^ //' | xargs -r | xclip -sel clip")),
+    EzKey("A-C-S-g", lazy.spawn(f"{terminal} -e nvim ~/.config/i3/config")),
+    EzKey("A-C-S-<period>", lazy.spawn("rofimoji -s neutral")),
+    EzKey("A-C-S-q", lazy.spawn("xkill")),
+    EzKey("A-C-S-<Tab>", lazy.spawn("chorder")),
 
-    EzKey("M-C-S-<Tab>", lazy.spawn("chorder")),
-
+    EzKey("M-A-C-S-l", lazy.spawn("fish -c 'i3lock -c 000000 -t -i ~/Obrazy/fancy_pants.jpg'")),
     EzKey("M-A-C-S-c", lazy.reload_config(), desc="Reload the config"),
     EzKey("M-A-C-S-r", lazy.restart(), desc="Restart Qtile"),
     EzKey("M-A-C-S-q", lazy.shutdown(), desc="Shutdown Qtile"),
@@ -97,7 +97,11 @@ keys = [
         ),
     ),
 
-    EzKey("<F10>", lazy.group["scratchpad"].dropdown_toggle("term"), desc="Toggle scratchpad terminal"),
+    EzKey(
+        "<F10>",
+        lazy.group["scratchpad"].dropdown_toggle("term"),
+        desc="Toggle scratchpad terminal",
+    ),
 
     KeyChord(
         [mod], "r",
@@ -111,7 +115,29 @@ keys = [
     ),
 ]
 
-groups = [Group(str(i + 1)) for i in range(9)] + [Group('F' + str(i + 1)) for i in range(10)]
+groups = [
+    Group("1", screen_affinity=2),
+    Group("2", screen_affinity=2),
+    Group("3", screen_affinity=1),
+    Group("4", screen_affinity=1),
+    Group("5", screen_affinity=1),
+    Group("6", screen_affinity=1),
+    Group("7", screen_affinity=1),
+    Group("8", screen_affinity=1),
+    Group("9", screen_affinity=1),
+    Group("F1", screen_affinity=0),
+    Group("F2", screen_affinity=0),
+    Group("F3", screen_affinity=0),
+    Group("F4", screen_affinity=0),
+    Group("F5", screen_affinity=0),
+    Group("F6", screen_affinity=0),
+    Group("F7", screen_affinity=0),
+    Group("F8", screen_affinity=0),
+    Group("F9", screen_affinity=0),
+    Group("F10", screen_affinity=0),
+    Group("F11", screen_affinity=0),
+    Group("F12", screen_affinity=0),
+]
 
 for i in groups:
     keys.extend(
@@ -119,7 +145,8 @@ for i in groups:
             Key(
                 [mod],
                 i.name,
-                lazy.group[i.name].toscreen(),
+                lazy.to_screen(i.screen_affinity),
+                lazy.group[i.name].toscreen(toggle=False),
                 desc="Switch to group {}".format(i.name),
             ),
             Key(
@@ -131,7 +158,6 @@ for i in groups:
         ]
     )
 
-
 groups.extend(
     [
         ScratchPad(
@@ -140,9 +166,9 @@ groups.extend(
                 DropDown(
                     "term",
                     "kitty -e fish",
-                    x=0.0,
-                    y=0.0,
-                    width=1.0,
+                    x=0.05,
+                    y=0.3,
+                    width=0.9,
                     height=0.4,
                     opacity=0.9,
                 ),
@@ -157,50 +183,123 @@ layouts = [
         border_width=3,
         ratio=0.6,
     ),
+    layout.MonadWide(
+        border_focus="#80ff00",
+        border_width=3,
+        ratio=0.6,
+    ),
 ]
 
 widget_defaults = dict(
     font="monospace",
-    fontsize=12,
+    fontsize=14,
     padding=4,
 )
 
 extension_defaults = widget_defaults.copy()
 
-screens = [
-    Screen(
-        top=bar.Bar(
-            [
-                widget.GroupBox(
-                    inactive="#000000",
-                    hide_unused=True,
-                    highlight_method="block",
-                ),
-                widget.Spacer(),
-                widget.Prompt(),
-                widget.Chord(
-                    chords_colors={
-                        "launch": ("#ff0000", "#ffffff"),
-                    },
-                    name_transform=lambda name: name.upper(),
-                ),
-                widget.Spacer(),
-                widget.Memory(
-                    format="MEM {MemPercent:5.1f}%",
-                ),
-                widget.CPU(
-                    format="CPU {load_percent:5.1f}%",
-                ),
-                widget.Systray(),
-                widget.Volume(
-                    emoji=False,
-                    step=5,
-                ),
-                widget.Clock(format="%x, %a %H:%M"),
-            ],
-            24,
-        ),
+main_bar_widgets = [
+    widget.GroupBox(
+        inactive="#000000",
+        hide_unused=True,
+        highlight_method="block",
+        visible_groups=[f"F{i + 1}" for i in range(12)],
     ),
+    widget.Spacer(),
+    widget.Prompt(),
+    widget.Chord(
+        chords_colors={
+            "launch": ("#ff0000", "#ffffff"),
+        },
+        name_transform=lambda name: name.upper(),
+    ),
+    widget.Spacer(),
+    widget.Memory(
+        format="mem {MemPercent:5.1f}%",
+    ),
+    widget.CPU(
+        format="cpu {load_percent:5.1f}%",
+    ),
+    widget.Systray(),
+    widget.PulseVolume(
+        fmt="vol {}",
+        emoji=False,
+        step=2,
+    ),
+    widget.ThermalSensor(
+        fmt="tmp {}",
+    ),
+    widget.Clock(format="%c"),
+]
+
+sub_bar_1_widgets = [
+    widget.GroupBox(
+        inactive="#000000",
+        hide_unused=True,
+        highlight_method="block",
+        visible_groups=[f"{i + 3}" for i in range(7)],
+    ),
+    widget.Spacer(),
+    widget.Chord(
+        chords_colors={
+            "launch": ("#ff0000", "#ffffff"),
+        },
+        name_transform=lambda name: name.upper(),
+    ),
+    widget.Spacer(),
+    widget.Memory(
+        format="mem {MemPercent:5.1f}%",
+    ),
+    widget.CPU(
+        format="cpu {load_percent:5.1f}%",
+    ),
+    widget.PulseVolume(
+        fmt="vol {}",
+        emoji=False,
+        step=2,
+    ),
+    widget.ThermalSensor(
+        fmt="tmp {}",
+    ),
+    widget.Clock(format="%c"),
+]
+
+sub_bar_2_widgets = [
+    widget.GroupBox(
+        inactive="#000000",
+        hide_unused=True,
+        highlight_method="block",
+        visible_groups=[f"{i + 1}" for i in range(2)],
+    ),
+    widget.Spacer(),
+    widget.Chord(
+        chords_colors={
+            "launch": ("#ff0000", "#ffffff"),
+        },
+        name_transform=lambda name: name.upper(),
+    ),
+    widget.Spacer(),
+    widget.Memory(
+        format="mem {MemPercent:5.1f}%",
+    ),
+    widget.CPU(
+        format="cpu {load_percent:5.1f}%",
+    ),
+    widget.PulseVolume(
+        fmt="vol {}",
+        emoji=False,
+        step=2,
+    ),
+    widget.ThermalSensor(
+        fmt="tmp {}",
+    ),
+    widget.Clock(format="%c"),
+]
+
+screens = [
+    Screen(top=bar.Bar(main_bar_widgets, 24, border_width=[0, 0, 3, 0])),
+    Screen(top=bar.Bar(sub_bar_1_widgets, 24, border_width=[0, 0, 3, 0])),
+    Screen(top=bar.Bar(sub_bar_2_widgets, 24, border_width=[0, 0, 3, 0])),
 ]
 
 # Drag floating layouts.
@@ -211,12 +310,56 @@ mouse = [
 ]
 
 dgroups_key_binder = None
+
 dgroups_app_rules = [
     Rule(
-        Match(wm_class=re.compile(r"ferdium|Ferdium")),
+        Match(wm_instance_class="EditorAlacritty"),
+        group="1"
+    ),
+    Rule(
+        Match(wm_instance_class="ProjectAlacritty"),
+        group="2"
+    ),
+
+    Rule(
+        Match(wm_class=re.compile("^firefoxdeveloperedition$")),
+        group="3"
+    ),
+    Rule(
+        Match(wm_class="Brave-browser"),
+        group="4"
+    ),
+    Rule(
+        Match(wm_class=re.compile("^firefox$")),
+        group="5"
+    ),
+    Rule(
+        Match(wm_class="Joplin"),
+        group="6"
+    ),
+    Rule(
+        Match(wm_class="smplayer"),
+        group="9"
+    ),
+
+    Rule(
+        Match(wm_class="Slack"),
+        group="F1"
+    ),
+    Rule(
+        Match(wm_class=re.compile(r"evolution", flags=re.IGNORECASE)),
+        group="F2"
+    ),
+    Rule(
+        Match(wm_class=re.compile(r"ferdium", flags=re.IGNORECASE)),
+        group="F3"
+    ),
+    Rule(
+        Match(wm_class=re.compile(r"ferdi", flags=re.IGNORECASE)),
         group="F3"
     ),
 ]
+
 follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
