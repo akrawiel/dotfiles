@@ -207,13 +207,14 @@ cursor_warp = False
 floating_layout = layout.Floating(
     float_rules=[
         *layout.Floating.default_float_rules,
-        Match(wm_class="confirmreset"),  # gitk
-        Match(wm_class="makebranch"),  # gitk
-        Match(wm_class="maketag"),  # gitk
-        Match(wm_class="ssh-askpass"),  # ssh-askpass
-        Match(title="branchdialog"),  # gitk
-        Match(title="pinentry"),  # GPG key password entry
-        Match(wm_class="pinentry-qt"),  # GPG key password entry
+        Match(wm_class="confirmreset"),
+        Match(wm_class="makebranch"),
+        Match(wm_class="maketag"),
+        Match(wm_class="ssh-askpass"),
+        Match(title="branchdialog"),
+        Match(title="pinentry"),
+        Match(wm_class="pinentry-qt"),
+        Match(wm_class="re.sonny.Junction"),
     ]
 )
 auto_fullscreen = True
