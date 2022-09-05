@@ -155,6 +155,7 @@ return require 'packer'.startup(function(use)
       require 'treesitter-config'
     end
   }
+  use 'nvim-treesitter/nvim-treesitter-context'
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   use {
     'phaazon/hop.nvim',

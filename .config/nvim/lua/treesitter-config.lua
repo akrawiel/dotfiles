@@ -11,6 +11,7 @@ require'nvim-treesitter.configs'.setup {
     "markdown",
     "regex",
     "markdown",
+    "python",
     "pug",
     "rust",
     "scss",
@@ -55,6 +56,38 @@ require'nvim-treesitter.configs'.setup {
         ["aP"] = "@parameter.outer",
         ["iP"] = "@parameter.inner",
       },
+    },
+  },
+}
+
+require'treesitter-context'.setup {
+  enable = true,
+  max_lines = 0,
+  trim_scope = 'outer',
+  patterns = {
+    default = {
+      'class',
+      'function',
+      'method',
+      'for',
+      'while',
+      'if',
+      'switch',
+      'case',
+    },
+    rust = {
+      'impl_item',
+      'struct',
+      'enum',
+    },
+    markdown = {
+      'section',
+    },
+    json = {
+      'pair',
+    },
+    yaml = {
+      'block_mapping_pair',
     },
   },
 }

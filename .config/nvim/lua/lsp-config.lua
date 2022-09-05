@@ -109,6 +109,10 @@ return function(enabled_servers)
         },
       },
     },
+    pylsp = {
+      name = 'pylsp',
+      on_attach = common_on_attach,
+    },
     emmet_ls = {
       name = 'emmet_ls',
       on_attach = common_on_attach,
