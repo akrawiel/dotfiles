@@ -199,7 +199,6 @@ for_window [window_role="task_dialog"] floating enable
 
 # Window workspace assignments
 assign [class="easyeffects"] → 10
-assign [class="Emacs"] → 7
 assign [class="^firefox$"] → 5
 assign [class="^firefoxdeveloperedition$"] → 3
 assign [class="(?i)caprine"] → F3
