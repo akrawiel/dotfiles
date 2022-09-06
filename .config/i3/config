@@ -1,138 +1,27 @@
 set $mod Mod4
-
 set $meh Mod1+Ctrl+Shift
 set $hyper Mod1+Mod4+Ctrl+Shift
 
-# font pango: CaskaydiaCove Nerd Font Mono 11
-font pango: JetBrainsMono Nerd Font Mono 11
+# Global settings
+client.focused          #DCDCCC #DCDCCC #000000 #000000
+client.focused_inactive #939365 #939365 #FFFFFF #000000
+client.unfocused        #333333 #333333 #888888 #FFFFFF
+client.urgent           #C20000 #C20000 #FFFFFF #FFFFFF
+default_border pixel 3
+default_orientation auto
+floating_modifier $mod
+focus_follows_mouse yes
+font pango: monospace 11
+mouse_warping output
+workspace_auto_back_and_forth yes
 
+# Always executing
 exec_always --no-startup-id ~/autostart.sh
 
-# run dropdown kitty terminal
-for_window [instance="DropdownKitty"] floating enable
-for_window [instance="DropdownKitty"] move scratchpad
+# Startup executing
 exec --no-startup-id kitty --class "DropdownKitty" -e "fish" 
-bindsym F10 [instance="DropdownKitty"] scratchpad show; [instance="DropdownKitty"] resize set 960 480; [instance="DropdownKitty"] move position center; 
 
-for_window [class="(?i)mullvad vpn"] floating disable, border pixel 3
-
-# Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
-
-# Audio player controls
-bindsym XF86AudioPrev exec --no-startup-id "playerctl -p $(playerctl -l | rofi -dmenu -auto-select) previous"
-bindsym XF86AudioNext exec --no-startup-id "playerctl -p $(playerctl -l | rofi -dmenu -auto-select) next"
-bindsym XF86AudioPlay exec --no-startup-id "playerctl -p $(playerctl -l | rofi -dmenu -auto-select) play-pause"
-bindsym XF86AudioStop exec --no-startup-id "playerctl -a stop"
-
-bindsym shift+XF86AudioPrev exec --no-startup-id "playerctl -a previous"
-bindsym shift+XF86AudioNext exec --no-startup-id "playerctl -a next"
-bindsym shift+XF86AudioPlay exec --no-startup-id "playerctl -a play-pause"
-
-bindsym $mod+Ctrl+Left exec --no-startup-id "playerctl -a previous"
-bindsym $mod+Ctrl+Right exec --no-startup-id "playerctl -a next"
-bindsym $mod+Ctrl+Down exec --no-startup-id "playerctl -a play-pause"
-bindsym $mod+Ctrl+Up exec --no-startup-id "playerctl -a stop"
-
-bindsym Print exec --no-startup-id "flameshot gui"
-
-# Project booters
-bindsym $meh+0 exec --no-startup-id "zsh ~/Projects/kill-projects.sh"
-
-# Script booter
-bindsym $meh+Tab exec --no-startup-id "chorder"
-
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
-
-# start a terminal
-bindsym $mod+Return exec --no-startup-id i3-sensible-terminal -e "fish"
-bindsym $meh+Return exec --no-startup-id i3-sensible-terminal --class "EditorAlacritty" -e "fish"
-
-# start nnn file manager in ~
-bindsym $meh+f exec i3-sensible-terminal -e nnn
-
-# rerun dropdown kitty 
-bindsym $meh+y exec --no-startup-id kitty --class "DropdownKitty" -e "fish"
-
-# kill focused window
-bindsym $mod+w kill
-
-# start rofi (a program launcher)
-bindsym $mod+space exec --no-startup-id rofi -show combi
-
-# change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
-
-# focus next window
-bindsym $mod+Tab focus next
-
-# move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
-
-# move workspaces to outputs
-bindsym $meh+h move workspace to output left
-bindsym $meh+j move workspace to output down
-bindsym $meh+k move workspace to output up
-bindsym $meh+l move workspace to output right
-
-# split direction toggle
-bindsym $mod+t split toggle
-
-# layout split toggle
-bindsym $mod+e layout toggle split
-
-# enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
-
-# change container layout
-bindsym $mod+Shift+e layout toggle
-
-# toggle floating
-bindsym $mod+Shift+space floating toggle 
-
-bindsym $hyper+l exec --no-startup-id "i3lock -c 000000 -t -i ~/Obrazy/fancy_pants.jpg"
-
-# dunst
-bindsym $meh+space exec --no-startup-id "dunstctl close"
-bindsym $meh+equal exec --no-startup-id "dunstctl history-pop"
-
-bindsym $meh+s exec --no-startup-id "xfce4-settings-manager"
-bindsym $meh+a exec --no-startup-id "arandr"
-bindsym $meh+v exec --no-startup-id "pavucontrol"
-bindsym $meh+c exec --no-startup-id "qalculate-gtk"
-bindsym $meh+m exec --no-startup-id "cat ~/music-commands | rofi -dmenu | nohup bash > /dev/null & disown"
-bindsym $meh+t exec --no-startup-id "cat ~/tenor-commands | rofi -i -dmenu | cut -d'|' -f2 | sed 's/^ //' | xargs -r | xclip -sel clip"
-bindsym $meh+g exec --no-startup-id "alacritty -e nvim ~/.config/i3/config"
-bindsym $meh+period exec --no-startup-id "rofimoji -s neutral"
-
-# xkill
-bindsym --release $meh+q exec xkill
-
-# Define names for default workspaces for which we configure key bindings later on.
-# We use variables to avoid repeating the names in multiple places.
+# Workspaces definitions
 set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
@@ -153,10 +42,9 @@ set $wsf7 "F7"
 set $wsf8 "F8"
 set $wsf9 "F9"
 set $wsf10 "F10"
-set $wsf11 "F11"
-set $wsf12 "F12"
 
-# switch to workspace
+# Mod bindings
+bindsym $mod+0 workspace number $ws10
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
 bindsym $mod+3 workspace number $ws3
@@ -166,8 +54,12 @@ bindsym $mod+6 workspace number $ws6
 bindsym $mod+7 workspace number $ws7
 bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
-bindsym $mod+0 workspace number $ws10
-
+bindsym $mod+Ctrl+Down exec --no-startup-id "playerctl -a play-pause"
+bindsym $mod+Ctrl+Left exec --no-startup-id "playerctl -a previous"
+bindsym $mod+Ctrl+Right exec --no-startup-id "playerctl -a next"
+bindsym $mod+Ctrl+Up exec --no-startup-id "playerctl -a stop"
+bindsym $mod+e layout toggle split
+bindsym $mod+F10 workspace $wsf10
 bindsym $mod+F1 workspace $wsf1
 bindsym $mod+F2 workspace $wsf2
 bindsym $mod+F3 workspace $wsf3
@@ -177,11 +69,14 @@ bindsym $mod+F6 workspace $wsf6
 bindsym $mod+F7 workspace $wsf7
 bindsym $mod+F8 workspace $wsf8
 bindsym $mod+F9 workspace $wsf9
-bindsym $mod+F10 workspace $wsf10
-bindsym $mod+F11 workspace $wsf11
-bindsym $mod+F12 workspace $wsf12
-
-# move focused container to workspace
+bindsym $mod+f fullscreen toggle
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+bindsym $mod+Return exec --no-startup-id i3-sensible-terminal -e "fish"
+bindsym $mod+r mode "resize"
+bindsym $mod+Shift+0 move container to workspace number $ws10
 bindsym $mod+Shift+1 move container to workspace number $ws1
 bindsym $mod+Shift+2 move container to workspace number $ws2
 bindsym $mod+Shift+3 move container to workspace number $ws3
@@ -191,8 +86,7 @@ bindsym $mod+Shift+6 move container to workspace number $ws6
 bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
-bindsym $mod+Shift+0 move container to workspace number $ws10
-
+bindsym $mod+Shift+F10 move container to workspace $wsf10
 bindsym $mod+Shift+F1 move container to workspace $wsf1
 bindsym $mod+Shift+F2 move container to workspace $wsf2
 bindsym $mod+Shift+F3 move container to workspace $wsf3
@@ -202,43 +96,77 @@ bindsym $mod+Shift+F6 move container to workspace $wsf6
 bindsym $mod+Shift+F7 move container to workspace $wsf7
 bindsym $mod+Shift+F8 move container to workspace $wsf8
 bindsym $mod+Shift+F9 move container to workspace $wsf9
-bindsym $mod+Shift+F10 move container to workspace $wsf10
-bindsym $mod+Shift+F11 move container to workspace $wsf11
-bindsym $mod+Shift+F12 move container to workspace $wsf12
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+bindsym $mod+space exec --no-startup-id rofi -show combi
+bindsym $mod+Tab focus next
+bindsym $mod+t floating toggle 
+bindsym $mod+w kill
 
-# reload the configuration file
+# Meh bindings
+bindsym $meh+a exec --no-startup-id "arandr"
+bindsym $meh+c exec --no-startup-id "qalculate-gtk"
+bindsym $meh+equal exec --no-startup-id "dunstctl history-pop"
+bindsym $meh+f exec --no-startup-id i3-sensible-terminal -e nnn
+bindsym $meh+g exec --no-startup-id "alacritty -e nvim ~/.config/i3/config"
+bindsym $meh+h move workspace to output left
+bindsym $meh+j move workspace to output down
+bindsym $meh+k move workspace to output up
+bindsym $meh+l move workspace to output right
+bindsym $meh+m exec --no-startup-id "cat ~/music-commands | rofi -dmenu | nohup bash > /dev/null & disown"
+bindsym $meh+period exec --no-startup-id "rofimoji -s neutral"
+bindsym $meh+q exec --no-startup-id xkill
+bindsym $meh+Return exec --no-startup-id i3-sensible-terminal --class "EditorAlacritty" -e "fish"
+bindsym $meh+s exec --no-startup-id "xfce4-settings-manager"
+bindsym $meh+space exec --no-startup-id "dunstctl close"
+bindsym $meh+Tab exec --no-startup-id "chorder"
+bindsym $meh+t exec --no-startup-id "cat ~/tenor-commands | rofi -i -dmenu | cut -d'|' -f2 | sed 's/^ //' | xargs -r | xclip -sel clip"
+bindsym $meh+v exec --no-startup-id "pavucontrol"
+bindsym $meh+y exec --no-startup-id kitty --class "DropdownKitty" -e "fish"
+
+# Hyper bindings
 bindsym $hyper+c reload
-
-# restart i3 inplace
+bindsym $hyper+l exec --no-startup-id "i3lock -c 000000 -t -i ~/Obrazy/fancy_pants.jpg"
+bindsym $hyper+q exit
 bindsym $hyper+r restart
 
-# exit i3
-bindsym $hyper+q exit
+# Volume controls
+bindsym shift+XF86AudioNext exec --no-startup-id "playerctl -a next"
+bindsym shift+XF86AudioPlay exec --no-startup-id "playerctl -a play-pause"
+bindsym shift+XF86AudioPrev exec --no-startup-id "playerctl -a previous"
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioNext exec --no-startup-id "playerctl -p $(playerctl -l | rofi -dmenu -auto-select) next"
+bindsym XF86AudioPlay exec --no-startup-id "playerctl -p $(playerctl -l | rofi -dmenu -auto-select) play-pause"
+bindsym XF86AudioPrev exec --no-startup-id "playerctl -p $(playerctl -l | rofi -dmenu -auto-select) previous"
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioStop exec --no-startup-id "playerctl -a stop"
 
-# resize window (you can also use the mouse for that)
+# Other bindings
+bindsym Print exec --no-startup-id "flameshot gui"
+bindsym F10 [instance="DropdownKitty"] scratchpad show; [instance="DropdownKitty"] resize set 960 600; [instance="DropdownKitty"] move position center; 
+
+# Resize mode
 mode "resize" {
   bindsym h resize shrink width 10 px or 10 ppt
   bindsym j resize grow height 10 px or 10 ppt
   bindsym k resize shrink height 10 px or 10 ppt
   bindsym l resize grow width 10 px or 10 ppt
-  
-  # same bindings, but for the arrow keys
-  bindsym Left resize shrink width 10 px or 10 ppt
-  bindsym Down resize grow height 10 px or 10 ppt
-  bindsym Up resize shrink height 10 px or 10 ppt
-  bindsym Right resize grow width 10 px or 10 ppt
-  
-  # back to normal: Enter or Escape or $mod+r
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
+
   bindsym $mod+r mode "default"
+  bindsym Escape mode "default"
+  bindsym Return mode "default"
 }
 
-bindsym $mod+r mode "resize"
-
+# Bar settings
 bar {
+  position top
+
   status_command bumblebee-status -m sensors2 cpu memory pasink pasource datetime -t iceberg-contrast -p \
-    memory.format='{percent:.0f}%' cpu.format='{:.0f}%' datetime.format='%a, %-d %b %y %X' \
+    memory.format='{percent:3.0f}%' cpu.format='{:3.0f}%' datetime.format='%a, %-d %b %y %X' \
     sensors2.showfan=false sensors2.showcpu=false sensors2.chip='coretemp-isa-0000' \
     sensors2.chip_field_include='coretemp-isa-0000.temp1'
 
@@ -251,62 +179,45 @@ bar {
     inactive_workspace #333333 #333333 #888888
     urgent_workspace   #C20000 #C20000 #FFFFFF
   }
-
-  position top
 }
 
-client.focused          #DCDCCC #DCDCCC #000000 #000000
-client.focused_inactive #939365 #939365 #FFFFFF #000000
-client.unfocused        #333333 #333333 #888888 #FFFFFF
-client.urgent           #C20000 #C20000 #FFFFFF #FFFFFF
-
-# Global options
-default_border pixel 3
-default_orientation auto
-focus_follows_mouse yes
-mouse_warping output
-workspace_auto_back_and_forth yes
-
 # Specific window options
-for_window [window_role="pop-up"] floating enable
-for_window [window_role="task_dialog"] floating enable
-
 for_window [class="easyeffects" workspace="(?!^10$)^.+$"] move to workspace 10
 for_window [class="Emacs" title="^Helm$"] floating enable, move position center;
+for_window [class="Gcolor3"] floating enable
+for_window [class="(?i)mullvad vpn"] floating disable; border pixel 3
+for_window [class="^join\?action=join"] floating enable;
 for_window [class="re.sonny.Junction"] floating enable
 for_window [class="Spotify" workspace="(?!^10$)^.+$"] move to workspace 10
-for_window [title="(?i)^shortwave$" workspace="(?!^10$)^.+$"] move to workspace 10
 for_window [class="systemsettings"] floating enable
-for_window [class="Gcolor3"] floating enable
-for_window [class="^join\?action=join"] floating enable;
-
+for_window [instance="DropdownKitty"] floating enable; move scratchpad
 for_window [title="Android Emulator.*"] move window to workspace 4, floating enable, resize set height 1000 px, move position center;
+for_window [title="(?i)^shortwave$" workspace="(?!^10$)^.+$"] move to workspace 10
 for_window [title="win7"] floating enable; border pixel 3
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
 
 # Window workspace assignments
 assign [class="easyeffects"] → 10
 assign [class="Emacs"] → 7
 assign [class="^firefox$"] → 5
 assign [class="^firefoxdeveloperedition$"] → 3
-assign [class="(?i)evolution"] → F2
-assign [class="Joplin"] → 6
-assign [class="Slack"] → F1
-assign [class="Spotify"] → 10
-assign [class="vlc"] → 10
-assign [class="smplayer"] → 10
-assign [class="(?i)de.haeckerfelix.shortwave"] → 10
 assign [class="(?i)caprine"] → F3
+assign [class="(?i)de.haeckerfelix.shortwave"] → 10
+assign [class="(?i)evolution"] → F2
+assign [class="(?i)ferdi"] → F3
 assign [class="(?i)telegram-desktop"] → F3
 assign [class="(?i)telegramdesktop"] → F3
-assign [class="(?i)ferdi"] → F3
-
-assign [title="Android Emulator.*"] → 4
-
+assign [class="Joplin"] → 6
+assign [class="Slack"] → F1
+assign [class="smplayer"] → 10
+assign [class="Spotify"] → 10
+assign [class="vlc"] → 10
 assign [instance="EditorAlacritty"] → 1
 assign [instance="ProjectAlacritty"] → 2
+assign [title="Android Emulator.*"] → 4
 
 # Workspace monitor configuration
-
 workspace $ws1 output DP1-3 primary
 workspace $ws2 output DP1-3 primary
 workspace $ws3 output DP1-2 primary
@@ -327,5 +238,3 @@ workspace $wsf7 output eDP1 primary
 workspace $wsf8 output eDP1 primary
 workspace $wsf9 output eDP1 primary
 workspace $wsf10 output eDP1 primary
-workspace $wsf11 output eDP1 primary
-workspace $wsf12 output eDP1 primary
