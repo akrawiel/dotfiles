@@ -18,15 +18,14 @@
   
   (use-package auto-package-update
     :custom
-    (auto-package-update-interval 7)
+    (auto-package-update-interval 14)
     (auto-package-update-hide-results t)
     (auto-package-update-prompt-before-update t)
+    (auto-package-update-delete-old-versions t)
     :config
-    (auto-package-update-maybe)
-    (auto-package-update-at-time "08:00"))
+    (auto-package-update-maybe))
   
 #+end_src
-
 * Basic UI config
 
 #+begin_src emacs-lisp
@@ -57,7 +56,7 @@
   
   (defun akrw/set-font ()
     (set-face-attribute 'default nil
-                        :font "Cascadia Code"
+                        :font "monospace"
                         :weight 'normal
                         :height 110))
   
@@ -96,13 +95,14 @@
   ;; (load-theme 'doom-sourcerer t) -> pretty low cont
   ;; (load-theme 'doom-spacegray t) -> pretty low cont
   ;; (load-theme 'doom-wilmersdorf t) -> low cont
+  ;; (load-theme 'doom-nord t) -> low cont
   ;; (load-theme 'doom-zenburn t) -> classic
   ;; (load-theme 'doom-1337 t) -> high cont
   ;; (load-theme 'doom-monokai-ristretto t) -> coffee like
   
   (use-package doom-themes
     :config
-    (load-theme 'doom-nord t)
+    (load-theme 'doom-zenburn t)
     (doom-themes-org-config))
   
 #+end_src
@@ -143,14 +143,14 @@
 ** Consult
 
 #+begin_src emacs-lisp
-  
+
   (use-package consult
     :config
     (setq consult-project-root-function #'projectile-project-root
           consult-ripgrep-args "rg --glob \!.git --ignore --hidden --line-buffered --color=never --max-columns=1000 --path-separator / --smart-case --no-heading --line-number ."
           consult-preview-max-count 0
           consult-async-min-input 2))
-  
+
 #+end_src
 
 * Company
@@ -160,9 +160,7 @@
 #+begin_src emacs-lisp
   
   (use-package company
-    :after lsp-mode
-    :hook ((lsp-mode . company-mode)
-           (org-mode . company-mode)
+    :hook ((org-mode . company-mode)
            (emacs-lisp-mode . company-mode))
     :custom
     (company-minimum-prefix-length 1)
@@ -376,7 +374,7 @@
 #+begin_src emacs-lisp
   
   (setq org-ellipsis " ↓"
-        org-agenda-files '("~/Org/agenda.org")
+        org-agenda-files '("~/Dropbox/Documents/OrgSync/Inbox.org")
         org-agenda-start-with-log-mode t
         org-log-done 'time
         org-log-into-drawer t
@@ -384,7 +382,7 @@
         org-agenda-start-day "-2d"
         org-agenda-start-on-weekday nil
         org-capture-templates
-        '(("t" "Task" entry (file+olp "~/Org/agenda.org" "Inbox") "* TODO %?\n %U\n %a\n %i" :empty-lines 1)))
+        '(("t" "Task" entry (file+olp "~/Dropbox/Documents/OrgSync/Inbox.org" "Inbox") "* TODO %?\n %U\n %a\n %i" :empty-lines 1)))
   
   (require 'org-tempo)
   
@@ -408,7 +406,7 @@
     (setq org-roam-v2-ack t
           org-roam-completion-everywhere t
           org-roam-mode-section-functions '(org-roam-backlinks-section org-roam-reflinks-section)
-          org-roam-directory (file-truename "~/OrgRoam")
+          org-roam-directory (file-truename "~/Dropbox/Documents/OrgSync/Roam")
           org-roam-capture-templates '(("d" "default" plain "%?"
                                         :target (file+head "${slug}.org"
                                                            "#+title: ${title}\n")
@@ -517,34 +515,32 @@
 
 #+end_src
 
-* Auth sources
-
-#+begin_src emacs-lisp
-  
-  (setq auth-sources '(password-store "~/.authinfo" "~/.authinfo.gpg" "~/.netrc"))
-  
-#+end_src
 
 * Keybindings
 
 #+begin_src emacs-lisp
-  
+
   (defun akrw/search-config ()
     "Search through emacs config directory."
     (interactive)
     (projectile-find-file-in-directory "~/dotfiles"))
-  
+
+  (defun akrw/search-org ()
+    "Search through emacs config directory."
+    (interactive)
+    (consult-find "~/Dropbox/Documents/OrgSync"))
+
   (defun akrw/kill-current-tab ()
     "Kills current tab and its buffer."
     (interactive)
     (kill-current-buffer)
     (tab-bar-close-tab))
-  
+
   (defun akrw/ripgrep-org-roam ()
     "Searches through all org-roam files"
     (interactive)
     (consult-ripgrep "~/OrgRoam"))
-  
+
   (akrw/leader-keys
     :keymaps 'override
     "DEL" '(selectrum-repeat :wk "repeat last command")
@@ -568,6 +564,7 @@
     "aa" '(org-agenda :wk "org agenda")
     "al" '(org-agenda-list :wk "org agenda list")
     "ac" '(org-capture :wk "org agenda capture")
+    "oo" '(akrw/search-org :wk "org files")
     "b" '(:ignore t :wk "buffers")
     "bd" '(kill-this-buffer :wk "kill current buffer")
     "bR" '(revert-buffer-quick :wk "revert current buffer")
@@ -602,44 +599,44 @@
     "rR" '(org-roam-ref-add :wk "add reference to note")
     "rT" '(org-roam-tag-add :wk "add tags to note")
     "rf" '(akrw/ripgrep-org-roam :wk "ripgrep through org-roam files"))
-  
+
   (general-define-key
    :keymaps 'selectrum-minibuffer-map
    "C-j" 'selectrum-next-candidate
    "C-k" 'selectrum-previous-candidate
    "C-a" 'embark-act
    [escape] 'keyboard-escape-quit)
-  
+
   (general-define-key
    :states 'insert
    :keymaps 'eshell-mode-map
    "C-r" 'consult-history
    "<home>" 'eshell-bol)
-  
+
   (general-define-key
    :states 'insert
    :keymaps 'org-mode-map
    "M-i" 'org-roam-node-insert)
-  
+
   (general-define-key
    :states 'normal
    :keymaps 'dired-mode-map
    "h" 'dired-single-up-directory
    "l" 'dired-single-buffer)
-  
+
   (general-define-key
    :states 'motion
    [remap describe-command] 'helpful-command
    [remap describe-key] 'helpful-key
    " " nil)
-  
+
   (general-define-key
    :states 'normal
    "u" 'undo-fu-only-undo
    "\C-r" 'undo-fu-only-redo)
-  
+
   (general-define-key
    :states 'insert
    "\C-q" 'company-capf)
-  
+
 #+end_src

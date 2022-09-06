@@ -28,4 +28,4 @@
 
 (use-package org
   :config
-  (org-babel-load-file "~/.emacs.d/boot.org"))
+  (org-babel-load-file "~/.config/emacs/boot.org"))
