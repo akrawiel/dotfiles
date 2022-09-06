@@ -15,6 +15,7 @@ pkill polkit-gnome-au &
 pkill solaar &
 pkill xfsettingsd &
 pkill xfce4-power-man &
+pkill emacs &
 
 sleep 1
 
@@ -30,3 +31,4 @@ solaar -w hide &
 xfsettingsd --daemon &
 xfce4-power-manager --daemon &
 nitrogen --restore &
+emacs --daemon &
