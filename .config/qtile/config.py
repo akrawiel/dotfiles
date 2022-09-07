@@ -2,21 +2,161 @@ import os
 import re
 import subprocess
 
-from libqtile import bar, extension, hook, layout, widget
+from libqtile import bar, extension, hook, layout, qtile, widget
 from libqtile.config import Click, Drag, DropDown, EzKey, Group, Key, KeyChord, Match, Rule, Screen, ScratchPad
 from libqtile.lazy import lazy
-from Xlib.ext.randr import ScreenChangeNotify
-
-from pprint import pprint
 
 @hook.subscribe.startup_once
-def autostart():
+def startup_once():
     home = os.path.expanduser("~/autostart.sh")
     subprocess.Popen([home])
 
+def get_main_bar_widgets():
+    return [
+        widget.GroupBox(
+            inactive="#000000",
+            hide_unused=True,
+            highlight_method="block",
+        ),
+        widget.Spacer(),
+        widget.Prompt(),
+        widget.Chord(
+            chords_colors={
+                "launch": ("#ff0000", "#ffffff"),
+            },
+            name_transform=lambda name: name.upper(),
+        ),
+        widget.Spacer(),
+        widget.Memory(
+            format="mem {MemPercent:5.1f}%",
+        ),
+        widget.CPU(
+            format="cpu {load_percent:5.1f}%",
+        ),
+        widget.Systray(),
+        widget.PulseVolume(
+            fmt="vol {}",
+            emoji=False,
+            step=2,
+        ),
+        widget.ThermalSensor(
+            fmt="tmp {}",
+        ),
+        widget.Clock(format="%c"),
+    ]
+
+def get_sub_bar_widgets():
+    return [
+        widget.GroupBox(
+            inactive="#000000",
+            hide_unused=True,
+            highlight_method="block",
+        ),
+        widget.Spacer(),
+        widget.Chord(
+            chords_colors={
+                "launch": ("#ff0000", "#ffffff"),
+            },
+            name_transform=lambda name: name.upper(),
+        ),
+        widget.Spacer(),
+        widget.Memory(
+            format="mem {MemPercent:5.1f}%",
+        ),
+        widget.CPU(
+            format="cpu {load_percent:5.1f}%",
+        ),
+        widget.PulseVolume(
+            fmt="vol {}",
+            emoji=False,
+            step=2,
+        ),
+        widget.ThermalSensor(
+            fmt="tmp {}",
+        ),
+        widget.Clock(format="%c"),
+    ]
+
+
+def _screen_change(fn = None):
+    monitor_list_subprocess = subprocess.Popen(
+        ["xrandr"],
+        stdout=subprocess.PIPE,
+    )
+
+    raw_monitor_list, _ = monitor_list_subprocess.communicate()
+
+    raw_monitor_lines = raw_monitor_list.decode().splitlines()[1:]
+
+    connected_monitor_lines = filter(
+        lambda line: re.match(r'^\s+', line) is None and line.find('disconnected') < 0, 
+        raw_monitor_lines,
+    )
+
+    def handle_monitor(line):
+        w, h, x, y = map(
+            int,
+            re.search(r'(\d+)x(\d+)\+(\d+)\+(\d+)', line).groups(),
+        )
+
+        return x, y, w, h
+
+    primary_monitor_line = list(filter(
+        lambda line: line.find('primary') >= 0,
+        connected_monitor_lines,
+    ))[0]
+
+    secondary_monitors_lines = filter(
+        lambda line: line.find('primary') < 0,
+        connected_monitor_lines,
+    )
+
+    new_screens = []
+
+    main_x, main_y, main_w, main_h = handle_monitor(primary_monitor_line)
+
+    new_screens.append(
+        Screen(
+            top=bar.Bar(
+                fn() if fn else get_main_bar_widgets(),
+                24,
+                border_width=[0, 0, 3, 0],
+            ),
+            x=main_x,
+            y=main_y,
+            width=main_w,
+            height=main_h,
+        )
+    )
+
+    for screen_line in secondary_monitors_lines:
+        x, y, w, h = handle_monitor(screen_line)
+
+        new_screens.append(
+            Screen(
+                top=bar.Bar(
+                    get_sub_bar_widgets(),
+                    24,
+                    border_width=[0, 0, 3, 0],
+                ),
+                x=x,
+                y=y,
+                width=w,
+                height=h,
+            ),
+        )
+
+    return new_screens
+
+fake_screens = _screen_change()
+
 @hook.subscribe.screen_change
-def screen_change(event: ScreenChangeNotify):
-    pprint(event)
+def screen_change(event):
+    global fake_screens
+
+    fake_screens = _screen_change(get_sub_bar_widgets)
+
+    qtile.cmd_reconfigure_screens(ev=event)
 
 mod = "mod4"
 terminal = "kitty"
@@ -198,110 +338,6 @@ widget_defaults = dict(
 
 extension_defaults = widget_defaults.copy()
 
-main_bar_widgets = [
-    widget.GroupBox(
-        inactive="#000000",
-        hide_unused=True,
-        highlight_method="block",
-        visible_groups=[f"F{i + 1}" for i in range(12)],
-    ),
-    widget.Spacer(),
-    widget.Prompt(),
-    widget.Chord(
-        chords_colors={
-            "launch": ("#ff0000", "#ffffff"),
-        },
-        name_transform=lambda name: name.upper(),
-    ),
-    widget.Spacer(),
-    widget.Memory(
-        format="mem {MemPercent:5.1f}%",
-    ),
-    widget.CPU(
-        format="cpu {load_percent:5.1f}%",
-    ),
-    widget.Systray(),
-    widget.PulseVolume(
-        fmt="vol {}",
-        emoji=False,
-        step=2,
-    ),
-    widget.ThermalSensor(
-        fmt="tmp {}",
-    ),
-    widget.Clock(format="%c"),
-]
-
-sub_bar_1_widgets = [
-    widget.GroupBox(
-        inactive="#000000",
-        hide_unused=True,
-        highlight_method="block",
-        visible_groups=[f"{i + 3}" for i in range(7)],
-    ),
-    widget.Spacer(),
-    widget.Chord(
-        chords_colors={
-            "launch": ("#ff0000", "#ffffff"),
-        },
-        name_transform=lambda name: name.upper(),
-    ),
-    widget.Spacer(),
-    widget.Memory(
-        format="mem {MemPercent:5.1f}%",
-    ),
-    widget.CPU(
-        format="cpu {load_percent:5.1f}%",
-    ),
-    widget.PulseVolume(
-        fmt="vol {}",
-        emoji=False,
-        step=2,
-    ),
-    widget.ThermalSensor(
-        fmt="tmp {}",
-    ),
-    widget.Clock(format="%c"),
-]
-
-sub_bar_2_widgets = [
-    widget.GroupBox(
-        inactive="#000000",
-        hide_unused=True,
-        highlight_method="block",
-        visible_groups=[f"{i + 1}" for i in range(2)],
-    ),
-    widget.Spacer(),
-    widget.Chord(
-        chords_colors={
-            "launch": ("#ff0000", "#ffffff"),
-        },
-        name_transform=lambda name: name.upper(),
-    ),
-    widget.Spacer(),
-    widget.Memory(
-        format="mem {MemPercent:5.1f}%",
-    ),
-    widget.CPU(
-        format="cpu {load_percent:5.1f}%",
-    ),
-    widget.PulseVolume(
-        fmt="vol {}",
-        emoji=False,
-        step=2,
-    ),
-    widget.ThermalSensor(
-        fmt="tmp {}",
-    ),
-    widget.Clock(format="%c"),
-]
-
-screens = [
-    Screen(top=bar.Bar(main_bar_widgets, 24, border_width=[0, 0, 3, 0])),
-    Screen(top=bar.Bar(sub_bar_1_widgets, 24, border_width=[0, 0, 3, 0])),
-    Screen(top=bar.Bar(sub_bar_2_widgets, 24, border_width=[0, 0, 3, 0])),
-]
-
 # Drag floating layouts.
 mouse = [
     Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
@@ -380,7 +416,7 @@ floating_layout = layout.Floating(
 )
 auto_fullscreen = True
 focus_on_window_activation = "smart"
-reconfigure_screens = True
+reconfigure_screens = False
 
 # If things like steam games want to auto-minimize themselves when losing
 # focus, should we respect this or not?
