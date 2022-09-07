@@ -31,20 +31,17 @@ set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
-set $ws10 "10"
-set $wsf1 "F1"
-set $wsf2 "F2"
-set $wsf3 "F3"
-set $wsf4 "F4"
-set $wsf5 "F5"
-set $wsf6 "F6"
-set $wsf7 "F7"
-set $wsf8 "F8"
-set $wsf9 "F9"
-set $wsf10 "F10"
+set $wsf1 "1F"
+set $wsf2 "2F"
+set $wsf3 "3F"
+set $wsf4 "4F"
+set $wsf5 "5F"
+set $wsf6 "6F"
+set $wsf7 "7F"
+set $wsf8 "8F"
+set $wsf9 "9F"
 
 # Mod bindings
-bindsym $mod+0 workspace number $ws10
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
 bindsym $mod+3 workspace number $ws3
@@ -59,7 +56,6 @@ bindsym $mod+Ctrl+Left exec --no-startup-id "playerctl -a previous"
 bindsym $mod+Ctrl+Right exec --no-startup-id "playerctl -a next"
 bindsym $mod+Ctrl+Up exec --no-startup-id "playerctl -a stop"
 bindsym $mod+e layout toggle split
-bindsym $mod+F10 workspace $wsf10
 bindsym $mod+F1 workspace $wsf1
 bindsym $mod+F2 workspace $wsf2
 bindsym $mod+F3 workspace $wsf3
@@ -76,7 +72,6 @@ bindsym $mod+k focus up
 bindsym $mod+l focus right
 bindsym $mod+Return exec --no-startup-id i3-sensible-terminal -e "fish"
 bindsym $mod+r mode "resize"
-bindsym $mod+Shift+0 move container to workspace number $ws10
 bindsym $mod+Shift+1 move container to workspace number $ws1
 bindsym $mod+Shift+2 move container to workspace number $ws2
 bindsym $mod+Shift+3 move container to workspace number $ws3
@@ -86,7 +81,6 @@ bindsym $mod+Shift+6 move container to workspace number $ws6
 bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
-bindsym $mod+Shift+F10 move container to workspace $wsf10
 bindsym $mod+Shift+F1 move container to workspace $wsf1
 bindsym $mod+Shift+F2 move container to workspace $wsf2
 bindsym $mod+Shift+F3 move container to workspace $wsf3
@@ -182,39 +176,39 @@ bar {
 }
 
 # Specific window options
-for_window [class="easyeffects" workspace="(?!^10$)^.+$"] move to workspace 10
+for_window [class="easyeffects" workspace="(?!^9$)^.+$"] move to workspace 9
 for_window [class="Emacs" title="^Helm$"] floating enable, move position center;
 for_window [class="Gcolor3"] floating enable
 for_window [class="(?i)mullvad vpn"] floating disable; border pixel 3
 for_window [class="^join\?action=join"] floating enable;
 for_window [class="re.sonny.Junction"] floating enable
-for_window [class="Spotify" workspace="(?!^10$)^.+$"] move to workspace 10
+for_window [class="Spotify" workspace="(?!^9$)^.+$"] move to workspace 9
 for_window [class="systemsettings"] floating enable
 for_window [instance="DropdownKitty"] floating enable; move scratchpad
 for_window [title="Android Emulator.*"] move window to workspace 4, floating enable, resize set height 1000 px, move position center;
-for_window [title="(?i)^shortwave$" workspace="(?!^10$)^.+$"] move to workspace 10
+for_window [title="(?i)^shortwave$" workspace="(?!^9$)^.+$"] move to workspace 9
 for_window [title="win7"] floating enable; border pixel 3
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
 
 # Window workspace assignments
-assign [class="easyeffects"] → 10
-assign [class="^firefox$"] → 5
-assign [class="^firefoxdeveloperedition$"] → 3
-assign [class="(?i)caprine"] → F3
-assign [class="(?i)de.haeckerfelix.shortwave"] → 10
-assign [class="(?i)evolution"] → F2
-assign [class="(?i)ferdi"] → F3
-assign [class="(?i)telegram-desktop"] → F3
-assign [class="(?i)telegramdesktop"] → F3
-assign [class="Joplin"] → 6
-assign [class="Slack"] → F1
-assign [class="smplayer"] → 10
-assign [class="Spotify"] → 10
-assign [class="vlc"] → 10
-assign [instance="EditorAlacritty"] → 1
-assign [instance="ProjectAlacritty"] → 2
-assign [title="Android Emulator.*"] → 4
+assign [class="easyeffects"] → $ws9
+assign [class="^firefox$"] → $ws5
+assign [class="^firefoxdeveloperedition$"] → $ws3
+assign [class="(?i)caprine"] → $wsf3
+assign [class="(?i)de.haeckerfelix.shortwave"] → $ws9
+assign [class="(?i)evolution"] → $wsf2
+assign [class="(?i)ferdi"] → $wsf3
+assign [class="(?i)telegram-desktop"] → $wsf3
+assign [class="(?i)telegramdesktop"] → $wsf3
+assign [class="Joplin"] → $ws6
+assign [class="Slack"] → $wsf1
+assign [class="smplayer"] → $ws9
+assign [class="Spotify"] → $ws9
+assign [class="vlc"] → $ws9
+assign [instance="EditorAlacritty"] → $ws1
+assign [instance="ProjectAlacritty"] → $ws2
+assign [title="Android Emulator.*"] → $ws4
 
 # Workspace monitor configuration
 workspace $ws1 output DP1-3 primary
@@ -226,7 +220,6 @@ workspace $ws6 output DP1-2 primary
 workspace $ws7 output DP1-2 primary
 workspace $ws8 output DP1-2 primary
 workspace $ws9 output DP1-2 primary
-workspace $ws10 output DP1-2 primary
 workspace $wsf1 output eDP1 primary
 workspace $wsf2 output eDP1 primary
 workspace $wsf3 output eDP1 primary
@@ -236,4 +229,3 @@ workspace $wsf6 output eDP1 primary
 workspace $wsf7 output eDP1 primary
 workspace $wsf8 output eDP1 primary
 workspace $wsf9 output eDP1 primary
-workspace $wsf10 output eDP1 primary
