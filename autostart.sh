@@ -16,6 +16,8 @@ pkill solaar &
 pkill xfsettingsd &
 pkill xfce4-power-man &
 pkill emacs &
+pkill dropbox &
+pkill syncthing-gtk &
 
 sleep 1
 
@@ -32,3 +34,5 @@ xfsettingsd --daemon &
 xfce4-power-manager --daemon &
 nitrogen --restore &
 emacs --daemon &
+dropbox &
+syncthing-gtk &
