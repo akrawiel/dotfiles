@@ -364,7 +364,6 @@
 #+begin_src emacs-lisp
   
   (defun akrw/org-mode-init-hook ()
-    (org-indent-mode)
     (visual-line-mode 1))
   
 #+end_src
@@ -372,29 +371,30 @@
 ** Org Mode Base
 
 #+begin_src emacs-lisp
-  
-  (setq org-ellipsis " ↓"
-        org-agenda-files '("~/Dropbox/Documents/OrgSync/Inbox.org")
-        org-agenda-start-with-log-mode t
-        org-log-done 'time
-        org-log-into-drawer t
-        org-agenda-span 14
-        org-agenda-start-day "-2d"
-        org-agenda-start-on-weekday nil
-        org-capture-templates
-        '(("t" "Task" entry (file+olp "~/Dropbox/Documents/OrgSync/Inbox.org" "Inbox") "* TODO %?\n %U\n %a\n %i" :empty-lines 1)))
-  
-  (require 'org-tempo)
-  
-  (custom-set-variables
-   '(org-agenda-view-columns-initially nil)
-   '(org-modules
-     '(ol-bbdb ol-bibtex ol-docview ol-doi ol-eww ol-gnus org-habit ol-info ol-irc ol-mhe ol-rmail org-tempo ol-w3m)))
-  
-  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-  
-  (add-hook 'org-mode-hook 'akrw/org-mode-init-hook)
-  
+
+	(setq org-ellipsis " ↓"
+				org-agenda-files '("~/Dropbox/Documents/OrgSync/Inbox.org")
+				org-agenda-start-with-log-mode t
+				org-log-done 'time
+				org-log-into-drawer t
+				org-priority-lowest 69
+				org-agenda-span 14
+				org-agenda-start-day "-2d"
+				org-agenda-start-on-weekday nil
+				org-capture-templates
+				'(("t" "Task" entry (file+olp "~/Dropbox/Documents/OrgSync/Inbox.org" "Inbox") "* TODO %?\n %U\n %a\n %i" :empty-lines 1)))
+
+	(require 'org-tempo)
+
+	(custom-set-variables
+	 '(org-agenda-view-columns-initially nil)
+	 '(org-modules
+		 '(ol-bbdb ol-bibtex ol-docview ol-doi ol-eww ol-gnus org-habit ol-info ol-irc ol-mhe ol-rmail org-tempo ol-w3m)))
+
+	(add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+
+	(add-hook 'org-mode-hook 'akrw/org-mode-init-hook)
+
 #+end_src
 
 ** Org Roam
