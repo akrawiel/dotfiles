@@ -35,4 +35,4 @@ xfce4-power-manager --daemon &
 nitrogen --restore &
 emacs --daemon &
 dropbox &
-syncthing-gtk &
+syncthing-gtk -m &
