@@ -5,6 +5,8 @@ import subprocess
 from libqtile import bar, extension, hook, layout, qtile, widget
 from libqtile.config import Click, Drag, DropDown, EzKey, Group, Key, KeyChord, Match, Rule, Screen, ScratchPad
 from libqtile.lazy import lazy
+from libqtile.log_utils import logger
+from pprint import pformat
 
 @hook.subscribe.startup_once
 def startup_once():
@@ -33,7 +35,6 @@ def get_main_bar_widgets():
         widget.CPU(
             format="cpu {load_percent:5.1f}%",
         ),
-        widget.Systray(),
         widget.PulseVolume(
             fmt="vol {}",
             emoji=False,
@@ -42,6 +43,7 @@ def get_main_bar_widgets():
         widget.ThermalSensor(
             fmt="tmp {}",
         ),
+        widget.Systray(),
         widget.Clock(format="%c"),
     ]
 
@@ -80,34 +82,29 @@ def get_sub_bar_widgets():
 
 def _screen_change():
     monitor_list_subprocess = subprocess.Popen(
-        ["xrandr"],
+        ["xrandr", "--listmonitors"],
         stdout=subprocess.PIPE,
     )
 
     raw_monitor_list, _ = monitor_list_subprocess.communicate()
 
-    raw_monitor_lines = raw_monitor_list.decode().splitlines()[1:]
-
-    connected_monitor_lines = filter(
-        lambda line: re.match(r'^\s+', line) is None and line.find('disconnected') < 0, 
-        raw_monitor_lines,
-    )
+    connected_monitor_lines = raw_monitor_list.decode().splitlines()[1:]
 
     def handle_monitor(line):
         w, h, x, y = map(
             int,
-            re.search(r'(\d+)x(\d+)\+(\d+)\+(\d+)', line).groups(),
+            re.search(r'(\d+)\/\d+x(\d+)\/\d+\+(\d+)\+(\d+)', line).groups(),
         )
 
         return x, y, w, h
 
     primary_monitor_line = list(filter(
-        lambda line: line.find('primary') >= 0,
+        lambda line: line.find('*') >= 0,
         connected_monitor_lines,
     ))[0]
 
     secondary_monitors_lines = filter(
-        lambda line: line.find('primary') < 0,
+        lambda line: line.find('*') < 0,
         connected_monitor_lines,
     )
 
@@ -150,13 +147,41 @@ def _screen_change():
 
 fake_screens = _screen_change()
 
+def get_visible_groups(index):
+    screen_count = len(qtile.cmd_screens())
+
+    if screen_count == 1:
+        return []
+
+    if screen_count == 3:
+        if index == 0:
+            return [f"F{i + 1}" for i in range(9)]
+        if index == 1:
+            return [str(i + 3) for i in range(7)]
+        if index == 2:
+            return [str(i + 1) for i in range(2)]
+
+def handle_visible_groups():
+    for (index, _) in enumerate(qtile.cmd_screens()):
+        suffix = f"_{index}" if index > 0 else ""
+
+        qtile.widgets_map[f"groupbox{suffix}"].visible_groups = get_visible_groups(index)
+        qtile.widgets_map[f"groupbox{suffix}"].draw()
+
+    for group_name, group in qtile.cmd_groups().items():
+        if 'screen' in group and group['screen'] is not None:
+            screen = qtile.cmd_screens()[group['screen']]
+
+            logger.error(pformat([screen['width'], screen['height']]))
+
+            if int(screen['width']) > int(screen['height']):
+                qtile.groups_map[group_name].layout = "monad-wide"
+            else:
+                qtile.groups_map[group_name].layout = "monad-tall"
+
 @hook.subscribe.startup
-def startup_once():
-    global fake_screens
-
-    fake_screens = _screen_change()
-
-    qtile.cmd_reconfigure_screens(ev=event)
+def startup():
+    handle_visible_groups()
 
 @hook.subscribe.screen_change
 def screen_change(event):
@@ -164,7 +189,9 @@ def screen_change(event):
 
     fake_screens = _screen_change()
 
-    qtile.cmd_reconfigure_screens(ev=event)
+    handle_visible_groups()
+
+    lazy.restart()
 
 mod = "mod4"
 terminal = "kitty"
@@ -215,16 +242,17 @@ keys = [
     EzKey("<Print>", lazy.spawn("flameshot gui")),
 
     EzKey("A-C-S-0", lazy.spawn("zsh ~/Projects/kill-projects.sh")),
-    EzKey("A-C-S-s", lazy.spawn("xfce4-settings-manager")),
     EzKey("A-C-S-a", lazy.spawn("arandr")),
-    EzKey("A-C-S-v", lazy.spawn("pavucontrol")),
     EzKey("A-C-S-c", lazy.spawn("qalculate-gtk")),
-    EzKey("A-C-S-m", lazy.spawn("cat ~/music-commands | rofi -dmenu | nohup bash > /dev/null & disown")),
-    EzKey("A-C-S-t", lazy.spawn("cat ~/tenor-commands | rofi -i -dmenu | cut -d'|' -f2 | sed 's/^ //' | xargs -r | xclip -sel clip")),
     EzKey("A-C-S-g", lazy.spawn(f"{terminal} -e nvim ~/.config/i3/config")),
+    EzKey("A-C-S-m", lazy.spawn("cat ~/music-commands | rofi -dmenu | nohup bash > /dev/null & disown")),
     EzKey("A-C-S-<period>", lazy.spawn("rofimoji -s neutral")),
     EzKey("A-C-S-q", lazy.spawn("xkill")),
+    EzKey("A-C-S-<Return>", lazy.spawn(f"{terminal} --class EditorAlacritty -e fish"), desc="Launch terminal"),
+    EzKey("A-C-S-s", lazy.spawn("xfce4-settings-manager")),
     EzKey("A-C-S-<Tab>", lazy.spawn("chorder")),
+    EzKey("A-C-S-t", lazy.spawn("cat ~/tenor-commands | rofi -i -dmenu | cut -d'|' -f2 | sed 's/^ //' | xargs -r | xclip -sel clip")),
+    EzKey("A-C-S-v", lazy.spawn("pavucontrol")),
 
     EzKey("M-A-C-S-l", lazy.spawn("fish -c 'i3lock -c 000000 -t -i ~/Obrazy/fancy_pants.jpg'")),
     EzKey("M-A-C-S-c", lazy.reload_config(), desc="Reload the config"),
@@ -282,9 +310,6 @@ groups = [
     Group("F7", screen_affinity=0),
     Group("F8", screen_affinity=0),
     Group("F9", screen_affinity=0),
-    Group("F10", screen_affinity=0),
-    Group("F11", screen_affinity=0),
-    Group("F12", screen_affinity=0),
 ]
 
 for i in groups:
@@ -330,11 +355,13 @@ layouts = [
         border_focus="#80ff00",
         border_width=3,
         ratio=0.6,
+        name="monad-tall",
     ),
     layout.MonadWide(
         border_focus="#80ff00",
         border_width=3,
         ratio=0.6,
+        name="monad-wide",
     ),
 ]
 
@@ -406,7 +433,7 @@ dgroups_app_rules = [
 
 follow_mouse_focus = True
 bring_front_click = False
-cursor_warp = False
+cursor_warp = True
 floating_layout = layout.Floating(
     border_focus="#0080ff",
     border_width=3,
