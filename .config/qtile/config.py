@@ -78,7 +78,7 @@ def get_sub_bar_widgets():
     ]
 
 
-def _screen_change(fn = None):
+def _screen_change():
     monitor_list_subprocess = subprocess.Popen(
         ["xrandr"],
         stdout=subprocess.PIPE,
@@ -118,7 +118,7 @@ def _screen_change(fn = None):
     new_screens.append(
         Screen(
             top=bar.Bar(
-                fn() if fn else get_main_bar_widgets(),
+                get_main_bar_widgets(),
                 24,
                 border_width=[0, 0, 3, 0],
             ),
@@ -150,11 +150,19 @@ def _screen_change(fn = None):
 
 fake_screens = _screen_change()
 
+@hook.subscribe.startup
+def startup_once():
+    global fake_screens
+
+    fake_screens = _screen_change()
+
+    qtile.cmd_reconfigure_screens(ev=event)
+
 @hook.subscribe.screen_change
 def screen_change(event):
     global fake_screens
 
-    fake_screens = _screen_change(get_sub_bar_widgets)
+    fake_screens = _screen_change()
 
     qtile.cmd_reconfigure_screens(ev=event)
 
