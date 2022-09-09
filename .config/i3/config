@@ -8,6 +8,7 @@ client.focused_inactive #939365 #939365 #FFFFFF #000000
 client.unfocused        #333333 #333333 #888888 #FFFFFF
 client.urgent           #C20000 #C20000 #FFFFFF #FFFFFF
 default_border pixel 3
+default_floating_border pixel 3
 default_orientation auto
 floating_modifier $mod
 focus_follows_mouse yes

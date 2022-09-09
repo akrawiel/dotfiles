@@ -82,6 +82,7 @@ return require 'packer'.startup(function(use)
           require 'null-ls'.builtins.formatting.eslint_d.with {
             to_temp_file = false
           },
+          require 'null-ls'.builtins.formatting.stylua,
         },
       }
     end,

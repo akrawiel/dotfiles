@@ -89,8 +89,6 @@ return function(enabled_servers)
         common_on_attach(client, bufnr)
 
         client.server_capabilities.document_formatting = true
-
-        vim.api.nvim_command[[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 5000)]]
       end,
       params = {
         settings = {
@@ -112,6 +110,36 @@ return function(enabled_servers)
     pylsp = {
       name = 'pylsp',
       on_attach = common_on_attach,
+    },
+    sumneko_lua = {
+      name = 'sumneko_lua',
+      on_attach = function(client, bufnr)
+        common_on_attach(client, bufnr)
+
+        client.server_capabilities.document_formatting = false
+        client.server_capabilities.document_range_formatting = false
+      end,
+      params = {
+        settings = {
+          Lua = {
+            runtime = {
+              version = 'LuaJIT',
+            },
+            diagnostics = {
+              globals = {'vim'},
+            },
+            workspace = {
+              library = vim.api.nvim_get_runtime_file("", true),
+            },
+            telemetry = {
+              enable = false,
+            },
+            format = {
+              enable = false,
+            }
+          },
+        },
+      },
     },
     emmet_ls = {
       name = 'emmet_ls',

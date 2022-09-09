@@ -24,6 +24,7 @@ vim.opt.shiftwidth = 2
 vim.opt.smartindent = true
 vim.opt.smarttab = true
 vim.opt.softtabstop = 2
+vim.opt.tabstop = 2
 
 vim.opt.ruler = true
 vim.opt.showtabline = 2
