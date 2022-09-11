@@ -28,6 +28,11 @@ local inoremapSilent = function(key, cmd)
   vim.api.nvim_set_keymap('i', key, cmd, { noremap = true, silent = true })
 end
 
+local xnoremapSilent = function(key, cmd)
+  vim.api.nvim_set_keymap('x', key, cmd, { noremap = true, silent = true })
+end
+
+
 local tnoremap = function(key, cmd)
   vim.api.nvim_set_keymap('t', key, cmd, { noremap = true, silent = false })
 end
@@ -127,6 +132,9 @@ nnoremapSilent('<space>wl', '<C-w>l')
 nnoremapSilent('<space>wL', '<C-w>L')
 nnoremapSilent('<space>wq', '<C-w>q')
 nnoremapSilent('<space>ww', '<C-w>w')
+
+-- Yanking
+xnoremapSilent('<space>p', '"_dP')
 
 -- Packer
 
