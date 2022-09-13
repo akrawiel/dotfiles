@@ -137,13 +137,7 @@ return require 'packer'.startup(function(use)
       require 'telescope-config'
     end
   }
-  use {
-    'nvim-telescope/telescope-frecency.nvim',
-    config = function()
-      require 'telescope'.load_extension 'frecency'
-    end,
-    requires = { 'tami5/sqlite.lua' }
-  }
+  use 'nvim-telescope/telescope-symbols.nvim'
   use 'nvim-telescope/telescope-ui-select.nvim'
   use {
     'nvim-telescope/telescope-fzf-native.nvim',
