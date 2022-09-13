@@ -1,13 +1,18 @@
 local actions = require('telescope.actions')
 local action_state = require('telescope.actions.state')
 local previewers = require('telescope.previewers')
-local Path = require('plenary.path')
 
 require('telescope').setup {
   defaults = {
-    prompt_prefix = '> ',
+    prompt_prefix = ' 💻 ',
+    entry_prefix = '    ',
+    selection_caret = ' 👉 ',
+    multi_icon = ' ✅ ',
     disable_devicons = false,
     color_devicons = true,
+    file_previewer = previewers.cat.new,
+    grep_previewer = previewers.vimgrep.new,
+    qflist_previewer = previewers.qflist.new,
 
     layout_strategy = 'flex',
     layout_config = {
