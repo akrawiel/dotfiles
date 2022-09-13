@@ -86,6 +86,10 @@ nnoremapSilent('<leader>t', [[<cmd>terminal fish<CR>]])
 nnoremapSilent('<leader>g', [[<cmd>terminal fish -c lazygit<CR>]])
 nnoremapSilent('<leader>j', [[<cmd>terminal fish -c joplin<CR>]])
 
+-- Current word search
+nnoremapSilent('*', 'g*N')
+nnoremapSilent('#', 'g#N')
+
 -- External operations
 
 nnoremapSilent('<space>k', '"+')
