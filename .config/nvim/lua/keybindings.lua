@@ -121,7 +121,6 @@ nnoremapSilent('<space>t.', [[<cmd>lua require('telescope.builtin').symbols({ so
 nnoremapSilent('<space><bs>', [[<cmd>lua require('telescope.builtin').resume()<CR>]])
 nnoremapSilent('<space><return>', [[<cmd>lua require('telescope.builtin').commands()<CR>]])
 nnoremapSilent('<space><space>', [[<cmd>lua require('telescope.builtin').find_files({ find_command = { 'fd', '--type', 'f', '--hidden', '--exclude', '.git' } })<CR>]])
-nnoremapSilent('<leader><space>', [[<cmd>lua require('telescope').extensions.frecency.frecency()<CR>]])
 
 -- Windows
 
@@ -176,6 +175,9 @@ vnoremapSilent('<space>tu', [[:!uniq<CR>]])
 
 nnoremap('<space>ss', [[:<C-u>%s/]])
 vnoremap('<space>ss', [[:<C-u>\'<,\'>s/]])
+
+nnoremap('<space>sf', [[:<C-u>%sm/<C-r>//]])
+vnoremap('<space>sf', [[:<C-u>'<,'>sm/<C-r>//]])
 
 nnoremap('<space>so', [[:<C-u>so<CR>]])
 vnoremap('<space>so', [[:<C-u>'<,'>so<CR>]])
