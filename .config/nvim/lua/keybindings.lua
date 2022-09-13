@@ -84,7 +84,6 @@ onoremapSilent('z', [[<cmd>Pounce<CR>]])
 nnoremapSilent('<leader>p', [[<cmd>lua vim.lsp.buf.format { async = true }<CR>]])
 nnoremapSilent('<leader>t', [[<cmd>terminal fish<CR>]])
 nnoremapSilent('<leader>g', [[<cmd>terminal fish -c lazygit<CR>]])
-nnoremapSilent('<leader>j', [[<cmd>terminal fish -c joplin<CR>]])
 
 -- Current word search
 nnoremapSilent('*', 'g*N')
