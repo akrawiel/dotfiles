@@ -373,7 +373,7 @@
 #+begin_src emacs-lisp
 
 	(setq org-ellipsis " ↓"
-				org-agenda-files '("~/Dropbox/Documents/OrgSync/Inbox.org")
+				org-agenda-files '("~/Dropbox/Documents/OrgSync/Inbox.org" "~/Dropbox/Documents/OrgSync/Todo.org")
 				org-agenda-start-with-log-mode t
 				org-log-done 'time
 				org-log-into-drawer t
