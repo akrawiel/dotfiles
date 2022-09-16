@@ -1,15 +1,15 @@
 -- Helpers
 
-local nnoremapSilent = function(key, cmd)
-  vim.api.nvim_set_keymap('n', key, cmd, { noremap = true, silent = true })
+local nnoremapSilent = function(key, cmd, opts)
+  vim.api.nvim_set_keymap('n', key, cmd, { noremap = true, silent = true, callback = opts and opts.callback or nil })
 end
 
 local nnoremap = function(key, cmd)
   vim.api.nvim_set_keymap('n', key, cmd, { noremap = true, silent = false })
 end
 
-local vnoremapSilent = function(key, cmd)
-  vim.api.nvim_set_keymap('v', key, cmd, { noremap = true, silent = true })
+local vnoremapSilent = function(key, cmd, opts)
+  vim.api.nvim_set_keymap('v', key, cmd, { noremap = true, silent = true, callback = opts and opts.callback or nil })
 end
 
 local vnoremap = function(key, cmd)
@@ -86,8 +86,44 @@ nnoremapSilent('<leader>t', [[<cmd>terminal fish<CR>]])
 nnoremapSilent('<leader>g', [[<cmd>terminal fish -c lazygit<CR>]])
 
 -- Current word search
-nnoremapSilent('*', 'g*N')
-nnoremapSilent('#', 'g#N')
+local function highlightCurrentWord()
+  vim.fn.setreg('/', vim.fn.expand('<cword>'))
+  vim.opt.hlsearch = true
+end
+
+nnoremapSilent('*', '', { callback = highlightCurrentWord })
+nnoremapSilent('#', '', { callback = highlightCurrentWord })
+
+local function highlightSelectedWord()
+  if vim.fn.mode() ~= "v" then return end
+
+  local _, csrow, cscol, cerow, cecol
+
+  _, csrow, cscol, _ = unpack(vim.fn.getpos("."))
+  _, cerow, cecol, _ = unpack(vim.fn.getpos("v"))
+
+  if cerow < csrow then csrow, cerow = cerow, csrow end
+  if cecol < cscol then cscol, cecol = cecol, cscol end
+
+  local lines = vim.fn.getline(csrow, cerow)
+  local n = #lines
+
+  if n <= 0 then return '' end
+
+  lines[n] = string.sub(lines[n], 1, cecol)
+  lines[1] = string.sub(lines[1], cscol)
+
+  vim.fn.setreg('/', table.concat(lines, "\\n"))
+
+  vim.api.nvim_feedkeys(
+    vim.api.nvim_replace_termcodes("<Esc>", true, false, true), 'n', true
+  )
+
+  vim.opt.hlsearch = true
+end
+
+vnoremapSilent('*', '', { callback = highlightSelectedWord })
+vnoremapSilent('#', '', { callback = highlightSelectedWord })
 
 -- External operations
 
