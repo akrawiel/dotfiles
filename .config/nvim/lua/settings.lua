@@ -69,3 +69,4 @@ vim.api.nvim_create_autocmd('TermClose', { callback = function(event)
     vim.api.nvim_input('<CR>')
   end
 end, pattern = '*' })
+vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, { command = 'set ft=html', pattern = '*.njk' })

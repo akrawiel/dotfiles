@@ -565,6 +565,8 @@
     "al" '(org-agenda-list :wk "org agenda list")
     "ac" '(org-capture :wk "org agenda capture")
     "oo" '(akrw/search-org :wk "org files")
+    "op" '(org-priority :wk "org priority")
+    "ot" '(org-todo :wk "org todo")
     "b" '(:ignore t :wk "buffers")
     "bd" '(kill-this-buffer :wk "kill current buffer")
     "bR" '(revert-buffer-quick :wk "revert current buffer")

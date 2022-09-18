@@ -36,3 +36,4 @@ nitrogen --restore &
 emacs --daemon &
 dropbox &
 syncthing-gtk -m &
+joplin sync &
