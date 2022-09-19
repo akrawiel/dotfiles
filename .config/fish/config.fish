@@ -26,7 +26,27 @@ set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 set -gx VOLTA_HOME "$HOME/.volta"
 set -gx XDG_CONFIG_HOME $HOME/.config
 
-set -U FZF_COMPLETE 0
+# fzf plugin config
+
+fzf_configure_bindings --directory=\cf --git_log= --git_status= --history=\cr --variables=\cv --processes=\cp
+set fzf_fd_opts --hidden --exclude=.git
+
+function _open_with_editor
+  set -l file (fzf --preview='bat --color always -pp {}');
+  if test $file;
+    $EDITOR $file;
+  end;
+end
+
+function _open_with_xdg
+  set -l file (fzf --preview='bat --color always -pp {}');
+  if test $file;
+    xdg-open $file;
+  end;
+end
+
+bind --mode insert \co _open_with_editor
+bind --mode insert \cg _open_with_xdg
 
 # options
 
