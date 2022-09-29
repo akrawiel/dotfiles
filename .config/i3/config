@@ -7,8 +7,8 @@ client.focused          #DCDCCC #DCDCCC #000000 #000000
 client.focused_inactive #939365 #939365 #FFFFFF #000000
 client.unfocused        #333333 #333333 #888888 #FFFFFF
 client.urgent           #C20000 #C20000 #FFFFFF #FFFFFF
-default_border pixel 3
-default_floating_border pixel 3
+default_border pixel 2
+default_floating_border pixel 2
 default_orientation auto
 floating_modifier $mod
 focus_follows_mouse yes
@@ -177,36 +177,30 @@ bar {
 }
 
 # Specific window options
-for_window [class="easyeffects" workspace="(?!^9$)^.+$"] move to workspace 9
 for_window [class="Emacs" title="^Helm$"] floating enable, move position center;
 for_window [class="Gcolor3"] floating enable
-for_window [class="(?i)mullvad vpn"] floating disable; border pixel 3
+for_window [class="(?i)mullvad vpn"] floating disable;
 for_window [class="^join\?action=join"] floating enable;
 for_window [class="re.sonny.Junction"] floating enable
 for_window [class="Spotify" workspace="(?!^9$)^.+$"] move to workspace 9
 for_window [class="systemsettings"] floating enable
 for_window [instance="DropdownKitty"] floating enable; move scratchpad
 for_window [title="Android Emulator.*"] move window to workspace 4, floating enable, resize set height 1000 px, move position center;
-for_window [title="(?i)^shortwave$" workspace="(?!^9$)^.+$"] move to workspace 9
-for_window [title="win7"] floating enable; border pixel 3
+for_window [title="win7"] floating enable
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
 
+for_window [class=".*"] border pixel 2
+
 # Window workspace assignments
-assign [class="easyeffects"] → $ws9
 assign [class="^firefox$"] → $ws5
 assign [class="^firefoxdeveloperedition$"] → $ws3
-assign [class="(?i)caprine"] → $wsf3
-assign [class="(?i)de.haeckerfelix.shortwave"] → $ws9
 assign [class="(?i)evolution"] → $wsf2
 assign [class="(?i)ferdi"] → $wsf3
 assign [class="(?i)telegram-desktop"] → $wsf3
 assign [class="(?i)telegramdesktop"] → $wsf3
-assign [class="Joplin"] → $ws6
 assign [class="Slack"] → $wsf1
-assign [class="smplayer"] → $ws9
 assign [class="Spotify"] → $ws9
-assign [class="vlc"] → $ws9
 assign [instance="EditorAlacritty"] → $ws1
 assign [instance="ProjectAlacritty"] → $ws2
 assign [title="Android Emulator.*"] → $ws4

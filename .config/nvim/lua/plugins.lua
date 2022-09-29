@@ -95,22 +95,26 @@ return require 'packer'.startup(function(use)
     end
   }
   use {
-    'mcchrish/nnn.vim',
+    'luukvbaal/nnn.nvim',
     config = function()
       require 'nnn'.setup {
-        action = {
-          ['<c-x>'] = 'split',
-          ['<c-v>'] = 'vsplit',
-        },
-        layout = {
-          window = {
+        picker = {
+          style = {
             width = 0.9,
-            height = 0.7,
-            highlight = 'Debug'
+            height = 0.5,
+            xoffset = 0.5,
+            yoffset = 0.5,
+            border = 'double'
           },
+          session = 'local',
         },
-        replace_netrw = 1,
-        set_default_mappings = 0,
+        mappings = {
+          { '<C-x>', require('nnn').builtin.open_in_split },
+          { '<C-v>', require('nnn').builtin.open_in_vsplit },
+          { '<C-e>', require('nnn').builtin.populate_cmdline },
+        },
+        buflisted = false,
+        replace_netrw = "picker",
       }
     end
   }
