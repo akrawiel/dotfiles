@@ -209,8 +209,8 @@ vnoremapSilent('<space>tu', [[:!uniq<CR>]])
 
 -- Ex commands
 
-nnoremap('<space>ss', [[:<C-u>%s/]])
-vnoremap('<space>ss', [[:<C-u>\'<,\'>s/]])
+nnoremap('<space>ss', [[:<C-u>%sm/]])
+vnoremap('<space>ss', [[:<C-u>'<,'>sm/]])
 
 nnoremap('<space>sf', [[:<C-u>%sm/<C-r>//]])
 vnoremap('<space>sf', [[:<C-u>'<,'>sm/<C-r>//]])

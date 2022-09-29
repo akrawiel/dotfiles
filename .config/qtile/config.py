@@ -217,7 +217,7 @@ keys = [
     EzKey("M-S-<Tab>", lazy.group.prev_window(), desc="Focus previous window"),
     EzKey("M-S-<space>", lazy.window.toggle_floating(), desc="Toggle floating"),
 
-    EzKey("M-<Return>", lazy.spawn(f"{terminal} -e fish"), desc="Launch terminal"),
+    EzKey("M-<Return>", lazy.spawn(terminal), desc="Launch terminal"),
     EzKey("M-<space>", lazy.spawn("rofi -show combi"), desc="Spawn rofi"),
 
     EzKey("<XF86AudioRaiseVolume>", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +5%")),
@@ -244,11 +244,10 @@ keys = [
     EzKey("A-C-S-0", lazy.spawn("zsh ~/Projects/kill-projects.sh")),
     EzKey("A-C-S-a", lazy.spawn("arandr")),
     EzKey("A-C-S-c", lazy.spawn("qalculate-gtk")),
-    EzKey("A-C-S-g", lazy.spawn(f"{terminal} -e nvim ~/.config/i3/config")),
     EzKey("A-C-S-m", lazy.spawn("cat ~/music-commands | rofi -dmenu | nohup bash > /dev/null & disown")),
     EzKey("A-C-S-<period>", lazy.spawn("rofimoji -s neutral")),
     EzKey("A-C-S-q", lazy.spawn("xkill")),
-    EzKey("A-C-S-<Return>", lazy.spawn(f"{terminal} --class EditorAlacritty -e fish"), desc="Launch terminal"),
+    EzKey("A-C-S-<Return>", lazy.spawn(f"{terminal} --class EditorAlacritty"), desc="Launch terminal"),
     EzKey("A-C-S-s", lazy.spawn("xfce4-settings-manager")),
     EzKey("A-C-S-<Tab>", lazy.spawn("chorder")),
     EzKey("A-C-S-t", lazy.spawn("cat ~/tenor-commands | rofi -i -dmenu | cut -d'|' -f2 | sed 's/^ //' | xargs -r | xclip -sel clip")),
@@ -338,7 +337,7 @@ groups.extend(
             [
                 DropDown(
                     "term",
-                    "kitty -e fish",
+                    "kitty",
                     x=0.05,
                     y=0.3,
                     width=0.9,
