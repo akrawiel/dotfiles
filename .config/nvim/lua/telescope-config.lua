@@ -10,9 +10,6 @@ require('telescope').setup {
     multi_icon = ' ✅ ',
     disable_devicons = false,
     color_devicons = true,
-    file_previewer = previewers.cat.new,
-    grep_previewer = previewers.vimgrep.new,
-    qflist_previewer = previewers.qflist.new,
 
     layout_strategy = 'flex',
     layout_config = {
