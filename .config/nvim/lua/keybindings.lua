@@ -87,7 +87,7 @@ nnoremapSilent('<leader>g', [[<cmd>terminal fish -c lazygit<CR>]])
 
 -- Current word search
 local function highlightCurrentWord()
-  vim.fn.setreg('/', vim.fn.expand('<cword>'))
+  vim.fn.setreg('/', string.lower(vim.fn.expand('<cword>')))
   vim.opt.hlsearch = true
 end
 
@@ -113,7 +113,7 @@ local function highlightSelectedWord()
   lines[n] = string.sub(lines[n], 1, cecol)
   lines[1] = string.sub(lines[1], cscol)
 
-  vim.fn.setreg('/', table.concat(lines, "\\n"))
+  vim.fn.setreg('/', string.lower(table.concat(lines, "\\n")))
 
   vim.api.nvim_feedkeys(
     vim.api.nvim_replace_termcodes("<Esc>", true, false, true), 'n', true
