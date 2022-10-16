@@ -19,7 +19,7 @@ set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --exclude .git'
 set -gx GIT_PAGER 'delta'
 set -gx GPG_TTY (tty)
 set -gx LANG en_US.UTF-8
-set -gx LC_ALL C
+set -gx LC_ALL C.UTF-8
 set -gx NNN_PLUG 'z:autojump;G:getplugs;R:gitroot;r:renamer'
 set -gx PROJECT_PATHS $HOME/Projects
 set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
