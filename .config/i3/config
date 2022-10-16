@@ -123,7 +123,7 @@ bindsym $meh+y exec --no-startup-id kitty --class "DropdownKitty" -e "fish"
 
 # Hyper bindings
 bindsym $hyper+c reload
-bindsym $hyper+l exec --no-startup-id "i3lock -c 000000 -t -i ~/Obrazy/fancy_pants.jpg"
+bindsym $hyper+l exec --no-startup-id "i3lock -c 008040 -k --{time,date,verif,wrong,modif}-color=ffffff"
 bindsym $hyper+q exit
 bindsym $hyper+r restart
 
