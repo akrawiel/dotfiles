@@ -150,8 +150,7 @@ return function(enabled_servers)
     }
   }
 
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+  local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
   local function handle_server(server)
     local result_params = {
