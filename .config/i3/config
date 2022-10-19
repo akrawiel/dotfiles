@@ -23,18 +23,18 @@ exec_always --no-startup-id ~/autostart.sh
 exec --no-startup-id kitty --class "DropdownKitty" -e "fish" 
 
 # Workspaces definitions
-set $ws1 "1¯dev"
-set $ws2 "2¯term"
-set $ws3 "3¯ffd"
-set $ws4 "4¯br"
-set $ws5 "5¯ff"
+set $ws1 "1_dev"
+set $ws2 "2_term"
+set $ws3 "3_ffd"
+set $ws4 "4_br"
+set $ws5 "5_ff"
 set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
-set $wsf1 "11¯slack"
-set $wsf2 "12¯mail"
-set $wsf3 "13¯ferdi"
+set $wsf1 "11_slack"
+set $wsf2 "12_mail"
+set $wsf3 "13_ferdi"
 set $wsf4 "14"
 set $wsf5 "15"
 set $wsf6 "16"
@@ -193,17 +193,18 @@ for_window [window_role="task_dialog"] floating enable
 for_window [class=".*"] border pixel 2
 
 # Window workspace assignments
-assign [class="^firefox$"] → $ws5
-assign [class="^firefoxdeveloperedition$"] → $ws3
-assign [class="(?i)evolution"] → $wsf2
-assign [class="(?i)ferdi"] → $wsf3
-assign [class="(?i)telegram-desktop"] → $wsf3
-assign [class="(?i)telegramdesktop"] → $wsf3
-assign [class="Slack"] → $wsf1
-assign [class="Spotify"] → $ws9
-assign [instance="EditorAlacritty"] → $ws1
-assign [instance="ProjectAlacritty"] → $ws2
-assign [title="Android Emulator.*"] → $ws4
+assign [class="^firefox$"] $ws5
+assign [class="^firefoxdeveloperedition$"] $ws3
+assign [class="Brave-browser"] $ws4
+assign [class="(?i)evolution"] $wsf2
+assign [class="(?i)ferdi"] $wsf3
+assign [class="(?i)telegram-desktop"] $wsf3
+assign [class="(?i)telegramdesktop"] $wsf3
+assign [class="Slack"] $wsf1
+assign [class="Spotify"] $ws9
+assign [instance="EditorAlacritty"] $ws1
+assign [instance="ProjectAlacritty"] $ws2
+assign [title="Android Emulator.*"] $ws4
 
 # Workspace monitor configuration
 workspace $ws1 output DP1-3 primary
