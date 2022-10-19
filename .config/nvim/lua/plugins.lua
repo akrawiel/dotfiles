@@ -38,18 +38,10 @@ return require 'packer'.startup(function(use)
   use 'arthurxavierx/vim-caser'
   use 'editorconfig/editorconfig-vim'
   use {
-    'ggandor/lightspeed.nvim',
+    'echasnovski/mini.nvim',
     config = function()
-      require 'lightspeed'.setup {
-        exit_after_idle_msecs = {
-          labeled = nil,
-          unlabeled = nil
-        },
-        safe_labels = nil,
-        limit_ft_matches = 10,
+      require 'mini.jump'.setup {
       }
-
-      vim.cmd 'highlight LightspeedOneCharMatch guifg=Black guibg=#b0b0ff gui=bold'
     end
   }
   use {
