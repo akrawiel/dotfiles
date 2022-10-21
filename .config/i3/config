@@ -101,25 +101,15 @@ bindsym $mod+t floating toggle
 bindsym $mod+w kill
 
 # Meh bindings
-bindsym $meh+a exec --no-startup-id "arandr"
-bindsym $meh+c exec --no-startup-id "qalculate-gtk"
-bindsym $meh+equal exec --no-startup-id "dunstctl history-pop"
-bindsym $meh+f exec --no-startup-id i3-sensible-terminal -e nnn
-bindsym $meh+g exec --no-startup-id "alacritty -e nvim ~/.config/i3/config"
 bindsym $meh+h move workspace to output left
 bindsym $meh+j move workspace to output down
 bindsym $meh+k move workspace to output up
 bindsym $meh+l move workspace to output right
-bindsym $meh+m exec --no-startup-id "cat ~/music-commands | rofi -dmenu | nohup bash > /dev/null & disown"
 bindsym $meh+period exec --no-startup-id "rofimoji -s neutral"
 bindsym $meh+q exec --no-startup-id xkill
 bindsym $meh+Return exec --no-startup-id i3-sensible-terminal --class "EditorAlacritty" -e "fish"
-bindsym $meh+s exec --no-startup-id "xfce4-settings-manager"
-bindsym $meh+space exec --no-startup-id "dunstctl close"
 bindsym $meh+Tab exec --no-startup-id "chorder"
 bindsym $meh+t exec --no-startup-id "cat ~/tenor-commands | rofi -i -dmenu | cut -d'|' -f2 | sed 's/^ //' | xargs -r | xclip -sel clip"
-bindsym $meh+v exec --no-startup-id "pavucontrol"
-bindsym $meh+y exec --no-startup-id kitty --class "DropdownKitty" -e "fish"
 
 # Hyper bindings
 bindsym $hyper+c reload
@@ -177,15 +167,15 @@ bar {
 }
 
 # Specific window options
-for_window [class="Emacs" title="^Helm$"] floating enable, move position center;
+for_window [class="Emacs" title="^Helm$"] floating enable, move position center
 for_window [class="Gcolor3"] floating enable
-for_window [class="(?i)mullvad vpn"] floating disable;
-for_window [class="^join\?action=join"] floating enable;
+for_window [class="(?i)mullvad vpn"] floating disable
+for_window [class="^join\?action=join"] floating enable
 for_window [class="re.sonny.Junction"] floating enable
 for_window [class="Spotify" workspace="(?!^9$)^.+$"] move to workspace 9
 for_window [class="systemsettings"] floating enable
-for_window [instance="DropdownKitty"] floating enable; move scratchpad
-for_window [title="Android Emulator.*"] move window to workspace 4, floating enable, resize set height 1000 px, move position center;
+for_window [instance="DropdownKitty"] floating enable, move scratchpad
+for_window [title="Android Emulator.*"] move window to workspace 4, floating enable, resize set height 1000 px, move position center
 for_window [title="win7"] floating enable
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
