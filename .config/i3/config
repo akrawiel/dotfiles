@@ -113,7 +113,7 @@ bindsym $meh+t exec --no-startup-id "cat ~/tenor-commands | rofi -i -dmenu | cut
 
 # Hyper bindings
 bindsym $hyper+c reload
-bindsym $hyper+l exec --no-startup-id "i3lock -c 008040 -k --{time,date,verif,wrong,modif}-color=ffffff"
+bindsym $hyper+l exec --no-startup-id "i3lock -c 008040 -k --{time,date,verif,wrong,modif}-color=ffffff --date-str='%A, %d %b %Y'"
 bindsym $hyper+q exit
 bindsym $hyper+r restart
 

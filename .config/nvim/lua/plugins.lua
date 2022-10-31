@@ -128,6 +128,14 @@ return require 'packer'.startup(function(use)
   }
   use 'nvim-lua/plenary.nvim'
   use {
+    'nvim-orgmode/orgmode', config = function()
+      require('orgmode').setup {
+        org_agenda_files = { '~/Dropbox/Documents/OrgSync/**/*' },
+        org_default_notes_file = '~/Dropbox/Documents/OrgSync/Inbox.org',
+      }
+    end
+  }
+  use {
     'nvim-telescope/telescope.nvim',
     config = function()
       require 'telescope-config'

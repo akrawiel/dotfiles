@@ -1,3 +1,5 @@
+require'orgmode'.setup_ts_grammar()
+
 require'nvim-treesitter.configs'.setup {
   ensure_installed = {
     "astro",
@@ -14,6 +16,7 @@ require'nvim-treesitter.configs'.setup {
     "json",
     "lua",
     "markdown",
+    "org",
     "pug",
     "python",
     "regex",
@@ -29,6 +32,7 @@ require'nvim-treesitter.configs'.setup {
   },
   highlight = {
     enable = true,
+    additional_vim_regex_highlighting = {'org'}
   },
   indent = {
     enable = true,

@@ -35,6 +35,7 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'vsnip' },
+    { name = 'orgmode' },
     { name = 'buffer' },
   },
 }
