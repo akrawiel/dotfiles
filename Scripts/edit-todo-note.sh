@@ -1,3 +1,3 @@
 #!/bin/bash
 
-emacsclient -nc $HOME/Dropbox/Documents/OrgSync/Todo.org
+i3-sensible-terminal -e nvim $HOME/Dropbox/Documents/OrgSync/Todo.org
