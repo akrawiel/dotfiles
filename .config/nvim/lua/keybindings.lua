@@ -68,14 +68,13 @@ nnoremapSilent('<F4>', [[<cmd>NnnPicker %:p:h<CR>]])
 
 -- Hop
 
-nnoremapSilent('<space>jl', [[<cmd>HopLineStartMW<CR>]])
-nnoremapSilent('<space>jj', [[<cmd>HopWordMW<CR>]])
-nnoremapSilent('<space>j/', [[<cmd>HopPatternMW<CR>]])
+nnoremapSilent('S', [[<cmd>HopWordMW<CR>]])
+vnoremapSilent('Z', [[<cmd>HopWordMW<CR>]])
+onoremapSilent('Z', [[<cmd>HopWordMW<CR>]])
 
 -- Pounce
 
 nnoremapSilent('s', [[<cmd>Pounce<CR>]])
-nnoremapSilent('S', [[<cmd>PounceRepeat<CR>]])
 vnoremapSilent('s', [[<cmd>Pounce<CR>]])
 onoremapSilent('z', [[<cmd>Pounce<CR>]])
 
