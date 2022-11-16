@@ -128,10 +128,25 @@ return require 'packer'.startup(function(use)
   }
   use 'nvim-lua/plenary.nvim'
   use {
-    'nvim-orgmode/orgmode', config = function()
+    'nvim-orgmode/orgmode',
+    config = function()
       require('orgmode').setup {
         org_agenda_files = { '~/Dropbox/Documents/OrgSync/**/*' },
         org_default_notes_file = '~/Dropbox/Documents/OrgSync/Inbox.org',
+        org_priority_highest = 'A',
+        org_priority_default = 'B',
+        org_priority_lowest = 'E',
+        org_todo_keywords = { 'TODO(t)', 'NEXT(n)', 'WAIT(w)', '|', 'DONE(d)' },
+        org_todo_keyword_faces = {
+          TODO = ':foreground orange :weight bold',
+          NEXT = ':foreground yellow :weight bold',
+          WAIT = ':foreground red :weight bold',
+          DONE = ':foreground lightgreen :weight bold',
+        },
+        org_blank_before_new_entry = {
+          heading = false,
+          plain_list_item = false,
+        }
       }
     end
   }
