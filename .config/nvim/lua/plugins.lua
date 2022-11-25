@@ -139,7 +139,7 @@ return require 'packer'.startup(function(use)
         org_todo_keywords = { 'TODO(t)', 'NEXT(n)', 'WAIT(w)', '|', 'DONE(d)' },
         org_todo_keyword_faces = {
           TODO = ':foreground orange :weight bold',
-          NEXT = ':foreground yellow :weight bold',
+          NEXT = ':foreground white :weight bold',
           WAIT = ':foreground red :weight bold',
           DONE = ':foreground lightgreen :weight bold',
         },

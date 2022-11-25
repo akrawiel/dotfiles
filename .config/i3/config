@@ -17,10 +17,10 @@ mouse_warping output
 workspace_auto_back_and_forth yes
 
 # Always executing
-exec_always --no-startup-id ~/autostart.sh
 
 # Startup executing
 exec --no-startup-id kitty --class "DropdownKitty" -e "fish" 
+exec --no-startup-id ~/autostart.sh
 
 # Workspaces definitions
 set $ws1 "1_dev"
@@ -95,7 +95,7 @@ bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
-bindsym $mod+space exec --no-startup-id rofi -show combi
+bindsym $mod+space exec --no-startup-id rofi -show drun
 bindsym $mod+Tab focus next
 bindsym $mod+t floating toggle 
 bindsym $mod+w kill

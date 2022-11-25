@@ -1,3 +1,3 @@
-function gigaupdate --wraps='paru -Syu --noconfirm --skipreview' --description 'alias gigaupdate paru -Syu --noconfirm --skipreview'
-  paru -Syu --noconfirm --skipreview $argv; 
+function gigaupdate --wraps='yay -Syu --noconfirm' --description 'alias gigaupdate yay -Syu --noconfirm'
+  yay -Syu --noconfirm $argv; 
 end
