@@ -17,8 +17,7 @@ solaar -w hide &
 xfsettingsd --daemon &
 xfce4-power-manager --daemon &
 nitrogen --restore &
-emacs --daemon &
 dropbox &
 syncthing-gtk -m &
-joplin sync &
 dockd --daemon &
+keepassxc &

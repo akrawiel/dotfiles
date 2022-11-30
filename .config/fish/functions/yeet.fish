@@ -1,3 +1,3 @@
-function yeet --wraps='paru -Rscnd' --description 'alias yeet paru -Rscnd'
-  paru -Rscnd $argv; 
+function yeet --wraps='yay -Rscnd' --description 'alias yeet yay -Rscnd'
+  yay -Rscnd $argv; 
 end
