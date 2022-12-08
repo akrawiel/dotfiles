@@ -66,8 +66,14 @@ return require 'packer'.startup(function(use)
       require 'null-ls'.setup {
         sources = {
           require 'null-ls'.builtins.code_actions.eslint_d,
+          require 'null-ls'.builtins.diagnostics.codespell,
           require 'null-ls'.builtins.diagnostics.eslint_d,
+          require 'null-ls'.builtins.diagnostics.fish,
           require 'null-ls'.builtins.diagnostics.jsonlint,
+          require 'null-ls'.builtins.diagnostics.luacheck,
+          require 'null-ls'.builtins.diagnostics.yamllint,
+          require 'null-ls'.builtins.formatting.codespell,
+          require 'null-ls'.builtins.formatting.elm_format,
           require 'null-ls'.builtins.formatting.prettierd.with {
             to_temp_file = false
           },
@@ -98,7 +104,7 @@ return require 'packer'.startup(function(use)
             yoffset = 0.5,
             border = 'double'
           },
-          session = 'local',
+          session = 'global',
         },
         mappings = {
           { '<C-x>', require('nnn').builtin.open_in_split },
@@ -106,7 +112,7 @@ return require 'packer'.startup(function(use)
           { '<C-e>', require('nnn').builtin.populate_cmdline },
         },
         buflisted = false,
-        replace_netrw = "picker",
+        replace_netrw = nil,
       }
     end
   }
