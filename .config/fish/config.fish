@@ -27,6 +27,18 @@ set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 set -gx VOLTA_HOME "$HOME/.volta"
 set -gx XDG_CONFIG_HOME $HOME/.config
 
+# abbreviations
+
+abbr -a tst timew start
+abbr -a ts timew summary
+abbr -a tt timew tag
+
+abbr -a gcl git clone
+
+# project aliases
+
+source $HOME/.config/fish/project_aliases.fish
+
 # fzf plugin config
 
 fzf_configure_bindings --directory=\cf --git_log= --git_status= --history=\cr --variables=\cv --processes=\cp
