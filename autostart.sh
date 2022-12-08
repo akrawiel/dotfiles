@@ -5,7 +5,7 @@ export SSH_AUTH_SOCK
 
 export TERMINAL=kitty
 
-setxkbmap pl -option caps:ctrl_modifier &
+setxkbmap pl -option caps:ctrl_modifier -option compose:sclk &
 xset s off &
 dunst &
 numlockx &
