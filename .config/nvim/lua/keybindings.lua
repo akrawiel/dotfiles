@@ -78,6 +78,11 @@ nnoremapSilent('s', [[<cmd>Pounce<CR>]])
 vnoremapSilent('s', [[<cmd>Pounce<CR>]])
 onoremapSilent('z', [[<cmd>Pounce<CR>]])
 
+-- Search redefinition
+
+nnoremapSilent('n', 'nzzzv')
+nnoremapSilent('N', 'Nzzzv')
+
 -- Leader operations
 
 nnoremapSilent('<leader>p', [[<cmd>lua vim.lsp.buf.format { async = true }<CR>]])
