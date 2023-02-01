@@ -227,8 +227,8 @@ vnoremap('<space>x', [[:<C-u>]])
 
 -- Default keys remap
 
-nnoremap('/', '/\\v')
-vnoremap('/', '/\\v')
+-- nnoremap('/', '/\\v')
+-- vnoremap('/', '/\\v')
 
 -- Auto keybindings reload
 
