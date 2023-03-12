@@ -43,15 +43,6 @@ do
 	end)
 end
 
--- Theme
-beautiful.init(
-	string.format(
-		"%s/.config/awesome/themes/%s/theme.lua",
-		os.getenv("HOME"),
-		"zenburn"
-	)
-)
-
 -- Global variables
 terminal = "kitty"
 editor = os.getenv("EDITOR") or "nvim"
@@ -64,7 +55,14 @@ awful.layout.layouts = {
 	awful.layout.suit.tile.bottom,
 }
 
--- Additional widgets
+-- Theme
+beautiful.init(
+	string.format(
+		"%s/.config/awesome/themes/%s/theme.lua",
+		os.getenv("HOME"),
+		"zenburn"
+	)
+)
 
 -- Theme handling
 beautiful.bg_systray = beautiful.bg_normal
@@ -73,10 +71,20 @@ beautiful.useless_gap = 4
 beautiful.wallpaper =
 	string.format("%s/Pictures/%s", os.getenv("HOME"), "carina_nebula.jpg")
 
--- Geometry change wallpaper reset
--- screen.connect_signal("property::geometry", function()
--- 	awful.util.spawn("nitrogen --restore")
--- end)
+-- Wallpaper
+local function set_wallpaper(s)
+	if beautiful.wallpaper and gears.filesystem.file_readable(beautiful.wallpaper) then
+		local wallpaper = beautiful.wallpaper
+		-- If wallpaper is a function, call it with the screen
+		if type(wallpaper) == "function" then
+			wallpaper = wallpaper(s)
+		end
+		gears.wallpaper.maximized(wallpaper, s, true)
+  else
+		gears.wallpaper.set("#000000")
+	end
+end
+screen.connect_signal("property::geometry", set_wallpaper)
 
 -- Tag definitions
 local tags = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
@@ -104,6 +112,8 @@ local tagScreensAssignments = {
 }
 
 awful.screen.connect_for_each_screen(function(s)
+  set_wallpaper(s)
+
 	local geo = s.geometry
 
 	local displays = {}
@@ -234,7 +244,7 @@ end)
 
 -- Autostart
 awful.spawn.with_shell(
-	string.format("fish -c %s/autostart.sh", os.getenv("HOME"))
+	string.format("bash -c %s/autostart.sh", os.getenv("HOME"))
 )
 awful.spawn.single_instance([[kitty --class "DropdownKitty" -e fish]], {
 	hidden = true,
