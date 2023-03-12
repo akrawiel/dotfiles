@@ -77,6 +77,8 @@ set -g fish_cursor_visual block
 
 # custom booters
 
+setxkbmap pl -option caps:ctrl_modifier -option compose:sclk
+
 zoxide init fish | source
 
 gpgconf --launch gpg-agent
