@@ -157,6 +157,9 @@ awful.screen.connect_for_each_screen(function(s)
 			awful.widget.taglist({
 				screen = s,
 				filter = awful.widget.taglist.filter.noempty,
+				buttons = gears.table.join(awful.button({}, 1, function(t)
+					t:view_only()
+				end)),
 			}),
 		},
 		{
