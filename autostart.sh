@@ -1,35 +1,27 @@
-#!/bin/sh
+#!/bin/bash
 
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
 
-export TERMINAL=kitty
+run() {
+  if ! pgrep -f "$1";
+  then
+    "$@"&
+  fi
+}
 
-setxkbmap pl -option caps:ctrl_modifier -option compose:sclk &
-pkill numlockx &
-pkill flameshot &
-pkill redshift-gtk &
-pkill nm-applet &
-pkill polkit-gnome-au &
-pkill solaar &
-pkill xfsettingsd &
-pkill xfce4-power-man &
-pkill dropbox &
-pkill syncthing-gtk &
+setxkbmap pl -option caps:ctrl_modifier -option compose:sclk
 
-sleep 1
-
-setxkbmap pl -option caps:ctrl_modifier -option compose:sclk &
-xset s off &
-numlockx &
-flameshot &
-redshift-gtk &
-nm-applet &
-/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-solaar -w hide &
-xfsettingsd --daemon &
-xfce4-power-manager --daemon &
-dropbox &
-syncthing-gtk -m &
-dockd --daemon &
-keepassxc &
+run "xset s off"
+run "numlockx"
+run "flameshot"
+run "redshift-gtk"
+run "nm-applet"
+run "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+run "solaar -w hide"
+run "xfsettingsd --daemon"
+run "xfce4-power-manager --daemon"
+run "dropbox"
+run "syncthing-gtk -m"
+run "dockd --daemon"
+run "keepassxc"
