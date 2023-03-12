@@ -1,7 +1,5 @@
 local awful = require("awful")
-local hotkeys_popup = require("awful.hotkeys_popup")
 local gears = require("gears")
-local naughty = require("naughty")
 
 local commands = require("config.commands")
 
@@ -15,8 +13,6 @@ return function(options)
 	local tags = options.tags or {}
 
 	local keys = gears.table.join(
-		awful.key(Mod, "s", hotkeys_popup.show_help),
-
 		-- Focus switching
 		awful.key(Mod, "h", commands.focusLeft),
 		awful.key(Mod, "j", commands.focusDown),
