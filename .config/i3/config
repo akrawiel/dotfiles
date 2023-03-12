@@ -17,10 +17,11 @@ mouse_warping output
 workspace_auto_back_and_forth yes
 
 # Always executing
+exec_always --no-startup-id ~/autostart.sh
+exec_always --no-startup-id autotiling --limit 2
 
 # Startup executing
 exec --no-startup-id kitty --class "DropdownKitty" -e "fish" 
-exec --no-startup-id ~/autostart.sh
 
 # Workspaces definitions
 set $ws1 "1_dev"
@@ -57,6 +58,7 @@ bindsym $mod+Ctrl+Left exec --no-startup-id "playerctl -a previous"
 bindsym $mod+Ctrl+Right exec --no-startup-id "playerctl -a next"
 bindsym $mod+Ctrl+Up exec --no-startup-id "playerctl -a stop"
 bindsym $mod+e layout toggle split
+bindsym $mod+g split toggle
 bindsym $mod+F1 workspace $wsf1
 bindsym $mod+F2 workspace $wsf2
 bindsym $mod+F3 workspace $wsf3
