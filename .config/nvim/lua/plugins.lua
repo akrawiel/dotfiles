@@ -104,7 +104,7 @@ return require 'packer'.startup(function(use)
             yoffset = 0.5,
             border = 'double'
           },
-          session = 'global',
+          session = '',
         },
         mappings = {
           { '<C-x>', require('nnn').builtin.open_in_split },
@@ -112,7 +112,6 @@ return require 'packer'.startup(function(use)
           { '<C-e>', require('nnn').builtin.populate_cmdline },
         },
         buflisted = false,
-        replace_netrw = nil,
       }
     end
   }
