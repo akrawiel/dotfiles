@@ -111,13 +111,13 @@ return function(enabled_servers)
       name = 'pylsp',
       on_attach = common_on_attach,
     },
-    sumneko_lua = {
-      name = 'sumneko_lua',
+    lua_ls = {
+      name = 'lua_ls',
       on_attach = function(client, bufnr)
         common_on_attach(client, bufnr)
 
-        client.server_capabilities.document_formatting = false
-        client.server_capabilities.document_range_formatting = false
+        -- client.server_capabilities.document_formatting = false
+        -- client.server_capabilities.document_range_formatting = false
       end,
       params = {
         settings = {
