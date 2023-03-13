@@ -147,6 +147,13 @@ return function(enabled_servers)
       params = {
         filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less', 'vue' },
       },
+    },
+    denols = {
+      name = 'denols',
+      on_attach = common_on_attach,
+      params = {
+        root_dir = util.root_pattern("deno.json", "deno.jsonc"),
+      }
     }
   }
 

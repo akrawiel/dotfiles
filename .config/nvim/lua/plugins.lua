@@ -36,6 +36,10 @@ return require 'packer'.startup(function(use)
 
   -- plugins
   use 'arthurxavierx/vim-caser'
+  use {
+    'cshuaimin/ssr.nvim',
+    module = 'ssr',
+  }
   use 'editorconfig/editorconfig-vim'
   use {
     'echasnovski/mini.nvim',
@@ -66,20 +70,14 @@ return require 'packer'.startup(function(use)
       require 'null-ls'.setup {
         sources = {
           require 'null-ls'.builtins.code_actions.eslint_d,
-          require 'null-ls'.builtins.diagnostics.codespell,
           require 'null-ls'.builtins.diagnostics.eslint_d,
           require 'null-ls'.builtins.diagnostics.fish,
           require 'null-ls'.builtins.diagnostics.jsonlint,
           require 'null-ls'.builtins.diagnostics.luacheck,
           require 'null-ls'.builtins.diagnostics.yamllint,
-          require 'null-ls'.builtins.formatting.codespell,
           require 'null-ls'.builtins.formatting.elm_format,
-          require 'null-ls'.builtins.formatting.prettierd.with {
-            to_temp_file = false
-          },
-          require 'null-ls'.builtins.formatting.eslint_d.with {
-            to_temp_file = false
-          },
+          require 'null-ls'.builtins.formatting.prettierd,
+          require 'null-ls'.builtins.formatting.eslint_d,
           require 'null-ls'.builtins.formatting.stylua,
         },
       }
@@ -176,16 +174,6 @@ return require 'packer'.startup(function(use)
   }
   use 'nvim-treesitter/nvim-treesitter-context'
   use 'nvim-treesitter/nvim-treesitter-textobjects'
-  use {
-    'phaazon/hop.nvim',
-    config = function()
-      require 'hop'.setup {
-        char2_fallback_key = "<cr>",
-        jump_on_sole_occurrence = true,
-        teasing = false,
-      }
-    end,
-  }
   use 'romgrk/barbar.nvim'
   use {
     'rlane/pounce.nvim',

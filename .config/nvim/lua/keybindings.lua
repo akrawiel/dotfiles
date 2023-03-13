@@ -66,12 +66,6 @@ nnoremapSilent('<space>4', [[<cmd>BufferGoto 4<CR>]])
 nnoremapSilent('<F3>', [[<cmd>noh<CR>]])
 nnoremapSilent('<F4>', [[<cmd>NnnPicker %:p:h<CR>]])
 
--- Hop
-
-nnoremapSilent('S', [[<cmd>HopWordMW<CR>]])
-vnoremapSilent('Z', [[<cmd>HopWordMW<CR>]])
-onoremapSilent('Z', [[<cmd>HopWordMW<CR>]])
-
 -- Pounce
 
 nnoremapSilent('s', [[<cmd>Pounce<CR>]])
@@ -177,6 +171,7 @@ nnoremapSilent('<space>wq', '<C-w>q')
 nnoremapSilent('<space>ww', '<C-w>w')
 
 -- Yanking
+
 xnoremapSilent('<space>p', '"_dP')
 
 -- Packer
@@ -204,6 +199,10 @@ nnoremapSilent('<M-k>', [[:m .-2<CR>==]])
 
 nnoremapSilent('<C-j>', [[<cmd>cnext<CR>]])
 nnoremapSilent('<C-k>', [[<cmd>cprev<CR>]])
+
+-- Code operations
+
+nnoremapSilent('<space>cR', '', { callback = function() require('ssr').open() end })
 
 -- Text operations
 
