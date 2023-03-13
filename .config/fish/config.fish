@@ -5,7 +5,6 @@ fish_add_path $HOME/.yarn/bin
 fish_add_path $HOME/go/bin
 fish_add_path $HOME/Applications
 fish_add_path $HOME/.local/bin
-fish_add_path $HOME/.volta/bin
 fish_add_path /opt/applications
 fish_add_path /opt/android-sdk/platform-tools
 fish_add_path /opt/android-sdk/tools
@@ -24,7 +23,6 @@ set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
 set -gx NNN_PLUG 'z:autojump;G:getplugs;R:gitroot;r:renamer'
 set -gx PROJECT_PATHS "$HOME/Projects"
 set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
-set -gx VOLTA_HOME "$HOME/.volta"
 set -gx XDG_CONFIG_HOME $HOME/.config
 
 # abbreviations
@@ -32,8 +30,17 @@ set -gx XDG_CONFIG_HOME $HOME/.config
 abbr -a tst timew start
 abbr -a ts timew summary
 abbr -a tt timew tag
+abbr -a tct timew continue @2
 
 abbr -a gcl git clone
+
+abbr -a s swallow
+
+abbr -a L --position anywhere "| less"
+abbr -a R --position anywhere "| rg"
+abbr -a C --position anywhere "| xclip -selection clipboard"
+
+abbr -a m --set-cursor 'math "%"'
 
 # project aliases
 
