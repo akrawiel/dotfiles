@@ -14,7 +14,10 @@ return {
 			buttons = clientbuttons,
 			screen = awful.screen.preferred,
 			placement = awful.placement.no_overlap + awful.placement.no_offscreen,
-      maximized = false,
+			fullscreen = false,
+			maximized = false,
+			maximized_vertical = false,
+			maximized_horizontal = false,
 		},
 	},
 

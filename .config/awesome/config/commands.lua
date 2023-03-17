@@ -79,8 +79,10 @@ return {
 	focusTag = function(tag)
 		return function()
 			local foundTag = awful.tag.find_by_name(root.tags(), tag)
+
 			if foundTag then
 				foundTag:view_only()
+				awful.screen.focus(foundTag.screen)
 			end
 		end
 	end,
