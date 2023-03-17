@@ -139,6 +139,7 @@ return require 'packer'.startup(function(use)
         org_priority_highest = 'A',
         org_priority_default = 'B',
         org_priority_lowest = 'E',
+        org_tags_column = -64,
         org_todo_keywords = { 'TODO(t)', 'NEXT(n)', 'WAIT(w)', '|', 'DONE(d)' },
         org_todo_keyword_faces = {
           TODO = ':foreground orange :weight bold',
