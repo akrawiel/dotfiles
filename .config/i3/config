@@ -194,6 +194,7 @@ assign [class="(?i)evolution"] $wsf2
 assign [class="(?i)ferdi"] $wsf3
 assign [class="(?i)telegram-desktop"] $wsf3
 assign [class="(?i)telegramdesktop"] $wsf3
+assign [class="TodoDaily"] $wsf1
 assign [class="Slack"] $wsf1
 assign [class="Spotify"] $ws9
 assign [instance="EditorAlacritty"] $ws1
