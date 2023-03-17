@@ -7,26 +7,19 @@ for variable in $keyringVariables
   eval "set -Ux $splitVariable[1] $splitVariable[2]"
 end
 
-function run
-  set -l result (pgrep -f "$argv[1]")
-  if test -z "$result"
-    eval "$argv[1]&"
-  end
-end
-
 setxkbmap pl -option caps:ctrl_modifier -option compose:sclk
 xset s off
 nitrogen --restore
 
-run 'numlockx'
-run 'flameshot'
-run 'redshift-gtk'
-run 'nm-applet'
-run '/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1'
-run 'solaar -w hide'
-run 'xfsettingsd --daemon'
-run 'xfce4-power-manager --daemon'
-run 'dropbox'
-run 'syncthing-gtk -m'
-run 'dockd --daemon'
-run 'keepassxc'
+runSingleInstance 'numlockx'
+runSingleInstance 'flameshot'
+runSingleInstance 'redshift-gtk'
+runSingleInstance 'nm-applet'
+runSingleInstance '/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1'
+runSingleInstance 'solaar -w hide'
+runSingleInstance 'xfsettingsd --daemon'
+runSingleInstance 'xfce4-power-manager --daemon'
+runSingleInstance 'dropbox'
+runSingleInstance 'syncthing-gtk -m'
+runSingleInstance 'dockd --daemon'
+runSingleInstance 'keepassxc'
