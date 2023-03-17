@@ -244,7 +244,7 @@ end)
 
 -- Autostart
 awful.spawn.with_shell(
-	string.format("bash -c %s/autostart.sh", os.getenv("HOME"))
+	string.format("%s/autostart.fish", os.getenv("HOME"))
 )
 awful.spawn.single_instance([[kitty --class "DropdownKitty" -e fish]], {
 	hidden = true,
