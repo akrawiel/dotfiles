@@ -70,6 +70,15 @@ beautiful.font = "monospace 12"
 beautiful.useless_gap = 4
 beautiful.wallpaper =
 	string.format("%s/Pictures/%s", os.getenv("HOME"), "carina_nebula.jpg")
+beautiful.notification_icon_size = 64
+beautiful.notification_font = "monospace 16"
+
+-- Notifications config
+naughty.config.padding = beautiful.xresources.apply_dpi(8)
+naughty.config.spacing = beautiful.xresources.apply_dpi(8)
+naughty.config.presets.low.bg = "#008000"
+naughty.config.presets.normal.bg = "#8080ff"
+naughty.config.presets.critical.bg = "#800000"
 
 -- Wallpaper
 local function set_wallpaper(s)
