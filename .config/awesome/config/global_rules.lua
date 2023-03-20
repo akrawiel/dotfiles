@@ -28,6 +28,7 @@ return {
 				"DTA", -- Firefox addon DownThemAll.
 				"copyq", -- Includes session name in class.
 				"pinentry",
+				"pinentry-qt",
 			},
 			class = {
 				"Arandr",
@@ -53,7 +54,10 @@ return {
 				"pop-up", -- e.g. Google Chrome's (detached) Developer Tools.
 			},
 		},
-		properties = { floating = true },
+		properties = {
+			floating = true,
+			placement = awful.placement.centered,
+		},
 	},
 
 	-- Add titlebars to normal clients and dialogs
