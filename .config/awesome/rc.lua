@@ -82,24 +82,27 @@ naughty.config.presets.critical.bg = "#800000"
 
 -- Wallpaper
 local function set_wallpaper(s)
-	if beautiful.wallpaper and gears.filesystem.file_readable(beautiful.wallpaper) then
+	if
+		beautiful.wallpaper and gears.filesystem.file_readable(beautiful.wallpaper)
+	then
 		local wallpaper = beautiful.wallpaper
 		-- If wallpaper is a function, call it with the screen
 		if type(wallpaper) == "function" then
 			wallpaper = wallpaper(s)
 		end
 		gears.wallpaper.maximized(wallpaper, s, true)
-  else
+	else
 		gears.wallpaper.set("#000000")
 	end
 end
-screen.connect_signal("property::geometry", set_wallpaper)
 
 -- Tag definitions
-local tags = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
-local ftags = { "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9" }
+local tag_names = gears.table.join(
+	{ "1", "2", "3", "4", "5", "6", "7", "8", "9" },
+	{ "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9" }
+)
 
-local tagScreensAssignments = {
+local tag_screen_assignments = {
 	["1"] = "DP1-3",
 	["2"] = "DP1-3",
 	["3"] = "DP1-2",
@@ -120,38 +123,43 @@ local tagScreensAssignments = {
 	["F9"] = "eDP1",
 }
 
-awful.screen.connect_for_each_screen(function(s)
-  set_wallpaper(s)
+for index, tagName in pairs(tag_names) do
+	awful.tag.add(tagName, { selected = index == 1 })
+end
 
-	local geo = s.geometry
+local function handle_tag_assignments()
+	local connected_display_names = {}
+	local connected_displays = {}
 
-	local displays = {}
-
-	for scr in screen do
-		for key, _ in pairs(scr.outputs) do
-			displays[key] = key
+	for s in screen do
+		for key, _ in pairs(s.outputs) do
+			if not gears.table.hasitem(connected_display_names, key) then
+				table.insert(connected_display_names, key)
+				connected_displays[key] = s
+			end
 		end
 	end
 
-	for filteredTag in
-		gears.table.iterate(gears.table.join(tags, ftags), function(tag)
-			local tagScreenAssignment = tagScreensAssignments[tag]
-			local displaysItems = gears.table.keys(displays)
+	for _, tag in pairs(root.tags()) do
+		local screen_assignment = tag_screen_assignments[tag.name]
 
-			if gears.table.hasitem(displaysItems, tagScreenAssignment) then
-				return gears.table.keys(s.outputs)[1] == tagScreenAssignment
-			end
+		local s = screen.primary
 
-			return true
-		end)
-	do
-		awful.tag.add(filteredTag, {
-			screen = s,
-			layout = geo.width > geo.height and awful.layout.layouts[1]
-				or awful.layout.layouts[2],
-			selected = filteredTag == tags[1],
-		})
+		if gears.table.hasitem(connected_display_names, screen_assignment) then
+			s = connected_displays[screen_assignment]
+		end
+
+		tag.screen = s
+		tag.layout = s.geometry.width > s.geometry.height
+				and awful.layout.layouts[1]
+			or awful.layout.layouts[2]
 	end
+end
+
+handle_tag_assignments()
+
+awful.screen.connect_for_each_screen(function(s)
+	set_wallpaper(s)
 
 	-- Wibox
 	s.mywibox = awful.wibar({ position = "top", screen = s, height = 20 })
@@ -196,13 +204,17 @@ awful.screen.connect_for_each_screen(function(s)
 	})
 end)
 
+-- Screen signals
+screen.connect_signal("property::geometry", set_wallpaper)
+screen.connect_signal("property::geometry", handle_tag_assignments)
+
 -- todo
 -- master resizing
 -- screen switching
 
 -- Key bindings
 globalkeys = require("config.global_keybindings")({
-	tags = gears.table.join(tags, ftags),
+	tags = tag_names,
 })
 
 clientkeys = require("config.client_keybindings")()
@@ -252,9 +264,7 @@ client.connect_signal("unfocus", function(c)
 end)
 
 -- Autostart
-awful.spawn.with_shell(
-	string.format("%s/autostart.fish", os.getenv("HOME"))
-)
+awful.spawn.with_shell(string.format("%s/autostart.fish", os.getenv("HOME")))
 awful.spawn.single_instance([[kitty --class "DropdownKitty" -e fish]], {
 	hidden = true,
 	floating = true,
