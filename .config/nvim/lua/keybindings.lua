@@ -155,7 +155,7 @@ nnoremapSilent('<space>t.', [[<cmd>lua require('telescope.builtin').symbols({ so
 nnoremapSilent('<space><bs>', [[<cmd>lua require('telescope.builtin').resume()<CR>]])
 nnoremapSilent('<space><return>', [[<cmd>lua require('telescope.builtin').commands()<CR>]])
 nnoremapSilent('<space><space>', [[<cmd>lua require('telescope.builtin').find_files({ find_command = { 'fd', '--type', 'f', '--hidden', '--exclude', '.git' } })<CR>]])
-nnoremapSilent('<space>oo', [[<cmd>lua require('telescope.builtin').find_files({ hidden = true, follow = true, cwd = "~/Dropbox/Documents/OrgSync" })<CR>]])
+nnoremapSilent('<space>n', [[<cmd>lua require('telescope.builtin').find_files({ hidden = true, follow = true, cwd = "~/Dropbox/Documents/OrgSync" })<CR>]])
 
 -- Windows
 

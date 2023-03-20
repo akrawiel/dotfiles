@@ -135,6 +135,11 @@ return require("packer").startup(function(use)
 			require("orgmode").setup({
 				mappings = {
 					prefix = "<space>o",
+					capture = {
+						org_capture_finalize = "S",
+						org_capture_refile = "R",
+						org_capture_kill = "Q",
+					},
 				},
 				win_split_mode = "float",
 				org_agenda_files = { "~/Dropbox/Documents/OrgSync/**/*" },
