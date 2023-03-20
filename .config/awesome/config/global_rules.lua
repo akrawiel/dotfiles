@@ -33,6 +33,7 @@ return {
 			class = {
 				"Arandr",
 				"Blueman-manager",
+				"Dragon-drop",
 				"Gpick",
 				"Kruler",
 				"MessageWin", -- kalarm.
