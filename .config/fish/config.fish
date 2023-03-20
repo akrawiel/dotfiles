@@ -5,6 +5,7 @@ fish_add_path $HOME/.yarn/bin
 fish_add_path $HOME/go/bin
 fish_add_path $HOME/Applications
 fish_add_path $HOME/.local/bin
+fish_add_path $HOME/.spicetify
 fish_add_path /opt/applications
 fish_add_path /opt/android-sdk/platform-tools
 fish_add_path /opt/android-sdk/tools
