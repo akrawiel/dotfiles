@@ -133,6 +133,10 @@ return require("packer").startup(function(use)
 		"nvim-orgmode/orgmode",
 		config = function()
 			require("orgmode").setup({
+				mappings = {
+					prefix = "<space>o",
+				},
+				win_split_mode = "float",
 				org_agenda_files = { "~/Dropbox/Documents/OrgSync/**/*" },
 				org_capture_templates = {
 					t = {
