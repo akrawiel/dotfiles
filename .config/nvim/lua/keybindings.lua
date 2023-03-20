@@ -46,9 +46,9 @@ nnoremap('<space>zz', [[<cmd>wqa<CR>]])
 
 -- Barbar
 
-nnoremapSilent('<space>bc', [[<cmd>bufdo :BufferWipeout<CR>]])
-nnoremapSilent('<space>bd', [[<cmd>BufferWipeout<CR>]])
-nnoremapSilent('<space>bD', [[<cmd>BufferWipeout!<CR>]])
+nnoremapSilent('<space>bc', [[<cmd>bufdo :bwipeout<CR>]])
+nnoremapSilent('<space>bd', [[<cmd>BufferClose<CR>]])
+nnoremapSilent('<space>bD', [[<cmd>BufferClose!<CR>]])
 nnoremapSilent('<space>bp', [[<cmd>BufferPin<CR>]])
 nnoremapSilent('<space>bh', [[<cmd>BufferMovePrevious<CR>]])
 nnoremapSilent('<space>bl', [[<cmd>BufferMoveNext<CR>]])
