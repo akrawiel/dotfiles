@@ -1,5 +1,12 @@
 local awful = require("awful")
 
+-- Special Spotify treatment
+client.connect_signal("property::class", function(c)
+	if c.class == "Spotify" then
+		c:move_to_tag(awful.tag.find_by_name(nil, "9"))
+	end
+end)
+
 return {
 	{
 		rule = { class = "DropdownKitty" },
@@ -31,10 +38,6 @@ return {
 	{
 		rule = { class = "Firefox" },
 		properties = { tag = "5" },
-	},
-	{
-		rule = { class = "Spotify" },
-		properties = { tag = "9" },
 	},
 	{
 		rule_any = { class = { "Slack" } },
