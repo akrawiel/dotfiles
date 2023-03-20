@@ -124,7 +124,7 @@ local tag_screen_assignments = {
 }
 
 for index, tagName in pairs(tag_names) do
-	awful.tag.add(tagName, { selected = index == 1 })
+	awful.tag.add(tagName, { selected = index == 1, master_width_factor = 0.6 })
 end
 
 local function handle_tag_assignments()
