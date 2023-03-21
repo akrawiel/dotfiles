@@ -1,9 +1,15 @@
 local awful = require("awful")
+local gears = require("gears")
 
--- Special Spotify treatment
+-- Special window treatment
 client.connect_signal("property::class", function(c)
 	if c.class == "Spotify" then
 		c:move_to_tag(awful.tag.find_by_name(nil, "9"))
+  elseif c.class == "Ferdium" or c.class == "Signal" then
+    gears.timer.start_new(1, function()
+      c:move_to_tag(awful.tag.find_by_name(nil, "F3"))
+      return false
+    end)
 	end
 end)
 
@@ -46,9 +52,5 @@ return {
 	{
 		rule = { class = "Evolution" },
 		properties = { tag = "F2" },
-	},
-	{
-		rule_any = { class = { "Ferdium", "Signal" } },
-		properties = { tag = "F3" },
 	},
 }
