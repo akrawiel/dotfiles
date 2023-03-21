@@ -124,7 +124,7 @@ local tag_screen_assignments = {
 }
 
 for index, tagName in pairs(tag_names) do
-	awful.tag.add(tagName, { selected = index == 1, master_width_factor = 0.6 })
+	awful.tag.add(tagName, { master_width_factor = 0.6 })
 end
 
 local function handle_tag_assignments()
@@ -153,6 +153,10 @@ local function handle_tag_assignments()
 		tag.layout = s.geometry.width > s.geometry.height
 				and awful.layout.layouts[1]
 			or awful.layout.layouts[2]
+	end
+
+	for s in screen do
+		s.tags[1].selected = true
 	end
 end
 
@@ -207,10 +211,6 @@ end)
 -- Screen signals
 screen.connect_signal("property::geometry", set_wallpaper)
 screen.connect_signal("property::geometry", handle_tag_assignments)
-
--- todo
--- master resizing
--- screen switching
 
 -- Key bindings
 globalkeys = require("config.global_keybindings")({
