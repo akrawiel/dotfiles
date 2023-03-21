@@ -39,6 +39,9 @@ return {
 	runRofi = function()
 		awful.spawn("rofi -show combi")
 	end,
+	runFlameshot = function()
+		awful.spawn("flameshot gui")
+	end,
 	runRofimoji = function()
 		awful.spawn("rofimoji --skin-tone neutral")
 	end,
@@ -147,5 +150,45 @@ return {
 		awful.spawn.with_shell(
 			"i3lock -c 008040 -k --{time,date,verif,wrong,modif}-color=ffffff --date-str='%A, %d %b %Y'"
 		)
+	end,
+
+	audioLower = function()
+		awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ -5%")
+	end,
+	audioMute = function()
+		awful.spawn.with_shell("pactl set-sink-mute @DEFAULT_SINK@ toggle")
+	end,
+	audioMicMute = function()
+		awful.spawn.with_shell("pactl set-source-mute @DEFAULT_SOURCE@ toggle")
+	end,
+	audioNext = function()
+		awful.spawn.with_shell(
+			"playerctl -p $(playerctl -l | rofi -dmenu -auto-select) next"
+		)
+	end,
+	audioPlay = function()
+		awful.spawn.with_shell(
+			"playerctl -p $(playerctl -l | rofi -dmenu -auto-select) play-pause"
+		)
+	end,
+	audioPrev = function()
+		awful.spawn.with_shell(
+			"playerctl -p $(playerctl -l | rofi -dmenu -auto-select) previous"
+		)
+	end,
+	audioRaise = function()
+		awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ +5")
+	end,
+	audioStop = function()
+		awful.spawn.with_shell("playerctl -a stop")
+	end,
+	audioNextAll = function()
+		awful.spawn.with_shell("playerctl -a next")
+	end,
+	audioPlayAll = function()
+		awful.spawn.with_shell("playerctl -a play-pause")
+	end,
+	audioPrevAll = function()
+		awful.spawn.with_shell("playerctl -a previous")
 	end,
 }
