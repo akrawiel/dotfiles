@@ -6,6 +6,7 @@ local beautiful = require("beautiful")
 local gears = require("gears")
 local naughty = require("naughty")
 local wibox = require("wibox")
+local vicious = require("vicious")
 
 require("awful.autofocus")
 
@@ -181,6 +182,30 @@ awful.screen.connect_for_each_screen(function(s)
 		visible = false,
 	})
 
+	-- CPU & RAM
+	local cpu_usage_box = wibox.widget.textbox("")
+	vicious.register(cpu_usage_box, vicious.widgets.cpu, function(_, args)
+		return "<b>C</b>" .. string.format("%3d", args[1])
+	end, 1)
+
+	local cpu_governor = wibox.widget.textbox("")
+	vicious.register(cpu_governor, vicious.widgets.cpufreq, function(_, args)
+		local governor_state = {
+			["↯"] = "OND",
+			["⌁"] = "POW",
+			["¤"] = "USR",
+			["⚡"] = "PRF",
+			["⊚"] = "CON",
+		}
+
+		return "<b>G</b>" .. governor_state[args[5]]
+	end, 5, "cpu0")
+
+	local ram_usage_box = wibox.widget.textbox("")
+	vicious.register(ram_usage_box, vicious.widgets.mem, function(_, args)
+		return "<b>R</b>" .. string.format("%3d", args[1])
+	end, 1)
+
 	s.mywibox:setup({
 		layout = wibox.layout.align.horizontal,
 		{
@@ -201,6 +226,9 @@ awful.screen.connect_for_each_screen(function(s)
 		{
 			layout = wibox.layout.fixed.horizontal,
 			wibox.widget.systray(),
+			wibox.container.margin(cpu_governor, 8, 2),
+			wibox.container.margin(cpu_usage_box, 8, 2),
+			wibox.container.margin(ram_usage_box, 8, 2),
 			require("config.volume_speaker_widget"),
 			require("config.volume_microphone_widget"),
 			wibox.widget.textclock(),
