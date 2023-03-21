@@ -18,7 +18,6 @@ return function(options)
 		awful.key(Mod, "j", commands.focusDown),
 		awful.key(Mod, "k", commands.focusUp),
 		awful.key(Mod, "l", commands.focusRight),
-		awful.key(Mod, "Tab", commands.focusPrevious),
 
 		-- Window swapping
 		awful.key(ModShift, "h", commands.swapLeft),
@@ -28,7 +27,10 @@ return function(options)
 
 		-- Launchers
 		awful.key(Mod, "Return", commands.runTerminal),
+		awful.key(Mod, ".", commands.runRofimoji),
+		awful.key(Meh, ".", commands.runRofimoji),
 		awful.key(Mod, "space", commands.runRofi),
+		awful.key(Mod, "Tab", commands.runChorder),
 		awful.key(Meh, "Tab", commands.runChorder),
 
 		-- Awesome controls
