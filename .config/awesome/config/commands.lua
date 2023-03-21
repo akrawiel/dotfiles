@@ -39,6 +39,9 @@ return {
 	runRofi = function()
 		awful.spawn("rofi -show combi")
 	end,
+	runRofimoji = function()
+		awful.spawn("rofimoji --skin-tone neutral")
+	end,
 	runChorder = function()
 		awful.spawn("chorder")
 	end,
