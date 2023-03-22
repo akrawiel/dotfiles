@@ -187,7 +187,7 @@ awful.screen.connect_for_each_screen(function(s)
 	-- CPU & RAM
 	local cpu_usage_box = wibox.widget.textbox("")
 	vicious.register(cpu_usage_box, vicious.widgets.cpu, function(_, args)
-		return "<b>C</b>" .. string.format("%3d", args[1])
+		return "<b>C</b>" .. string.format("%03d", args[1])
 	end, 1)
 
 	local cpu_governor = wibox.widget.textbox("")
@@ -205,7 +205,7 @@ awful.screen.connect_for_each_screen(function(s)
 
 	local ram_usage_box = wibox.widget.textbox("")
 	vicious.register(ram_usage_box, vicious.widgets.mem, function(_, args)
-		return "<b>R</b>" .. string.format("%3d", args[1])
+		return "<b>R</b>" .. string.format("%03d", args[1])
 	end, 1)
 
 	s.mywibox:setup({
