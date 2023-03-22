@@ -82,6 +82,7 @@ nnoremapSilent('N', 'Nzzzv')
 nnoremapSilent('<leader>p', [[<cmd>lua vim.lsp.buf.format { async = true }<CR>]])
 nnoremapSilent('<leader>t', [[<cmd>terminal fish<CR>]])
 nnoremapSilent('<leader>g', [[<cmd>terminal fish -c lazygit<CR>]])
+nnoremapSilent('<leader>d', [[<cmd>terminal fish -c lazydocker<CR>]])
 
 -- Current word search
 local function highlightCurrentWord()
