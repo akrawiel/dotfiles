@@ -77,6 +77,7 @@ return {
 				awful.client.focus.history.previous()
 			else
 				client.focus = c
+				awful.placement.centered(c)
 				c:raise()
 			end
 		end
