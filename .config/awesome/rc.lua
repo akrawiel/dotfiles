@@ -72,7 +72,9 @@ beautiful.useless_gap = 4
 beautiful.wallpaper =
 	string.format("%s/Pictures/%s", os.getenv("HOME"), "carina_nebula.jpg")
 beautiful.notification_icon_size = 64
-beautiful.notification_font = "monospace 16"
+beautiful.notification_font = "monospace 12"
+beautiful.notification_max_width = 536
+beautiful.notification_max_height = 536
 
 -- Notifications config
 naughty.config.padding = beautiful.xresources.apply_dpi(8)
