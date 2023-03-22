@@ -3,7 +3,7 @@ vim.api.nvim_command [[:filetype plugin indent on]]
 
 vim.api.nvim_command [[:highlight StatusLineBold guifg=#313633 guibg=#ccdc90 gui=bold]]
 vim.api.nvim_command [[:highlight OrgAgendaScheduled guifg=#eeeeee gui=bold]]
-vim.api.nvim_command [[:highlight OrgAgendaScheduledPast guifg=#cccccc]]
+vim.api.nvim_command [[:highlight OrgAgendaScheduledPast guifg=black guibg=red gui=bold]]
 vim.api.nvim_command [[:highlight OrgAgendaDeadline guifg=#ff8888 gui=bold]]
 
 vim.opt.compatible = false
