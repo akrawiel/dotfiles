@@ -77,6 +77,14 @@ beautiful.notification_max_width = 536
 beautiful.notification_max_height = 536
 beautiful.taglist_bg_urgent = "#cc0000"
 beautiful.taglist_fg_urgent = "#000000"
+beautiful.taglist_squares_sel = string.format(
+	"%s/themes/zenburn/taglist/squarefz.png",
+	gears.filesystem.get_configuration_dir()
+)
+beautiful.taglist_squares_unsel = string.format(
+	"%s/themes/zenburn/taglist/squarez.png",
+	gears.filesystem.get_configuration_dir()
+)
 
 -- Notifications config
 naughty.config.padding = beautiful.xresources.apply_dpi(8)
