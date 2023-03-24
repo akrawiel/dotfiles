@@ -75,6 +75,8 @@ beautiful.notification_icon_size = 64
 beautiful.notification_font = "monospace 12"
 beautiful.notification_max_width = 536
 beautiful.notification_max_height = 536
+beautiful.taglist_bg_urgent = "#cc0000"
+beautiful.taglist_fg_urgent = "#000000"
 
 -- Notifications config
 naughty.config.padding = beautiful.xresources.apply_dpi(8)
