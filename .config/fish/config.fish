@@ -67,7 +67,7 @@ function _open_with_xdg
 end
 
 bind --mode insert \co _open_with_editor
-bind --mode insert \cg _open_with_xdg
+bind --mode insert \cx _open_with_xdg
 
 # options
 
@@ -88,6 +88,7 @@ set -g fish_cursor_visual block
 setxkbmap pl -option caps:ctrl_modifier -option compose:sclk
 
 zoxide init fish | source
+navi widget fish | source
 
 gpgconf --launch gpg-agent
 
