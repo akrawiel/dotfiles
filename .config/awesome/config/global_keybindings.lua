@@ -45,6 +45,8 @@ return function(options)
 		awful.key(Mod, "space", commands.runRofi),
 		awful.key(Mod, "Tab", commands.runChorder),
 		awful.key(Meh, "Tab", commands.runChorder),
+		awful.key(Mod, "g", commands.runTenorSelector),
+		awful.key(Meh, "g", commands.runTenorSelector),
 
 		-- Awesome controls
 		awful.key(Hyper, "l", commands.lockScreen),
