@@ -178,7 +178,7 @@ return {
 		)
 	end,
 	audioRaise = function()
-		awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ +5")
+		awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ +5%")
 	end,
 	audioStop = function()
 		awful.spawn.with_shell("playerctl -a stop")
