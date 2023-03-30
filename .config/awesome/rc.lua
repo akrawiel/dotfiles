@@ -138,8 +138,10 @@ local tag_screen_assignments = {
 	["F9"] = "eDP1",
 }
 
-for index, tagName in pairs(tag_names) do
-	awful.tag.add(tagName, { master_width_factor = 0.6 })
+for _, tagName in pairs(tag_names) do
+	awful.tag.add(tagName, {
+		master_width_factor = gears.string.startswith(tagName, "F") and 0.7 or 0.6,
+	})
 end
 
 local function handle_tag_assignments()
