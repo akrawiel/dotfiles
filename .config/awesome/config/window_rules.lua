@@ -3,7 +3,7 @@ local beautiful = require("beautiful")
 
 local function TAG(tag)
 	return function(c)
-    c:move_to_tag(awful.tag.find_by_name(nil, tag))
+		c:move_to_tag(awful.tag.find_by_name(nil, tag))
 	end
 end
 
@@ -104,8 +104,14 @@ return {
 		callback = TAG("4"),
 	},
 	{
-		rule = { class = "Firefox" },
+		rule_any = { class = { "Firefox", "FreeTube" } },
 		callback = TAG("5"),
+	},
+	{
+		rule = { class = "FreeTube" },
+		properties = {
+			maximized = false,
+		},
 	},
 	{
 		rule = { class = "Spotify" },
