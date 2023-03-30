@@ -45,6 +45,9 @@ return {
 	runRofimoji = function()
 		awful.spawn("rofimoji --skin-tone neutral")
 	end,
+	runTenorSelector = function()
+		awful.spawn.with_shell("tenorSelector")
+	end,
 	runChorder = function()
 		awful.spawn("chorder")
 	end,
