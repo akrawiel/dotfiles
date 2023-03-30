@@ -1,19 +1,81 @@
 local awful = require("awful")
-local gears = require("gears")
+local beautiful = require("beautiful")
 
--- Special window treatment
-client.connect_signal("property::class", function(c)
-	if c.class == "Spotify" then
-		c:move_to_tag(awful.tag.find_by_name(nil, "9"))
-  elseif c.class == "Ferdium" or c.class == "Signal" then
-    gears.timer.start_new(1, function()
-      c:move_to_tag(awful.tag.find_by_name(nil, "F3"))
-      return false
-    end)
+local function TAG(tag)
+	return function(c)
+    c:move_to_tag(awful.tag.find_by_name(nil, tag))
 	end
-end)
+end
 
 return {
+	-- All clients will match this rule.
+	{
+		rule = {},
+		properties = {
+			border_width = beautiful.border_width,
+			border_color = beautiful.border_normal,
+			focus = awful.client.focus.filter,
+			raise = true,
+			keys = clientkeys,
+			buttons = clientbuttons,
+			screen = awful.screen.preferred,
+			placement = awful.placement.no_overlap + awful.placement.no_offscreen,
+			fullscreen = false,
+			maximized = false,
+			maximized_vertical = false,
+			maximized_horizontal = false,
+		},
+	},
+
+	-- Floating clients.
+	{
+		rule_any = {
+			instance = {
+				"DTA", -- Firefox addon DownThemAll.
+				"copyq", -- Includes session name in class.
+				"pinentry",
+				"pinentry-qt",
+			},
+			class = {
+				"Arandr",
+				"Blueman-manager",
+				"Dragon-drop",
+				"Gpick",
+				"Kruler",
+				"MessageWin", -- kalarm.
+				"Sxiv",
+				"Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
+				"KittyPopup",
+				"Wpa_gui",
+				"veromix",
+				"xtightvncviewer",
+			},
+
+			-- Note that the name property shown in xprop might be set slightly after creation of the client
+			-- and the name shown there might not match defined rules here.
+			name = {
+				"Event Tester", -- xev.
+			},
+			role = {
+				"AlarmWindow", -- Thunderbird's calendar.
+				"ConfigManager", -- Thunderbird's about:config.
+				"pop-up", -- e.g. Google Chrome's (detached) Developer Tools.
+			},
+		},
+		properties = {
+			floating = true,
+			placement = awful.placement.centered,
+			raise = true,
+		},
+	},
+
+	-- Add titlebars to normal clients and dialogs
+	{
+		rule_any = { type = { "normal", "dialog" } },
+		properties = { titlebars_enabled = true },
+	},
+
+	-- Custom rules
 	{
 		rule = { class = "DropdownKitty" },
 		properties = {
@@ -27,30 +89,43 @@ return {
 	},
 	{
 		rule = { instance = "EditorAlacritty" },
-		properties = { tag = "1" },
+		callback = TAG("1"),
 	},
 	{
 		rule = { instance = "ProjectAlacritty" },
-		properties = { tag = "2" },
+		callback = TAG("2"),
 	},
 	{
 		rule = { class = "Firefox Developer Edition" },
-		properties = { tag = "3" },
+		callback = TAG("3"),
 	},
 	{
 		rule = { class = "Brave-browser" },
-		properties = { tag = "4" },
+		callback = TAG("4"),
 	},
 	{
 		rule = { class = "Firefox" },
-		properties = { tag = "5" },
+		callback = TAG("5"),
+	},
+	{
+		rule = { class = "Spotify" },
+		callback = TAG("9"),
 	},
 	{
 		rule_any = { class = { "Slack" } },
-		properties = { tag = "F1" },
+		callback = TAG("F1"),
 	},
 	{
-		rule = { class = "Evolution" },
-		properties = { tag = "F2" },
+		rule_any = {
+			class = { "Evolution", "thunderbird-beta", "Thunderbird", "Mail" },
+		},
+		callback = TAG("F2"),
+	},
+
+	{
+		rule_any = {
+			class = { "Ferdium", "Signal" },
+		},
+		callback = TAG("F3"),
 	},
 }
