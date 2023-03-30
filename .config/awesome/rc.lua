@@ -282,10 +282,8 @@ root.keys(globalkeys)
 
 -- Rules
 -- Rules to apply to new clients (through the "manage" signal).
-awful.rules.rules = gears.table.join(
-	require("config.global_rules"),
-	require("config.window_rules")
-)
+awful.rules.rules = require("config.window_rules")
+require("config.special_rules")
 
 -- Signals
 -- Signal function to execute when a new client appears.
