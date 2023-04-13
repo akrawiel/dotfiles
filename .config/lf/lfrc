@@ -1,0 +1,90 @@
+set drawbox true
+set filesep "\\n"
+set mouse false
+set previewer ~/.config/lf/pv.fish
+set relativenumber true
+set scrolloff 10
+set shell fish
+set shellopts ""
+set smartcase true
+set smartdia true
+
+map x :delete
+map X !$f
+
+map R :batchRename
+map Z :zi
+
+map zh
+map . set hidden!
+
+map gr cd /
+map gd cd ~/Documents
+map gD cd ~/Downloads
+map gp cd ~/Pictures
+map gc cd ~/.config
+
+map S $/usr/bin/fish
+
+map o &xdg-open $f
+map O &re.sonny.Junction $f
+
+map <c-n>
+map <c-n>d :mkdir
+map <c-n>f :touch
+
+map w
+map wd :dragdrop
+map we :extract
+
+cmd dragdrop &dragon-drop (string split "\n" "$fx")
+
+cmd mkdir %{{
+  printf "New directory: "
+  read -l newDir
+  if test -n "$newDir"
+    mkdir -p "$newDir"
+    echo "Created $newDir"
+  end
+}}
+
+cmd touch %{{
+  printf "New file: "
+  read -l newFile
+  if test -n "$newFile"
+    set -l realFilePath (realpath "$newFile")
+    set -l baseDirName (dirname "$realFilePath")
+    mkdir -p "$baseDirName" &> /dev/null
+    touch "$realFilePath"
+    echo "Created $newFile"
+  end
+}}
+
+cmd extract $ouch d $f
+
+cmd zi ${{
+  set -l result (zoxide query -i)
+	lf -remote "send $id cd $result"
+}}
+
+cmd batchRename ${{
+  set -l filesChanged 0
+  set -l filesIn (string split "\n" "$fx")
+  set -l filesOutLocation (mktemp)
+  printf "$fx\n" > "$filesOutLocation"
+
+  $EDITOR "$filesOutLocation"
+
+  set -l filesOut (string split "\n" (cat "$filesOutLocation"))
+
+  for i in (seq 1 (count $filesIn))
+    if test "$filesIn[$i]" != "$filesOut[$i]"
+      mv "$filesIn[$i]" "$filesOut[$i]"
+      set filesChanged (math $filesChanged + 1)
+    end
+  end
+
+
+  lf -remote "send echo Files renamed: $filesChanged"
+  lf -remote "send unselect"
+}}
