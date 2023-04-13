@@ -313,6 +313,9 @@ awful.spawn.single_instance([[kitty --class "DropdownKitty" -e fish]], {
 	placement = awful.placement.centered,
 	width = 960,
 	height = 480,
+	ontop = true,
+	modal = true,
+	urgent = false,
 }, nil, "DropdownKitty")
 
 -- Garbage collection
