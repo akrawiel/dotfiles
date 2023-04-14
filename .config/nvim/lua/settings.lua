@@ -1,3 +1,5 @@
+vim.api.nvim_command [[:language en_US.utf8]]
+
 vim.api.nvim_command [[:syntax on]]
 vim.api.nvim_command [[:filetype plugin indent on]]
 
