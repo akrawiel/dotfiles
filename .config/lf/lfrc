@@ -29,6 +29,9 @@ map S $/usr/bin/fish
 map o &xdg-open $f
 map O &re.sonny.Junction $f
 
+map <c-enter>
+map <a-[> &nvr $f
+
 map <c-n>
 map <c-n>d :mkdir
 map <c-n>f :touch
