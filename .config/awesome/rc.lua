@@ -223,6 +223,47 @@ awful.screen.connect_for_each_screen(function(s)
 		return "<b>R</b>" .. string.format("%03d", args[1])
 	end, 1)
 
+	-- Currency
+	local currency_box = wibox.widget.textbox("")
+	local function get_currencies()
+		local currencies = { "usd", "eur" }
+
+		awful.spawn.easy_async_with_shell(
+			"qalc -t -e '["
+				.. table.concat(
+					gears.table.map(function(currency)
+						return "1 " .. currency
+					end, currencies),
+					", "
+				)
+				.. "] to pln'",
+			function(out)
+				local textout = ""
+				local index = 1
+
+				for w in out:gmatch("%b()") do
+					local currency = currencies[index]:upper():gsub("(.).*", "%1")
+					local parsedprice = w:gsub("[^%d.]", "")
+					local price = tonumber(parsedprice)
+
+					textout = textout
+						.. " <b>"
+						.. currency
+						.. "</b>"
+						.. string.format("%.3f", price)
+					index = index + 1
+				end
+
+				currency_box.markup = textout:gsub("^%s", "")
+			end
+		)
+
+		return true
+	end
+
+	gears.timer.start_new(60 * 15, get_currencies)
+	get_currencies()
+
 	s.mywibox:setup({
 		layout = wibox.layout.align.horizontal,
 		{
@@ -243,6 +284,7 @@ awful.screen.connect_for_each_screen(function(s)
 		{
 			layout = wibox.layout.fixed.horizontal,
 			wibox.widget.systray(),
+			wibox.container.margin(currency_box, 8, 2),
 			wibox.container.margin(cpu_governor, 8, 2),
 			wibox.container.margin(cpu_usage_box, 8, 2),
 			wibox.container.margin(ram_usage_box, 8, 2),
