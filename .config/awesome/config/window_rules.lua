@@ -40,6 +40,7 @@ return {
 				"Arandr",
 				"Blueman-manager",
 				"Dragon-drop",
+				"Gcr-prompter",
 				"Gpick",
 				"Kruler",
 				"MessageWin", -- kalarm.
@@ -66,6 +67,7 @@ return {
 			floating = true,
 			placement = awful.placement.centered,
 			raise = true,
+			ontop = true,
 		},
 	},
 
@@ -118,7 +120,7 @@ return {
 		callback = TAG("9"),
 	},
 	{
-		rule_any = { class = { "Slack" } },
+		rule_any = { class = { "Slack", "Logseq" } },
 		callback = TAG("F1"),
 	},
 	{
