@@ -195,4 +195,14 @@ return {
 	audioPrevAll = function()
 		awful.spawn.with_shell("playerctl -a previous")
 	end,
+
+	focusWindowClass = function(class)
+		return function()
+			for _, c in pairs(client.get()) do
+				if c.class == class then
+					client.focus = c
+				end
+			end
+		end
+	end,
 }
