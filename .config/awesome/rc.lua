@@ -174,6 +174,7 @@ local function handle_tag_assignments()
 
 	for s in screen do
 		s.tags[1].selected = true
+		set_wallpaper(s)
 	end
 end
 
