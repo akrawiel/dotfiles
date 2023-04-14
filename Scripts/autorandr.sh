@@ -1,3 +1,3 @@
 #!/bin/bash
 
-autorandr -c
+autorandr --cycle
