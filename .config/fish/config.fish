@@ -88,7 +88,6 @@ set -g fish_cursor_visual block
 setxkbmap pl -option caps:ctrl_modifier -option compose:sclk
 
 zoxide init fish | source
-navi widget fish | source
 
 gpgconf --launch gpg-agent
 
