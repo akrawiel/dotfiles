@@ -71,6 +71,14 @@ return {
 		},
 	},
 
+	-- xpad floating
+	{
+		rule = { class = "xpad" },
+		properties = {
+			floating = true,
+		},
+	},
+
 	-- Add titlebars to normal clients and dialogs
 	{
 		rule_any = { type = { "normal", "dialog" } },

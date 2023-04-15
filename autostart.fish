@@ -12,6 +12,7 @@ sleep 1
 setxkbmap pl -option caps:ctrl_modifier -option compose:sclk
 xset s off
 nitrogen --restore
+xpad -s
 
 runSingleInstance 'numlockx'
 runSingleInstance 'flameshot'
@@ -21,7 +22,6 @@ runSingleInstance '/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1'
 runSingleInstance 'solaar -w hide'
 runSingleInstance 'xfsettingsd --daemon'
 runSingleInstance 'xfce4-power-manager --daemon'
-runSingleInstance 'dropbox'
 runSingleInstance 'syncthing-gtk -m'
 runSingleInstance 'dockd --daemon'
 runSingleInstance 'keepassxc'

@@ -132,7 +132,7 @@ return require("packer").startup(function(use)
 	use({
 		"nvim-orgmode/orgmode",
 		config = function()
-      require("orgmode-config")()
+			require("orgmode-config")()
 		end,
 	})
 	use({
@@ -172,11 +172,10 @@ return require("packer").startup(function(use)
 
 	-- colorschemes
 	use({
-		"phha/zenburn.nvim",
+		"catppuccin/nvim",
+		as = "catppuccin",
 		config = function()
-			vim.api.nvim_command([[:colorscheme zenburn]])
-			vim.api.nvim_command([[:highlight Search guifg=#313633 guibg=#6d7f28]])
-			vim.api.nvim_command([[:highlight CurSearch guifg=#313633 guibg=#aac445 gui=bold]])
+			vim.api.nvim_command([[:colorscheme catppuccin-frappe]])
 		end,
 	})
 

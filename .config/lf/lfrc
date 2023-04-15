@@ -1,8 +1,10 @@
 set drawbox true
 set filesep "\\n"
 set mouse false
+set preview!
 set previewer ~/.config/lf/pv.fish
 set relativenumber true
+set ratios '1:3'
 set scrolloff 10
 set shell fish
 set shellopts ""
@@ -14,6 +16,14 @@ map X !$f
 
 map R :batchRename
 map Z :zi
+
+map zf filter
+map zF setfilter ""
+
+map zp :{{
+  set preview!
+  reratio
+}}
 
 map zh
 map . set hidden!
@@ -90,4 +100,12 @@ cmd batchRename ${{
 
   lf -remote "send echo Files renamed: $filesChanged"
   lf -remote "send unselect"
+}}
+
+cmd reratio &{{
+  if test "$lf_preview" = "true"
+    lf -remote "send set ratios '1:2:2'"
+  else
+    lf -remote "send set ratios '1:3'"
+  end
 }}
