@@ -47,6 +47,8 @@ return function(options)
 		awful.key(Meh, "Tab", commands.runPopup),
 		awful.key(Mod, "g", commands.runTenorSelector),
 		awful.key(Meh, "g", commands.runTenorSelector),
+		awful.key(Mod, "g", commands.runTenorSelector),
+		awful.key(Meh, "g", commands.runTenorSelector),
 
 		-- Awesome controls
 		awful.key(Hyper, "l", commands.lockScreen),
@@ -54,12 +56,11 @@ return function(options)
 		awful.key(Hyper, "q", awesome.quit),
 		awful.key(Mod, "x", commands.invokePrompt),
 		awful.key(Mod, "r", commands.startResize),
+		awful.key(ModShift, "s", commands.invokeWebSearch),
 
 		-- Window focus
 		awful.key(Mod, "s", commands.focusWindowClass("Slack")),
 		awful.key(Mod, "d", commands.focusWindowClass("Logseq")),
-		awful.key(ModShift, "f", commands.focusWindowClass("Ferdium")),
-		awful.key(ModShift, "s", commands.focusWindowClass("Signal")),
 
 		-- Other controls
 		awful.key({}, "F10", commands.toggleDropdown),

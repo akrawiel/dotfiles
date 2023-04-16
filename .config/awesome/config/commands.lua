@@ -75,6 +75,78 @@ return {
 			history_path = awful.util.get_cache_dir() .. "/history_eval",
 		})
 	end,
+	invokeWebSearch = function()
+		awful.prompt.run({
+			prompt = " Search: ",
+			textbox = awful.screen.focused().promptbox.widget,
+			exe_callback = function(input)
+				if not input or #input == 0 then
+					return
+				end
+
+				awful.spawn(
+					string.format(
+						"firefox-developer-edition 'https://search.brave.com/search?q=%s'",
+						input
+					)
+				)
+
+				for _, c in pairs(client.get()) do
+					if c.class == "firefoxdeveloperedition" then
+						client.focus = c
+						c.first_tag:view_only()
+						awful.screen.focus(c.screen)
+					end
+				end
+			end,
+			history_path = awful.util.get_cache_dir() .. "/web_search",
+		})
+	end,
+
+	quickInbox = function()
+		awful.prompt.run({
+			prompt = " Inbox: ",
+			textbox = awful.screen.focused().promptbox.widget,
+			exe_callback = function(input)
+				if not input or #input == 0 then
+					return
+				end
+
+				local file = io.open(
+					string.format("%s/SynologyDrive/Logseq/pages/inbox.org", os.getenv("HOME")),
+					"a"
+				)
+
+				if file ~= nil then
+					file:write(string.format("* %s\n", input))
+
+					io.close(file)
+				end
+			end,
+		})
+	end,
+	quickTodo = function()
+		awful.prompt.run({
+			prompt = " Todo: ",
+			textbox = awful.screen.focused().promptbox.widget,
+			exe_callback = function(input)
+				if not input or #input == 0 then
+					return
+				end
+
+				local file = io.open(
+					string.format("%s/SynologyDrive/Todo/Todo.org", os.getenv("HOME")),
+					"a"
+				)
+
+				if file ~= nil then
+					file:write(string.format("* TODO %s\n", input))
+
+					io.close(file)
+				end
+			end,
+		})
+	end,
 
 	toggleDropdown = function()
 		local dropdownKitty = function(c)

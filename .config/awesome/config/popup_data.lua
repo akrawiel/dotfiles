@@ -139,9 +139,19 @@ return {
 	},
 	notes = {
 		{
-			shortcut = "t",
+			shortcut = "T",
 			script = "edit-todo-note.sh",
 			description = "Org Todo",
+		},
+		{
+			shortcut = "t",
+			command = "quickTodo",
+			description = "Quick todo",
+		},
+		{
+			shortcut = "n",
+			command = "quickInbox",
+			description = "Quick inbox",
 		},
 	},
 	projects = (function()

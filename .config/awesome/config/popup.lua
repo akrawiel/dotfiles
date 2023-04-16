@@ -99,6 +99,12 @@ local function update_popup(key)
 						break
 					end
 
+					if action.command then
+						require("config.commands")[action.command]()
+						popup.visible = false
+						return true
+					end
+
 					if action.script then
 						awful.spawn.with_shell(
 							string.format("%s/Scripts/%s", os.getenv("HOME"), action.script)
