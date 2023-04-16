@@ -111,6 +111,10 @@ local function set_wallpaper(s)
 	end
 end
 
+-- Popup
+
+awful.popup_module = require("config.popup")
+
 -- Tag definitions
 local tag_names = gears.table.join(
 	{ "1", "2", "3", "4", "5", "6", "7", "8", "9" },

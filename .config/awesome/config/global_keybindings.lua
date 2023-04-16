@@ -43,8 +43,8 @@ return function(options)
 		awful.key(Mod, ".", commands.runRofimoji),
 		awful.key(Meh, ".", commands.runRofimoji),
 		awful.key(Mod, "space", commands.runRofi),
-		awful.key(Mod, "Tab", commands.runChorder),
-		awful.key(Meh, "Tab", commands.runChorder),
+		awful.key(Mod, "Tab", commands.runPopup),
+		awful.key(Meh, "Tab", commands.runPopup),
 		awful.key(Mod, "g", commands.runTenorSelector),
 		awful.key(Meh, "g", commands.runTenorSelector),
 
