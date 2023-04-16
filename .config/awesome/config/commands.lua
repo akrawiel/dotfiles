@@ -107,13 +107,31 @@ return {
 		awful.prompt.run({
 			prompt = " Inbox: ",
 			textbox = awful.screen.focused().promptbox.widget,
+			hooks = {
+				{
+					{ "Control" },
+					"v",
+					function()
+						local clipboard = io.popen("xclip -selection clipboard -o")
+
+						if clipboard ~= nil then
+							local content = clipboard:read("*a")
+							clipboard:close()
+							return content
+						end
+					end,
+				},
+			},
 			exe_callback = function(input)
 				if not input or #input == 0 then
 					return
 				end
 
 				local file = io.open(
-					string.format("%s/SynologyDrive/Logseq/pages/inbox.org", os.getenv("HOME")),
+					string.format(
+						"%s/SynologyDrive/Logseq/pages/inbox.org",
+						os.getenv("HOME")
+					),
 					"a"
 				)
 
