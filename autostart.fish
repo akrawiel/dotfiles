@@ -11,7 +11,6 @@ sleep 1
 
 setxkbmap pl -option caps:ctrl_modifier -option compose:sclk
 xset s off
-nitrogen --restore &
 xpad -s -N &
 
 runSingleInstance 'numlockx'
