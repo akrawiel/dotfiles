@@ -124,7 +124,7 @@ return {
 		},
 	},
 	{
-		rule = { class = "Spotify" },
+		rule_any = { class = { "Spotify" }, icon_name = { "Shortwave" } },
 		callback = TAG("9"),
 	},
 	{
