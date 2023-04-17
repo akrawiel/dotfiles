@@ -327,7 +327,6 @@ awful.screen.connect_for_each_screen(function(s)
 end)
 
 -- Screen signals
-screen.connect_signal("property::geometry", set_wallpaper)
 screen.connect_signal("property::geometry", handle_tag_assignments)
 
 -- Key bindings
