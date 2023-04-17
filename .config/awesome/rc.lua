@@ -72,7 +72,7 @@ beautiful.bg_systray = beautiful.bg_normal
 beautiful.font = "monospace 12"
 beautiful.useless_gap = 4
 beautiful.wallpaper =
-	string.format("%s/Pictures/%s", os.getenv("HOME"), "carina_nebula.jpg")
+	string.format("%s/Wallpapers/%s", os.getenv("HOME"), "wallpaper.png")
 beautiful.notification_icon_size = 64
 beautiful.notification_font = "monospace 12"
 beautiful.notification_max_width = 536
@@ -105,7 +105,7 @@ local function set_wallpaper(s)
 		if type(wallpaper) == "function" then
 			wallpaper = wallpaper(s)
 		end
-		gears.wallpaper.maximized(wallpaper, s, true)
+		gears.wallpaper.tiled(wallpaper, s, { x = 0, y = 0 })
 	else
 		gears.wallpaper.set("#000000")
 	end
