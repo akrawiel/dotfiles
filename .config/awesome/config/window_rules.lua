@@ -76,6 +76,7 @@ return {
 		rule = { class = "xpad" },
 		properties = {
 			floating = true,
+			ontop = true,
 		},
 	},
 
