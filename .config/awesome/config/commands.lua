@@ -136,7 +136,7 @@ return {
 				)
 
 				if file ~= nil then
-					file:write(string.format("* %s\n", input))
+					file:write(string.format("\n* %s\n", input))
 
 					io.close(file)
 				end
