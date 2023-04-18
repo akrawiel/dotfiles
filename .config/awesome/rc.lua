@@ -111,9 +111,10 @@ local function set_wallpaper(s)
 	end
 end
 
--- Popup
+-- Popups
 
 awful.popup_module = require("config.popup")
+awful.timewarrior_popup = require("config.timewarrior_popup")
 
 -- Tag definitions
 local tag_names = gears.table.join(

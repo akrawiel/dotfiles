@@ -66,6 +66,9 @@ return {
 			end,
 		})
 	end,
+  runTimewarriorPopup = function()
+    awful.timewarrior_popup.update_popup("start")
+  end,
 
 	invokePrompt = function()
 		awful.prompt.run({

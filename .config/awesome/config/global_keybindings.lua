@@ -54,7 +54,7 @@ return function(options)
 		awful.key(Hyper, "l", commands.lockScreen),
 		awful.key(Hyper, "r", awesome.restart),
 		awful.key(Hyper, "q", awesome.quit),
-		awful.key(Mod, "x", commands.invokePrompt),
+		awful.key(Mod, "x", commands.runTimewarriorPopup),
 		awful.key(Mod, "r", commands.startResize),
 		awful.key(ModShift, "s", commands.invokeWebSearch),
 
