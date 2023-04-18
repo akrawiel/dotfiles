@@ -40,7 +40,10 @@ map o &xdg-open $f
 map O &re.sonny.Junction $f
 
 map <c-enter>
-map <a-[> &nvr $f
+map <a-[> &{{
+  nvr --remote-send "q"
+  nvr --remote $f
+}}
 
 map <c-n>
 map <c-n>d :mkdir
