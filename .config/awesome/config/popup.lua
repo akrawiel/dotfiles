@@ -17,13 +17,13 @@ for i = 1, 9 do
 		},
 		{
 			text = "",
-			font = "monospace 20",
+			font = "monospace bold 24",
 			widget = textbox_top,
 			align = "center",
 		},
 		{
 			text = "",
-			font = "monospace 8",
+			font = "monospace 10",
 			widget = textbox_bottom,
 			align = "center",
 		},
@@ -36,40 +36,42 @@ for i = 1, 9 do
 	textboxes[i] = wibox.widget({
 		{
 			{
-				{
-					textboxes_container,
-					fill_vertical = true,
-					content_fill_vertical = true,
-					widget = wibox.container.place,
-				},
-				height = 150,
-				width = 150,
-				strategy = "exact",
-				widget = wibox.container.constraint,
+				textboxes_container,
+				fill_vertical = true,
+				content_fill_vertical = true,
+				widget = wibox.container.place,
 			},
-			color = "#f0dfaf",
-			margins = 2,
-			widget = wibox.container.margin,
+			height = 150,
+			width = 150,
+			strategy = "exact",
+			widget = wibox.container.constraint,
 		},
-		margins = 8,
-		widget = wibox.container.margin,
+		widget = wibox.container.background,
 		textbox_top = textbox_top,
 		textbox_bottom = textbox_bottom,
+		shape = function(cr, w, h) return gears.shape.rounded_rect(cr, w, h, 20) end,
+    shape_border_width = 1,
+		shape_border_color = "#f0dfaf",
 		visible = false,
 	})
 end
 
 local popup = awful.popup({
 	widget = {
-		widget = wibox.layout.grid,
-		forced_num_cols = 3,
-		table.unpack(textboxes),
+		{
+			widget = wibox.layout.grid,
+			forced_num_cols = 3,
+			spacing = 8,
+			table.unpack(textboxes),
+		},
+		widget = wibox.container.margin,
+		margins = 8,
 	},
 	border_color = "#f0dfaf",
-	border_width = 2,
+	border_width = 1,
 	ontop = true,
 	placement = awful.placement.centered,
-	shape = gears.shape.rect,
+  shape = function(cr, w, h) return gears.shape.rounded_rect(cr, w, h, 30) end,
 	visible = false,
 })
 
