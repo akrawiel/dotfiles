@@ -49,8 +49,10 @@ for i = 1, 9 do
 		widget = wibox.container.background,
 		textbox_top = textbox_top,
 		textbox_bottom = textbox_bottom,
-		shape = function(cr, w, h) return gears.shape.rounded_rect(cr, w, h, 20) end,
-    shape_border_width = 1,
+		shape = function(cr, w, h)
+			return gears.shape.rounded_rect(cr, w, h, 20)
+		end,
+		shape_border_width = 1,
 		shape_border_color = "#f0dfaf",
 		visible = false,
 	})
@@ -71,21 +73,38 @@ local popup = awful.popup({
 	border_width = 1,
 	ontop = true,
 	placement = awful.placement.centered,
-  shape = function(cr, w, h) return gears.shape.rounded_rect(cr, w, h, 30) end,
+	shape = function(cr, w, h)
+		return gears.shape.rounded_rect(cr, w, h, 30)
+	end,
 	visible = false,
+})
+
+local keygrabber = awful.keygrabber({
+	keypressed_callback = function(self, mod, key)
+		local should_stop = awful.popup_module.update_popup(key)
+
+		if should_stop == true then
+			self:stop()
+		end
+	end,
+	stop_key = "Escape",
+	stop_callback = function()
+		awful.popup_module.update_popup("stop")
+	end,
 })
 
 local current_state = "main"
 
 local function update_popup(key)
 	if key == "start" then
+		keygrabber:start()
 		popup.visible = true
 		current_state = "main"
 	end
 
 	if key == "stop" then
 		popup.visible = false
-		return
+		return true
 	end
 
 	local data = popup_data[current_state]
@@ -102,7 +121,9 @@ local function update_popup(key)
 					end
 
 					if action.command then
-						require("config.commands")[action.command]()
+						gears.timer.delayed_call(function()
+							require("config.commands")[action.command]()
+						end)
 						popup.visible = false
 						return true
 					end

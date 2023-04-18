@@ -50,21 +50,6 @@ return {
 	end,
 	runPopup = function()
 		awful.popup_module.update_popup("start")
-
-		awful.keygrabber({
-			autostart = true,
-			keypressed_callback = function(self, mod, key)
-				local should_stop = awful.popup_module.update_popup(key)
-
-				if should_stop == true then
-					self:stop()
-				end
-			end,
-			stop_key = "Escape",
-			stop_callback = function()
-				awful.popup_module.update_popup("stop")
-			end,
-		})
 	end,
   runTimewarriorPopup = function()
     awful.timewarrior_popup.update_popup("start")
