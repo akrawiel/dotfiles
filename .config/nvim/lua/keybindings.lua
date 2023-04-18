@@ -64,7 +64,7 @@ nnoremapSilent('<space>4', [[<cmd>BufferGoto 4<CR>]])
 -- Function keys
 
 nnoremapSilent('<F3>', [[<cmd>noh<CR>]])
-nnoremapSilent('<F4>', [[<cmd>lua vim.cmd("terminal fish -c \"lf " .. vim.fn.expand"%:p" .. "\"")<CR>]])
+nnoremapSilent('<F4>', [[<cmd>lua vim.cmd("terminal fish -c \"lf '" .. vim.fn.expand"%:p" .. "'\"")<CR>]])
 
 -- Pounce
 
