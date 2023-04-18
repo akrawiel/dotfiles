@@ -42,9 +42,14 @@ return {
 	},
 	work = {
 		{
-			shortcut = "r",
+			shortcut = "R",
 			script = "report-jira-time.sh",
 			description = "Report Jira time",
+		},
+		{
+			shortcut = "w",
+			command = "runTimewarriorPopup",
+			description = "Open Timewarrior popup",
 		},
 	},
 	system = {
