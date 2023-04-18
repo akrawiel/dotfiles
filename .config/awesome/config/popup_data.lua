@@ -72,7 +72,7 @@ return {
 	browsers = {
 		{
 			shortcut = "b",
-			script = "boot-brave-work.sh",
+			script = "boot-brave-main.sh",
 			description = "Run Main Brave",
 		},
 		{
