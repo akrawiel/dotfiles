@@ -2,31 +2,45 @@ local awful = require("awful")
 local gears = require("gears")
 local wibox = require("wibox")
 
-local projects = loadfile(
+local projects_success, projects_file = pcall(
+	loadfile,
 	string.format("%s/Projects/projects_timewarrior_data.lua", os.getenv("HOME"))
 )
 
+local projects = projects_success and projects_file() or {}
+
 local json = require("libraries.json")
 
-local last_tasks_count = 20
+local function popen(process)
+	local success, handle = pcall(io.popen, process)
+
+	if success and handle then
+		local data = handle:read("*a")
+		handle:close()
+		return true, data
+	else
+		return false, nil
+	end
+end
+
+local function popen_msg(process)
+	local success = popen(process)
+	local msg = success and "✅ OK" or "❎ Error"
+
+	return string.format("%s | %s | %s", msg, process, os.date())
+end
+
+local last_tasks_count = 10
 
 local task_textboxes = {}
 
 for i = 1, last_tasks_count do
-	local textbox_task = wibox.widget({
-		text = " ",
-		widget = wibox.widget.textbox(),
-	})
+	local textbox_task = wibox.widget.textbox(" ")
+	local textbox_from = wibox.widget.textbox(" ")
+	local textbox_to = wibox.widget.textbox(" ")
 
-	local textbox_from = wibox.widget({
-		text = " ",
-		widget = wibox.widget.textbox(),
-	})
-
-	local textbox_to = wibox.widget({
-		text = " ",
-		widget = wibox.widget.textbox(),
-	})
+  textbox_from.align = "right"
+  textbox_to.align = "right"
 
 	local ratio_container = wibox.widget({
 		textbox_task,
@@ -57,15 +71,15 @@ local local_message = wibox.widget({
 	widget = wibox.widget.textbox(),
 })
 
-local local_prompt = wibox.widget({
-	text = "",
-	widget = wibox.widget.textbox(),
-})
+local local_prompt = wibox.widget.textbox()
+local top_message = wibox.widget.textbox()
+local bottom_message = wibox.widget.textbox("[c]ontinue [C]⌚ [u]ndo [d]elete [s]tart [S]wap [n]ew [N]⌚")
 
 local popup_container = wibox.widget({
 	widget = wibox.layout.fixed.vertical,
 	spacing = 8,
 	forced_width = 600,
+	top_message,
 	{
 		local_message,
 		local_prompt,
@@ -79,7 +93,13 @@ local popup_container = wibox.widget({
 	table.unpack(task_textboxes),
 })
 
--- popup_container:ajustratio(2, 0.1, 0.9, 0)
+popup_container:add(wibox.widget({
+	forced_height = 1,
+	span_ratio = 1,
+	widget = wibox.widget.separator,
+}))
+
+popup_container:add(bottom_message)
 
 local popup = awful.popup({
 	widget = {
@@ -118,7 +138,7 @@ local function refresh_timewarrior_data()
 		table.insert(last_ids, "@" .. tostring(i))
 	end
 
-	local handle = io.popen(
+	local _, timewarrior_raw_data = popen(
 		"timew export "
 			.. table.concat(last_ids, " ")
 			.. [[ | jq 'def gettime(f): if f != null then f 
@@ -133,14 +153,20 @@ local function refresh_timewarrior_data()
           }]']]
 	)
 
-	if handle == nil then
-		return
-	end
-
-	local timewarrior_raw_data = handle:read("*a")
-	handle:close()
-
 	timewarrior_data = gears.table.reverse(json.decode(timewarrior_raw_data))
+
+	local _, timewarrior_summary = popen([[timew export today | jq -r -j 'reduce (
+      .[]
+        | {
+          start: (.start // now | strftime("%Y%m%dT%H%M%SZ")) | strptime("%Y%m%dT%H%M%SZ") | mktime,
+          end: (.end // now | strftime("%Y%m%dT%H%M%SZ")) | strptime("%Y%m%dT%H%M%SZ") | mktime
+        }
+        | .end - .start
+    ) as $item (0; . + $item)
+    | strftime("%H:%M:%S")']])
+
+	top_message.text =
+		string.format("Total time today %s", timewarrior_summary or "-")
 
 	for i = 1, last_tasks_count do
 		local row = timewarrior_data[i]
@@ -157,9 +183,28 @@ local function refresh_timewarrior_data()
 	end
 end
 
+local function refresh_project_data(project)
+	for i = 1, last_tasks_count do
+		if project[i] then
+			task_textboxes[i].textbox_task.text = project[i].shortcut
+				.. " - "
+				.. project[i].description
+		else
+			task_textboxes[i].textbox_task.text = " "
+		end
+
+		task_textboxes[i].textbox_from.text = " "
+		task_textboxes[i].textbox_to.text = " "
+	end
+end
+
 local index = 1
 
-local function redraw_selection()
+local function redraw_selection(reset)
+	if reset and index < 1 then
+		index = 1
+	end
+
 	for i = 1, last_tasks_count do
 		if index == i then
 			task_textboxes[i].fg = "#3f3f3f"
@@ -171,24 +216,45 @@ local function redraw_selection()
 	end
 end
 
-local confirm_state = nil
-local override_state = nil
-local project_state = nil
+local state = "awaiting"
+local data = {}
+local queue = {}
+local queue_index = 1
 
-local transient_data = nil
+local function clear_queue_data()
+	state = "awaiting"
+	data = {}
+	queue = {}
+	queue_index = 1
+end
+
+local function special_tasks_with_return(current_data)
+	return {
+		{
+			shortcut = "Enter",
+			description = "enter task number",
+		},
+		table.unpack(current_data.project.special_tasks),
+	}
+end
+
+local prompt_type_messages = {
+	hour = "Enter hour: ",
+	task_number = "Enter task number: ",
+}
+
+local yesno_type_messages = {
+	delete = "Are you sure you want to delete this log?",
+}
 
 local function update_popup(action)
-	if override_state ~= nil or project_state ~= nil then
-		return
-	end
-
 	if action == "start" then
 		keygrabber:start()
 
 		index = 1
-		confirm_state = nil
-		override_state = nil
+		local_message.text = local_message.default_text
 
+		clear_queue_data()
 		refresh_timewarrior_data()
 		redraw_selection()
 
@@ -197,386 +263,364 @@ local function update_popup(action)
 	end
 
 	if action == "stop" then
-		if project_state then
-			return
-		end
-
 		popup.visible = false
-		confirm_state = nil
-		override_state = nil
 		return
 	end
 
-	if confirm_state then
+	if state == "in-yes-no" then
 		if action == "y" then
-			if confirm_state == "delete" then
-				local handle = io.popen("timew delete @" .. timewarrior_data[index].id)
-				if handle == nil then
-					local_message.text = "Error: Delete @" .. timewarrior_data[index].id
-					return
-				end
-
-				handle:close()
-
-				local_message.text = "Delete @" .. timewarrior_data[index].id
-
-				refresh_timewarrior_data()
-				redraw_selection()
-			end
-
-			confirm_state = nil
+			queue_index = queue_index + 1
 		elseif action == "n" then
-			local_message.text = local_message.default_text
-
-			confirm_state = nil
+			local_message.text = "Cancelled"
+			clear_queue_data()
+			refresh_timewarrior_data()
+			redraw_selection(true)
+			return
 		else
 			return
 		end
 	end
 
-	local_prompt.text = ""
+	if state == "in-select" then
+		data.project = nil
 
-	if action == "j" then
-		index = math.min(index + 1, last_tasks_count)
-		redraw_selection()
+		if
+			data.previous_queue_action.insert_actions
+			and data.previous_queue_action.insert_actions[action]
+		then
+			queue_index = queue_index + 1
+			table.insert(
+				queue,
+				queue_index,
+				data.previous_queue_action.insert_actions[action]
+			)
+		else
+			for _, project in pairs(data.projects) do
+				if project.shortcut == action then
+					data.project = project
+					break
+				end
+			end
+
+			if not data.project then
+				return
+			end
+
+			data[data.previous_queue_action.field] =
+				data.project[data.previous_queue_action.field]
+			queue_index = queue_index + 1
+		end
 	end
 
-	if action == "k" then
-		index = math.max(index - 1, 1)
-		redraw_selection()
+	if state == "in-prompt" then
+		return
 	end
 
-	if action == "c" then
-		local handle = io.popen("timew continue @" .. timewarrior_data[index].id)
+	if state == "awaiting" then
+		if action == "j" then
+			data = {
+				direction = 1,
+			}
 
-		if handle == nil then
-			local_message.text = "Error: Continue @" .. timewarrior_data[index].id
-			return
+			queue = {
+				{
+					type = "move",
+				},
+			}
 		end
 
-		handle:close()
+		if action == "k" then
+			data = {
+				direction = -1,
+			}
 
-		local_message.text = "Continue @" .. timewarrior_data[index].id
-
-		refresh_timewarrior_data()
-		redraw_selection()
-	end
-
-	if action == "C" then
-		override_state = "continue"
-
-		local_message.text = "Enter start hour: "
-	end
-
-	if action == "n" and projects ~= nil then
-		project_state = true
-
-		local_message.text = "Select project: "
-	end
-
-	if action == "N" and projects ~= nil then
-		project_state = true
-		transient_data = true
-
-		local_message.text = "Select project: "
-	end
-
-	if action == "u" then
-		local handle = io.popen("timew undo")
-		if handle == nil then
-			local_message.text = "Error: Undo"
-			return
+			queue = {
+				{
+					type = "move",
+				},
+			}
 		end
 
-		handle:close()
+		if action == "c" then
+			data = {
+				id = timewarrior_data[index].id,
+			}
 
-		local_message.text = "Undo"
-
-		refresh_timewarrior_data()
-		redraw_selection()
-	end
-
-	if action == "s" then
-		local handle = io.popen("timew stop")
-		if handle == nil then
-			local_message.text = "Error: Stop"
-
-			return
+			queue = {
+				{
+					type = "exec",
+					command = "continue",
+				},
+			}
 		end
 
-		handle:close()
+		if action == "C" then
+			data = {
+				id = timewarrior_data[index].id,
+			}
 
-		local_message.text = "Stop"
+			queue = {
+				{
+					type = "prompt",
+					prompt_type = "hour",
+					field = "hour",
+				},
+				{
+					type = "exec",
+					command = "continue",
+				},
+			}
+		end
 
-		refresh_timewarrior_data()
+		if action == "n" then
+			data = {}
+
+			queue = {
+				{
+					type = "select",
+					data = projects,
+					field = "tag",
+				},
+				{
+					type = "select",
+					data = special_tasks_with_return,
+					field = "task",
+					insert_actions = {
+						Return = {
+							type = "prompt",
+							prompt_type = "task_number",
+							field = "task",
+						},
+					},
+				},
+				{
+					type = "exec",
+					command = "start",
+				},
+			}
+		end
+
+		if action == "N" then
+			data = {}
+
+			queue = {
+				{
+					type = "select",
+					data = projects,
+					field = "tag",
+				},
+				{
+					type = "select",
+					data = special_tasks_with_return,
+					field = "task",
+					insert_actions = {
+						Return = {
+							type = "prompt",
+							prompt_type = "task_number",
+							field = "task",
+						},
+					},
+				},
+				{
+					type = "prompt",
+					prompt_type = "hour",
+					field = "hour",
+				},
+				{
+					type = "exec",
+					command = "start",
+				},
+			}
+		end
+
+		if action == "S" then
+			data = {
+				id = timewarrior_data[index].id,
+			}
+
+			queue = {
+				{
+					type = "select",
+					data = projects,
+					field = "tag",
+				},
+				{
+					type = "select",
+					data = special_tasks_with_return,
+					field = "task",
+					insert_actions = {
+						Return = {
+							type = "prompt",
+							prompt_type = "task_number",
+							field = "task",
+						},
+					},
+				},
+				{
+					type = "exec",
+					command = "swap",
+				},
+			}
+		end
+
+		if action == "u" then
+			data = {}
+
+			queue = {
+				{
+					type = "exec",
+					command = "undo",
+				},
+			}
+		end
+
+		if action == "s" then
+			data = {}
+
+			queue = {
+				{
+					type = "exec",
+					command = "stop",
+				},
+			}
+		end
+
+		if action == "d" then
+			data = {
+				id = timewarrior_data[index].id,
+			}
+
+			queue = {
+				{
+					type = "yesno",
+					yesno_type = "delete",
+				},
+				{
+					type = "exec",
+					command = "delete",
+				},
+			}
+		end
+	end
+
+	local queue_action = queue[queue_index]
+
+	if not queue_action then
+		return
+	end
+
+	data.previous_queue_action = queue_action
+
+	if queue_action.type == "move" then
+		index = math.max(math.min(index + data.direction, last_tasks_count), 1)
 		redraw_selection()
+		clear_queue_data()
 	end
 
-	if action == "d" then
-		confirm_state = "delete"
-		local_message.text = "Are you sure you want to delete this log? [y/n]"
+	if queue_action.type == "exec" then
+		if queue_action.command == "continue" then
+			local_message.text = popen_msg(
+				string.format("timew continue @%s %s", data.id, data.hour or "")
+			)
+		end
+
+		if queue_action.command == "undo" then
+			local_message.text = popen_msg("timew undo")
+		end
+
+		if queue_action.command == "stop" then
+			local_message.text = popen_msg("timew stop")
+		end
+
+		if queue_action.command == "start" then
+			local_message.text = popen_msg(
+				string.format(
+					"timew start %s-%s %s",
+					data.tag,
+					data.task,
+					data.hour or ""
+				)
+			)
+		end
+
+		if queue_action.command == "swap" then
+			local current_tags = {}
+			local success, string_current_tags_count =
+				popen(string.format("timew get dom.tracked.%s.tag.count", data.id))
+
+			if success then
+				for i = 1, tonumber(string_current_tags_count) do
+					local tag_success, tag =
+						popen(string.format("timew get dom.tracked.%s.tag.%s", data.id, i))
+
+					if tag_success then
+						table.insert(current_tags, tag)
+					end
+				end
+
+				popen(
+					string.format(
+						"timew untag @%s %s",
+						data.id,
+						table.concat(current_tags, " ")
+					)
+				)
+			end
+
+			local_message.text = popen_msg(
+				string.format("timew tag @%s %s-%s", data.id, data.tag, data.task)
+			)
+		end
+
+		if queue_action.command == "delete" then
+			local_message.text = popen_msg(string.format("timew delete @%s", data.id))
+		end
+
+		clear_queue_data()
+		refresh_timewarrior_data()
+		redraw_selection(true)
 	end
 
-	if override_state ~= nil then
+	if queue_action.type == "prompt" then
+		local_message.text = prompt_type_messages[queue_action.prompt_type]
+		state = "in-prompt"
+
 		awful.prompt.run({
 			textbox = local_prompt,
 			done_callback = function()
-				override_state = nil
+				if data[queue_action.field] and #data[queue_action.field] > 0 then
+					queue_index = queue_index + 1
+					state = "awaiting"
+					update_popup()
+				else
+					local_message.text = "Cancelled"
+					clear_queue_data()
+					refresh_timewarrior_data()
+					redraw_selection(true)
+				end
 			end,
 			fg_cursor = "#3f3f3f",
 			bg_cursor = "#f0dfaf",
 			exe_callback = function(input)
-				if not input or #input == 0 then
-					return
-				end
-
-				if override_state == "continue" then
-					local handle = io.popen(
-						"timew continue @" .. timewarrior_data[index].id .. " " .. input
-					)
-
-					if handle == nil then
-						local_message.text = "Error: Continue @"
-							.. timewarrior_data[index].id
-
-						return
-					end
-
-					handle:close()
-
-					local_message.text = "Continue @"
-						.. timewarrior_data[index].id
-						.. " at "
-						.. input
-
-					refresh_timewarrior_data()
-					redraw_selection()
-				end
+				data[queue_action.field] = input or ""
 			end,
 		})
-
-		return
 	end
 
-	if project_state ~= nil then
+	if queue_action.type == "yesno" then
+		local_message.text =
+			string.format("%s [y/n]", yesno_type_messages[queue_action.yesno_type])
+		state = "in-yes-no"
+	end
+
+	if queue_action.type == "select" then
+		data.projects = type(queue_action.data) == "function"
+				and queue_action.data(data)
+			or queue_action.data
+		state = "in-select"
 		index = 0
 		redraw_selection()
-
-		keygrabber:stop()
-
-		local project_data = projects()
-
-		for i = 1, last_tasks_count do
-			if project_data[i] then
-				task_textboxes[i].textbox_task.text = project_data[i].shortcut
-					.. " - "
-					.. project_data[i].description
-			else
-				task_textboxes[i].textbox_task.text = " "
-			end
-
-			task_textboxes[i].textbox_from.text = " "
-			task_textboxes[i].textbox_to.text = " "
-		end
-
-		awful.keygrabber({
-			autostart = true,
-			keypressed_callback = function(self, mod, key)
-				if project_state == true then
-					for _, project in pairs(project_data) do
-						if project.shortcut == key then
-							project_state = project
-
-							task_textboxes[1].textbox_task.text = "Enter - enter task number"
-							for i = 2, last_tasks_count do
-								if project.special_tasks[i - 1] then
-									task_textboxes[i].textbox_task.text = project.special_tasks[i - 1].shortcut
-										.. " - "
-										.. project.special_tasks[i - 1].description
-								else
-									task_textboxes[i].textbox_task.text = " "
-								end
-							end
-
-							break
-						end
-					end
-				else
-					if key == "Return" then
-						local_message.text = "Enter task number: "
-
-						awful.prompt.run({
-							textbox = local_prompt,
-							done_callback = function()
-								if not transient_data then
-									project_state = nil
-									self:stop()
-								end
-							end,
-							fg_cursor = "#3f3f3f",
-							bg_cursor = "#f0dfaf",
-							exe_callback = function(input)
-								if input and #input > 0 then
-									if transient_data then
-										local_message.text = "Enter start hour: "
-
-										awful.prompt.run({
-											textbox = local_prompt,
-											done_callback = function()
-												transient_data = nil
-												project_state = nil
-												self:stop()
-											end,
-											fg_cursor = "#3f3f3f",
-											bg_cursor = "#f0dfaf",
-											exe_callback = function(hour_input)
-												if not hour_input or #hour_input == 0 then
-													return
-												end
-
-												local handle = io.popen(
-													"timew start "
-														.. project_state.tag
-														.. "-"
-														.. input
-														.. " "
-														.. hour_input
-												)
-												if handle == nil then
-													local_message.text = "Error: Start "
-														.. project_state.tag
-														.. "-"
-														.. input
-														.. " at "
-														.. hour_input
-													return
-												end
-
-												handle:close()
-
-												local_message.text = "Start "
-													.. project_state.tag
-													.. "-"
-													.. input
-													.. " at "
-													.. hour_input
-											end,
-										})
-									else
-										local handle = io.popen(
-											"timew start " .. project_state.tag .. "-" .. input
-										)
-										if handle == nil then
-											local_message.text = "Error: Start "
-												.. project_state.tag
-												.. "-"
-												.. input
-											return
-										end
-
-										handle:close()
-
-										local_message.text = "Start "
-											.. project_state.tag
-											.. "-"
-											.. input
-									end
-								end
-							end,
-						})
-						return
-					end
-
-					for _, special_task in pairs(project_state.special_tasks) do
-						if special_task.shortcut == key then
-							if transient_data then
-								local_message.text = "Enter start hour: "
-
-								awful.prompt.run({
-									textbox = local_prompt,
-									done_callback = function()
-										transient_data = nil
-										project_state = nil
-										self:stop()
-									end,
-									fg_cursor = "#3f3f3f",
-									bg_cursor = "#f0dfaf",
-									exe_callback = function(hour_input)
-										if not hour_input or #hour_input == 0 then
-											return
-										end
-
-										local handle = io.popen(
-											"timew start "
-												.. project_state.tag
-												.. "-"
-												.. special_task.task
-												.. " "
-												.. hour_input
-										)
-										if handle == nil then
-											local_message.text = "Error: Start "
-												.. project_state.tag
-												.. "-"
-												.. special_task.task
-												.. " at "
-												.. hour_input
-											return
-										end
-
-										handle:close()
-
-										local_message.text = "Start "
-											.. project_state.tag
-											.. "-"
-											.. special_task.task
-											.. " at "
-											.. hour_input
-									end,
-								})
-							else
-								local handle = io.popen(
-									"timew start "
-										.. project_state.tag
-										.. "-"
-										.. special_task.task
-								)
-								if handle == nil then
-									local_message.text = "Error: Start "
-										.. project_state.tag
-										.. "-"
-										.. special_task.task
-									return
-								end
-
-								handle:close()
-
-								local_message.text = "Start "
-									.. project_state.tag
-									.. "-"
-									.. special_task.task
-
-								project_state = nil
-								self:stop()
-							end
-							break
-						end
-					end
-				end
-			end,
-			stop_key = "Escape",
-			stop_callback = function()
-				project_state = nil
-				keygrabber:start()
-				index = 1
-				refresh_timewarrior_data()
-				redraw_selection()
-
-				if local_message.text:find(": $") then
-					local_message.text = local_message.default_text
-				end
-			end,
-		})
+		refresh_project_data(data.projects)
 	end
 end
 
