@@ -90,29 +90,6 @@ return require("packer").startup(function(use)
 		end,
 	})
 	use({
-		"luukvbaal/nnn.nvim",
-		config = function()
-			require("nnn").setup({
-				picker = {
-					style = {
-						width = 0.9,
-						height = 0.5,
-						xoffset = 0.5,
-						yoffset = 0.5,
-						border = "double",
-					},
-					session = "",
-				},
-				mappings = {
-					{ "<C-x>", require("nnn").builtin.open_in_split },
-					{ "<C-v>", require("nnn").builtin.open_in_vsplit },
-					{ "<C-e>", require("nnn").builtin.populate_cmdline },
-				},
-				buflisted = false,
-			})
-		end,
-	})
-	use({
 		"mg979/vim-visual-multi",
 		branch = "master",
 	})
