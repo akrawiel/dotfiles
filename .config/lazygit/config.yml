@@ -1,8 +1,28 @@
 git:
   autoFetch: false
+  autoRefresh: false
+  overrideGpg: true
+  parseEmoji: true
+customCommands:
+  - command: 'git push --force-with-lease'
+    context: 'global'
+    description: 'force push with lease'
+    key: '<c-f>'
+    loadingText: 'Force pushing with lease to repository...'
+    stream: yes
+  - command: 'git push --tags'
+    context: 'global'
+    description: 'push all tags'
+    key: '<c-t>'
+    loadingText: 'Pushing tags to repository...'
+    stream: yes
 gui:
+  language: 'en'
+  scrollPastBottom: true
+  showRandomTip: false
+  showIcons: true
   theme:
-    lightTheme: false 
+    lightTheme: false
     activeBorderColor:
       - "#a6d189" # Green
       - bold
@@ -20,3 +40,9 @@ gui:
       - "#8caaee" # Blue
     unstagedChangesColor:
       - red       # Red
+os:
+  editCommand: 'nvr'
+  editCommandTemplate: '{{editor}} --remote {{filename}}'
+reporting: 'off'
+update:
+  method: never
