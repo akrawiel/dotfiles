@@ -179,12 +179,6 @@ return require("packer").startup(function(use)
 		end,
 	})
 
-	-- language highlighting
-	use({
-		"ionide/Ionide-vim",
-		run = "make fsautocomplete",
-	})
-
 	-- bootstrap sync check
 	if packer_bootstrap then
 		require("packer").sync()
