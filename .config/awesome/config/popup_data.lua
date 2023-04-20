@@ -39,6 +39,11 @@ return {
 			switch = "notes",
 			description = "notes",
 		},
+		{
+			shortcut = "m",
+			switch = "music",
+			description = "music",
+		},
 	},
 	work = {
 		{
@@ -165,4 +170,16 @@ return {
 		end
 		return {}
 	end)(),
+	music = {
+		{
+			shortcut = "r",
+			run = "de.haeckerfelix.Shortwave",
+			description = "Shortwave radio",
+		},
+		{
+			shortcut = "s",
+			run = "spotify",
+			description = "Spotify",
+		},
+	},
 }
