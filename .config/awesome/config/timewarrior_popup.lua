@@ -158,8 +158,8 @@ local function refresh_timewarrior_data()
 	local _, timewarrior_summary = popen([[timew export today | jq -r -j 'reduce (
       .[]
         | {
-          start: (.start // now | strftime("%Y%m%dT%H%M%SZ")) | strptime("%Y%m%dT%H%M%SZ") | mktime,
-          end: (.end // now | strftime("%Y%m%dT%H%M%SZ")) | strptime("%Y%m%dT%H%M%SZ") | mktime
+          start: (.start // (now | strftime("%Y%m%dT%H%M%SZ"))) | strptime("%Y%m%dT%H%M%SZ") | mktime,
+          end: (.end // (now | strftime("%Y%m%dT%H%M%SZ"))) | strptime("%Y%m%dT%H%M%SZ") | mktime
         }
         | .end - .start
     ) as $item (0; . + $item)
