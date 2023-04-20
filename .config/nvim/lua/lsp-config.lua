@@ -51,10 +51,7 @@ return function()
 				root_dir = javascript_root,
 			},
 		},
-		vuels = {
-			on_attach = function(client)
-				client.server_capabilities.document_formatting = false
-			end,
+		volar = {
 			params = {
 				root_dir = javascript_root,
 			},
