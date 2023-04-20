@@ -56,4 +56,4 @@ SETUVAR fish_pager_color_selected_background:\x1d
 SETUVAR fish_pager_color_selected_completion:\x1d
 SETUVAR fish_pager_color_selected_description:\x1d
 SETUVAR fish_pager_color_selected_prefix:\x1d
-SETUVAR fish_user_paths:/opt/android\x2dsdk/tools/bin\x1e/opt/android\x2dsdk/tools\x1e/opt/android\x2dsdk/platform\x2dtools\x1e/opt/applications\x1e/home/akrawiel/\x2espicetify\x1e/home/akrawiel/\x2elocal/bin\x1e/home/akrawiel/Applications\x1e/home/akrawiel/go/bin\x1e/home/akrawiel/\x2eyarn/bin\x1e/home/akrawiel/\x2ecargo/bin
+SETUVAR fish_user_paths:/home/akrawiel/\x2efnm\x1e/opt/android\x2dsdk/tools/bin\x1e/opt/android\x2dsdk/tools\x1e/opt/android\x2dsdk/platform\x2dtools\x1e/opt/applications\x1e/home/akrawiel/\x2espicetify\x1e/home/akrawiel/\x2elocal/bin\x1e/home/akrawiel/Applications\x1e/home/akrawiel/go/bin\x1e/home/akrawiel/\x2eyarn/bin\x1e/home/akrawiel/\x2ecargo/bin
