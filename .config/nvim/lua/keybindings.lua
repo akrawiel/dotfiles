@@ -64,7 +64,7 @@ nnoremapSilent('<space>4', [[<cmd>BufferGoto 4<CR>]])
 -- Function keys
 
 nnoremapSilent('<F3>', [[<cmd>noh<CR>]])
-nnoremapSilent('<F4>', [[<cmd>lua vim.cmd("terminal fish -c \"lf '" .. vim.fn.expand"%:p" .. "'\"")<CR>]])
+vim.keymap.set('n', '<F4>', [[<cmd>Lf<CR>]])
 
 -- Pounce
 
@@ -80,9 +80,9 @@ nnoremapSilent('N', 'Nzzzv')
 -- Leader operations
 
 nnoremapSilent('<leader>p', [[<cmd>lua vim.lsp.buf.format { async = true }<CR>]])
-nnoremapSilent('<leader>t', [[<cmd>terminal fish<CR>]])
-nnoremapSilent('<leader>g', [[<cmd>terminal fish -c lazygit<CR>]])
-nnoremapSilent('<leader>d', [[<cmd>terminal fish -c lazydocker<CR>]])
+nnoremapSilent('<leader>t', [[<cmd>FloatermNew fish<CR>]])
+nnoremapSilent('<leader>g', [[<cmd>FloatermNew lazygit<CR>]])
+nnoremapSilent('<leader>d', [[<cmd>FloatermNew lazydocker<CR>]])
 
 -- Current word search
 local function highlightCurrentWord()
