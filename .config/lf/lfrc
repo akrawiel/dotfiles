@@ -36,6 +36,8 @@ map gc cd ~/.config
 
 map S $/usr/bin/fish
 
+map <enter> open
+
 map o &xdg-open $f
 map O &re.sonny.Junction $f
 
