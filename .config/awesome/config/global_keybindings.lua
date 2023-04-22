@@ -6,8 +6,6 @@ local commands = require("config.commands")
 local Mod = { modkey }
 local ModShift = { modkey, "Shift" }
 local ModControl = { modkey, "Control" }
-local Hyper = { "Control", "Shift", "Mod1", modkey }
-local Meh = { "Control", "Shift", "Mod1" }
 
 return function(options)
 	local tags = options.tags or {}
@@ -41,22 +39,13 @@ return function(options)
 		-- Launchers
 		awful.key(Mod, "Return", commands.runTerminal),
 		awful.key(Mod, ".", commands.runRofimoji),
-		awful.key(Meh, ".", commands.runRofimoji),
 		awful.key(Mod, "space", commands.runRofi),
 		awful.key(Mod, "Tab", commands.runPopup),
-		awful.key(Meh, "Tab", commands.runPopup),
 		awful.key(Mod, "g", commands.runTenorSelector),
-		awful.key(Meh, "g", commands.runTenorSelector),
-		awful.key(Mod, "g", commands.runTenorSelector),
-		awful.key(Meh, "g", commands.runTenorSelector),
 
 		-- Awesome controls
-		awful.key(Hyper, "l", commands.lockScreen),
-		awful.key(Hyper, "r", awesome.restart),
-		awful.key(Hyper, "q", awesome.quit),
 		awful.key(Mod, "x", commands.invokePrompt),
 		awful.key(Mod, "r", commands.startResize),
-		awful.key(ModShift, "s", commands.invokeWebSearch),
 
 		-- Window focus
 		awful.key(Mod, "s", commands.focusWindowClass("Slack")),
