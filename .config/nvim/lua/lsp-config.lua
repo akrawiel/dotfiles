@@ -109,11 +109,6 @@ return function()
 				},
 			},
 		},
-		emmet_ls = {
-			params = {
-				filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "vue" },
-			},
-		},
 		denols = {
 			params = {
 				root_dir = util.root_pattern("deno.json", "deno.jsonc"),
