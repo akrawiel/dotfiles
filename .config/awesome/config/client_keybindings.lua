@@ -6,17 +6,15 @@ return function()
 		awful.key({ modkey }, "f", function(c)
 			c.fullscreen = not c.fullscreen
 			c:raise()
-		end, { description = "toggle fullscreen", group = "client" }),
+		end),
 		awful.key({ modkey }, "w", function(c)
 			c:kill()
-		end, { description = "close", group = "client" }),
-		awful.key(
-			{ modkey },
-			"t",
-			awful.client.floating.toggle,
-			{ description = "toggle floating", group = "client" }
-		)
+		end),
+		awful.key({ modkey }, "t", function(c)
+			c.floating = not c.floating
+			c:raise()
+		end)
 	)
 
-  return keys
+	return keys
 end
