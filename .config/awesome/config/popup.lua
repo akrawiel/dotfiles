@@ -6,7 +6,11 @@ local popup_data = require("config.popup_data")
 
 local textboxes = {}
 
-for i = 1, 9 do
+local x = 4
+local y = 3
+local maxboxes = x * y
+
+for i = 1, maxboxes do
 	local textbox_top = wibox.widget.textbox()
 	local textbox_bottom = wibox.widget.textbox()
 
@@ -62,7 +66,8 @@ local popup = awful.popup({
 	widget = {
 		{
 			widget = wibox.layout.grid,
-			forced_num_cols = 3,
+			forced_num_cols = x,
+			forced_num_rows = y,
 			spacing = 8,
 			table.unpack(textboxes),
 		},
@@ -110,7 +115,7 @@ local function update_popup(key)
 	local data = popup_data[current_state]
 
 	if data then
-		for i = 1, 9 do
+		for i = 1, maxboxes do
 			local action = data[i]
 
 			if action ~= nil then
@@ -163,7 +168,7 @@ local function update_popup(key)
 	local new_data = popup_data[current_state]
 
 	if new_data then
-		for i = 1, 9 do
+		for i = 1, maxboxes do
 			if new_data[i] then
 				textboxes[i].textbox_top.text = new_data[i].shortcut
 				textboxes[i].textbox_bottom.text = new_data[i].description
