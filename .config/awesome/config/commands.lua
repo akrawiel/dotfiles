@@ -51,9 +51,9 @@ return {
 	runPopup = function()
 		awful.popup_module.update_popup("start")
 	end,
-  runTimewarriorPopup = function()
-    awful.timewarrior_popup.update_popup("start")
-  end,
+	runTimewarriorPopup = function()
+		awful.timewarrior_popup.update_popup("start")
+	end,
 
 	invokePrompt = function()
 		awful.prompt.run({
@@ -298,4 +298,6 @@ return {
 			end
 		end
 	end,
+
+	restartAwesome = awesome.restart,
 }
