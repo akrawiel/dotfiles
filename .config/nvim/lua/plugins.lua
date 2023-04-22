@@ -55,14 +55,12 @@ return require("packer").startup(function(use)
 	})
 	use("hrsh7th/cmp-buffer")
 	use("hrsh7th/cmp-nvim-lsp")
-	use("hrsh7th/cmp-vsnip")
 	use({
 		"hrsh7th/nvim-cmp",
 		config = function()
 			require("cmp-config")
 		end,
 	})
-	use("hrsh7th/vim-vsnip")
 	use({
 		"jose-elias-alvarez/null-ls.nvim",
 		config = function()
@@ -82,6 +80,13 @@ return require("packer").startup(function(use)
 		end,
 	})
 	use("kyazdani42/nvim-web-devicons")
+	use({
+		"L3MON4D3/LuaSnip",
+		run = "make install_jsregexp",
+		config = function()
+			require("luasnip-config")
+		end,
+	})
 	use({
 		"machakann/vim-highlightedyank",
 		config = function()
@@ -148,6 +153,7 @@ return require("packer").startup(function(use)
 			vim.cmd("highlight PounceGap guifg=Black guibg=#4040ff gui=bold")
 		end,
 	})
+	use("saadparwaiz1/cmp_luasnip")
 	use("tpope/vim-repeat")
 	use("tpope/vim-speeddating")
 	use("tpope/vim-surround")
