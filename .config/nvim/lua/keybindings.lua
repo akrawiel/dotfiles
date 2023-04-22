@@ -226,11 +226,6 @@ vnoremap('<space>so', [[:<C-u>'<,'>so<CR>]])
 nnoremap('<space>x', [[:<C-u>]])
 vnoremap('<space>x', [[:<C-u>]])
 
--- Default keys remap
-
--- nnoremap('/', '/\\v')
--- vnoremap('/', '/\\v')
-
 -- Auto keybindings reload
 
 vim.cmd [[
