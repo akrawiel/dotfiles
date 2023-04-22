@@ -48,7 +48,7 @@ return {
 	work = {
 		{
 			shortcut = "R",
-			script = "report-jira-time.sh",
+			script = "jira-report-daily.sh",
 			description = "Report Jira time",
 		},
 		{
