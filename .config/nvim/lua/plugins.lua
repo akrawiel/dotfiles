@@ -143,6 +143,7 @@ return require("packer").startup(function(use)
 			vim.g.lf_map_keys = 0
 		end,
 	})
+  use("rafamadriz/friendly-snippets")
 	use("romgrk/barbar.nvim")
 	use({
 		"rlane/pounce.nvim",
