@@ -78,6 +78,11 @@ return {
 			script = "autorandr.sh",
 			description = "Autorandr cycle",
 		},
+		{
+			shortcut = "l",
+			command = "lockScreen",
+			description = "Lock screen",
+		},
 	},
 	browsers = {
 		{
