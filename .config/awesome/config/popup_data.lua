@@ -69,6 +69,11 @@ return {
 			description = "Reboot",
 		},
 		{
+			shortcut = "r",
+			command = "restartAwesome",
+			description = "Restart Awesome",
+		},
+		{
 			shortcut = "c",
 			switch = "cpu-governors",
 			description = "CPU governors",
@@ -116,6 +121,11 @@ return {
 		},
 		{
 			shortcut = "s",
+			command = "invokeWebSearch",
+			description = "Web search",
+		},
+		{
+			shortcut = "S",
 			run = "xfce4-settings-manager",
 			description = "Run xfce4 settings manager",
 		},
