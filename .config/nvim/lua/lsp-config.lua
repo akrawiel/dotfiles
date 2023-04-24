@@ -51,11 +51,6 @@ return function()
 				root_dir = javascript_root,
 			},
 		},
-		volar = {
-			params = {
-				root_dir = javascript_root,
-			},
-		},
 		html = true,
 		cssls = {
 			params = {
