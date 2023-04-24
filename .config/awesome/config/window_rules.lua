@@ -71,6 +71,15 @@ return {
 		},
 	},
 
+	-- FreeTube unmaximized
+	{
+		rule = { class = "FreeTube" },
+		properties = {
+			floating = false,
+			maximized = false,
+		},
+	},
+
 	-- xpad floating
 	{
 		rule = { class = "xpad" },
@@ -117,12 +126,6 @@ return {
 	{
 		rule_any = { class = { "Firefox", "FreeTube" } },
 		callback = TAG("5"),
-	},
-	{
-		rule = { class = "FreeTube" },
-		properties = {
-			maximized = false,
-		},
 	},
 	{
 		rule_any = { class = { "Spotify" }, icon_name = { "Shortwave" } },
