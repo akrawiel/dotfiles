@@ -80,9 +80,9 @@ nnoremapSilent('N', 'Nzzzv')
 -- Leader operations
 
 nnoremapSilent('<leader>p', [[<cmd>lua vim.lsp.buf.format { async = true }<CR>]])
-nnoremapSilent('<leader>t', [[<cmd>FloatermNew fish<CR>]])
-nnoremapSilent('<leader>g', [[<cmd>FloatermNew lazygit<CR>]])
-nnoremapSilent('<leader>d', [[<cmd>FloatermNew lazydocker<CR>]])
+nnoremapSilent('<leader>t', [[<cmd>FloatermNew --width=0.9 --height=0.9 fish<CR>]])
+nnoremapSilent('<leader>g', [[<cmd>FloatermNew --width=0.9 --height=0.9 lazygit<CR>]])
+nnoremapSilent('<leader>d', [[<cmd>FloatermNew --width=0.9 --height=0.9 lazydocker<CR>]])
 
 -- Current word search
 local function highlightCurrentWord()
