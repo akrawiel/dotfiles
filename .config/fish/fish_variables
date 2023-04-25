@@ -8,6 +8,7 @@ SETUVAR FZF_PREVIEW_DIR_CMD:ls
 SETUVAR FZF_PREVIEW_FILE_CMD:head\x20\x2dn\x2010
 SETUVAR FZF_TMUX_HEIGHT:40\x25
 SETUVAR --export GNOME_KEYRING_CONTROL:/run/user/1000/keyring
+SETUVAR --export PYENV_ROOT:/home/akrawiel/\x2epyenv
 SETUVAR --export SSH_AUTH_SOCK:/run/user/1000/keyring/ssh
 SETUVAR __fish_initialized:3400
 SETUVAR _fisher_catppuccin_2F_fish_files:\x7e/\x2econfig/fish/themes/Catppuccin\x20Frappe\x2etheme\x1e\x7e/\x2econfig/fish/themes/Catppuccin\x20Latte\x2etheme\x1e\x7e/\x2econfig/fish/themes/Catppuccin\x20Macchiato\x2etheme\x1e\x7e/\x2econfig/fish/themes/Catppuccin\x20Mocha\x2etheme
