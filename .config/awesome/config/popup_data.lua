@@ -134,6 +134,16 @@ return {
 			run = "pavucontrol",
 			description = "Run pavucontrol",
 		},
+		{
+			shortcut = "c",
+			run = "xcolor -s clipboard",
+			description = "Run xcolor",
+		},
+		{
+			shortcut = "k",
+			run = "xkill",
+			description = "Run xkill",
+		},
 	},
 	config = {
 		{
