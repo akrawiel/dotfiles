@@ -26,13 +26,6 @@ set -gx PROJECT_PATHS "$HOME/Projects"
 set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 set -gx XDG_CONFIG_HOME $HOME/.config
 
-# pyenv
-
-set -Ux PYENV_ROOT $HOME/.pyenv
-fish_add_path $PYENV_ROOT/bin
-
-pyenv init - | source
-
 # abbreviations
 
 abbr -a tst timew start
