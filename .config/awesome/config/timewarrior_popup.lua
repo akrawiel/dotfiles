@@ -39,8 +39,8 @@ for i = 1, last_tasks_count do
 	local textbox_from = wibox.widget.textbox(" ")
 	local textbox_to = wibox.widget.textbox(" ")
 
-  textbox_from.align = "right"
-  textbox_to.align = "right"
+	textbox_from.align = "right"
+	textbox_to.align = "right"
 
 	local ratio_container = wibox.widget({
 		textbox_task,
@@ -73,7 +73,9 @@ local local_message = wibox.widget({
 
 local local_prompt = wibox.widget.textbox()
 local top_message = wibox.widget.textbox()
-local bottom_message = wibox.widget.textbox("[c]ontinue [C]⌚ [u]ndo [d]elete [s]tart [S]wap [n]ew [N]⌚")
+local bottom_message = wibox.widget.textbox(
+	"[c]ontinue [C]⌚ [u]ndo [d]elete [s]tart [S]wap [n]ew [N]⌚"
+)
 
 local popup_container = wibox.widget({
 	widget = wibox.layout.fixed.vertical,
@@ -138,20 +140,14 @@ local function refresh_timewarrior_data()
 		table.insert(last_ids, "@" .. tostring(i))
 	end
 
-	local _, timewarrior_raw_data = popen(
-		"timew export "
-			.. table.concat(last_ids, " ")
-			.. [[ | jq 'def gettime(f): if f != null then f 
-          | strptime("%Y%m%dT%H%M%SZ") 
-          | mktime | localtime | strftime("%b%d %H:%M:%S")
-          else null end;
-          [.[] | { 
-            id: .id, 
-            tags: .tags, 
-            from: gettime(.start), 
-            to: gettime(.end)
-          }]']]
-	)
+	local _, timewarrior_raw_data =
+		popen("timew export " .. table.concat(last_ids, " ") .. [[ | jq '
+          [.[] | {
+            id: .id,
+            tags: .tags,
+            from: .start,
+            to: .end
+          }]']])
 
 	timewarrior_data = gears.table.reverse(json.decode(timewarrior_raw_data))
 
@@ -168,6 +164,8 @@ local function refresh_timewarrior_data()
 	top_message.text =
 		string.format("Total time today %s", timewarrior_summary or "-")
 
+	local rows_to_format = {}
+
 	for i = 1, last_tasks_count do
 		local row = timewarrior_data[i]
 
@@ -175,12 +173,46 @@ local function refresh_timewarrior_data()
 			break
 		end
 
+		table.insert(rows_to_format, i, {
+			from = row.from,
+			to = row.to,
+		})
+
 		task_textboxes[i].textbox_task.text = row.tags ~= nil
 				and table.concat(row.tags, " ")
 			or "-"
-		task_textboxes[i].textbox_from.text = row.from ~= nil and row.from or "-"
-		task_textboxes[i].textbox_to.text = row.to ~= nil and row.to or "TRACKING"
+		task_textboxes[i].textbox_from.text = "..."
+		task_textboxes[i].textbox_to.text = "..."
 	end
+
+	awful.spawn.easy_async_with_shell(
+		string.format(
+			[[%s/Applications/date-array-convert.mjs '%s']],
+			os.getenv("HOME"),
+			json.encode(rows_to_format)
+		),
+		function(stdout, _stderr, _exitreason, exitcode)
+			if exitcode ~= 0 then
+				for i, _ in pairs(rows_to_format) do
+					task_textboxes[i].textbox_from.text = "-"
+					task_textboxes[i].textbox_to.text = "-"
+				end
+			else
+				local result = json.decode(stdout)
+
+				for i, row in pairs(result) do
+					task_textboxes[i].textbox_from.text = (row.from or "-"):gsub(
+						"%s+$",
+						""
+					)
+					task_textboxes[i].textbox_to.text = (row.to or "TRACKING"):gsub(
+						"%s+$",
+						""
+					)
+				end
+			end
+		end
+	)
 end
 
 local function refresh_project_data(project)
