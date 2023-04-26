@@ -16,8 +16,8 @@ return function()
 
 		local opts = { noremap = true, silent = true }
 
-		buf_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-		buf_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+		buf_set_keymap("n", "<C-S-j>", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+		buf_set_keymap("n", "<C-S-k>", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
 		buf_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
 		buf_set_keymap("n", "gk", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 		buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
