@@ -10,6 +10,8 @@ set shell fish
 set shellopts ""
 set smartcase true
 set smartdia true
+set wrapscan true
+set wrapscroll true
 
 map x :delete
 map X !$f
