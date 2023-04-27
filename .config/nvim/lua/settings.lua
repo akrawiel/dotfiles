@@ -3,9 +3,10 @@ vim.api.nvim_command [[:language en_US.utf8]]
 vim.api.nvim_command [[:syntax on]]
 vim.api.nvim_command [[:filetype plugin indent on]]
 
--- lf.vim
-vim.g.lf_height = 0.9
-vim.g.lf_width = 0.9
+-- floaterm
+vim.g.floaterm_height = 0.9
+vim.g.floaterm_width = 0.9
+vim.g.floaterm_opener = "edit"
 
 vim.opt.compatible = false
 
