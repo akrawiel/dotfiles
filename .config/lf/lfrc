@@ -36,7 +36,7 @@ map gc cd ~/.config
 
 map S $/usr/bin/fish
 
-map <enter> open
+map <enter> floatermcompatibleopen
 
 map o &xdg-open $f
 map O &re.sonny.Junction $f
@@ -112,5 +112,13 @@ cmd reratio &{{
     lf -remote "send set ratios '1:2:2'"
   else
     lf -remote "send set ratios '1:3'"
+  end
+}}
+
+cmd floatermcompatibleopen &{{
+  if type -q "floaterm"
+    floaterm $f
+  else
+    open $f
   end
 }}
