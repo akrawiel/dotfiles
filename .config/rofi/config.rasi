@@ -1,0 +1,10 @@
+configuration {
+  combi-hide-mode-prefix: true;
+  combi-modes: "drun,run";
+  font: "mono 12";
+  modes: "window,drun,run,ssh";
+  show-icons: true;
+  terminal: "kitty";
+}
+
+@theme "/home/akrawiel/.local/share/rofi/themes/catppuccin-frappe.rasi"
