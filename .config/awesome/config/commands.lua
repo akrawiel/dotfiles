@@ -245,7 +245,7 @@ return {
 
 	lockScreen = function()
 		awful.spawn.with_shell(
-			"i3lock -c 008040 -k --{time,date,verif,wrong,modif}-color=ffffff --date-str='%A, %d %b %Y'"
+			"i3lock -c 008040"
 		)
 	end,
 
