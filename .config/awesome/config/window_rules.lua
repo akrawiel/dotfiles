@@ -116,7 +116,7 @@ return {
 		callback = TAG("2"),
 	},
 	{
-		rule = { class = "Firefox Developer Edition" },
+		rule = { class = "Firefox Developer Edition", "Firefox" },
 		callback = TAG("3"),
 	},
 	{
@@ -124,7 +124,7 @@ return {
 		callback = TAG("4"),
 	},
 	{
-		rule_any = { class = { "Firefox", "FreeTube" } },
+		rule_any = { class = { "FreeTube" } },
 		callback = TAG("5"),
 	},
 	{
@@ -137,7 +137,7 @@ return {
 	},
 	{
 		rule_any = {
-			class = { "Evolution", "thunderbird-beta", "Thunderbird", "Mail" },
+			class = { "Evolution", "thunderbird-beta", "thunderbird", "Thunderbird", "Mail" },
 		},
 		callback = TAG("F2"),
 	},
