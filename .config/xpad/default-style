@@ -10,7 +10,7 @@ back rgb(255,238,153)
 use_back 1
 text rgb(0,0,0)
 use_text 1
-fontname Sans 20
+fontname Sans 28
 toolbar 1
 auto_hide_toolbar 0
 scrollbar 1
