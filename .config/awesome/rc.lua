@@ -122,26 +122,19 @@ local tag_names = gears.table.join(
 	{ "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9" }
 )
 
-local tag_screen_assignments = {
-	["1"] = "DP1-3",
-	["2"] = "DP1-3",
-	["3"] = "DP1-2",
-	["4"] = "DP1-2",
-	["5"] = "DP1-2",
-	["6"] = "DP1-2",
-	["7"] = "DP1-2",
-	["8"] = "DP1-2",
-	["9"] = "DP1-2",
-	["F1"] = "eDP1",
-	["F2"] = "eDP1",
-	["F3"] = "eDP1",
-	["F4"] = "eDP1",
-	["F5"] = "eDP1",
-	["F6"] = "eDP1",
-	["F7"] = "eDP1",
-	["F8"] = "eDP1",
-	["F9"] = "eDP1",
-}
+local function assign_tag_screen(tag_name)
+  local number_tag_name = tonumber(tag_name)
+
+  if number_tag_name and number_tag_name <= 2 then
+    return { "DP-3-3", "DP1-3" }
+  end
+
+  if number_tag_name and number_tag_name >= 2 then
+    return { "DP-3-2", "DP1-2" }
+  end
+
+  return { "eDP1" }
+end
 
 for _, tagName in pairs(tag_names) do
 	awful.tag.add(tagName, {
@@ -163,13 +156,16 @@ local function handle_tag_assignments()
 	end
 
 	for _, tag in pairs(root.tags()) do
-		local screen_assignment = tag_screen_assignments[tag.name]
+		local screen_assignments = assign_tag_screen(tag.name)
 
 		local s = screen.primary
 
-		if gears.table.hasitem(connected_display_names, screen_assignment) then
-			s = connected_displays[screen_assignment]
-		end
+    for _, screen_assignment in pairs(screen_assignments) do
+      if gears.table.hasitem(connected_display_names, screen_assignment) then
+        s = connected_displays[screen_assignment]
+        break
+      end
+    end
 
 		tag.screen = s
 		tag.layout = s.geometry.width > s.geometry.height
@@ -178,8 +174,10 @@ local function handle_tag_assignments()
 	end
 
 	for s in screen do
-		s.tags[1].selected = true
-		set_wallpaper(s)
+    if s and s.tags and s.tags[1] then
+      s.tags[1].selected = true
+      set_wallpaper(s)
+    end
 	end
 end
 
