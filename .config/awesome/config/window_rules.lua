@@ -128,7 +128,7 @@ return {
 		callback = TAG("5"),
 	},
 	{
-		rule_any = { class = { "Spotify" }, icon_name = { "Shortwave" } },
+		rule_any = { class = { "Spotify" }, icon_name = { "Blanket", "Shortwave" } },
 		callback = TAG("9"),
 	},
 	{
