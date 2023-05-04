@@ -1,6 +1,6 @@
 #!/bin/fish
 
-runSingleInstance 'firefox-developer-edition'
+runSingleInstance 'firefox'
 runSingleInstance 'slack -s'
-runSingleInstance 'thunderbird-beta'
+runSingleInstance 'thunderbird'
 runSingleInstance 'logseq'
