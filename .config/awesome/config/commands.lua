@@ -117,7 +117,7 @@ return {
 
 				local file = io.open(
 					string.format(
-						"%s/SynologyDrive/Logseq/pages/inbox.org",
+						"%s/Sync/Logseq/pages/inbox.org",
 						os.getenv("HOME")
 					),
 					"a"
@@ -141,7 +141,7 @@ return {
 				end
 
 				local file = io.open(
-					string.format("%s/SynologyDrive/Todo/Todo.org", os.getenv("HOME")),
+					string.format("%s/Sync/Todo/Todo.org", os.getenv("HOME")),
 					"a"
 				)
 
