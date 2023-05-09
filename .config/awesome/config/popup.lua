@@ -122,10 +122,6 @@ local function update_popup(key, mod)
     key = "c-" .. key
   end
 
-  if gears.table.hasitem(mod, "Shift") then
-    key = "s-" .. key
-  end
-
 	local data = popup_data[current_state]
 
 	if data then
