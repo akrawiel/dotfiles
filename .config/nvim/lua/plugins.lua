@@ -81,13 +81,6 @@ return require("packer").startup(function(use)
 	})
 	use("kyazdani42/nvim-web-devicons")
 	use({
-		"L3MON4D3/LuaSnip",
-		run = "make install_jsregexp",
-		config = function()
-			require("luasnip-config")
-		end,
-	})
-	use({
 		"machakann/vim-highlightedyank",
 		config = function()
 			vim.g.highlightedyank_highlight_duration = 100
@@ -143,7 +136,6 @@ return require("packer").startup(function(use)
 			vim.g.lf_map_keys = 0
 		end,
 	})
-  use("rafamadriz/friendly-snippets")
 	use("romgrk/barbar.nvim")
 	use({
 		"rlane/pounce.nvim",
@@ -154,7 +146,6 @@ return require("packer").startup(function(use)
 			vim.cmd("highlight PounceGap guifg=Black guibg=#4040ff gui=bold")
 		end,
 	})
-	use("saadparwaiz1/cmp_luasnip")
 	use("tpope/vim-repeat")
 	use("tpope/vim-speeddating")
 	use("tpope/vim-surround")
