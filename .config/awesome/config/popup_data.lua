@@ -44,6 +44,11 @@ return {
 			switch = "music",
 			description = "music",
 		},
+    {
+      shortcut = "c-v",
+      command = "clipboardToInbox",
+      description = "Clipboard to inbox"
+    }
 	},
 	work = {
 		{

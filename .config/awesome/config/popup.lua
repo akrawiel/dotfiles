@@ -86,7 +86,7 @@ local popup = awful.popup({
 
 local keygrabber = awful.keygrabber({
 	keypressed_callback = function(self, mod, key)
-		local should_stop = awful.popup_module.update_popup(key)
+		local should_stop = awful.popup_module.update_popup(key, mod)
 
 		if should_stop == true then
 			self:stop()
@@ -100,7 +100,7 @@ local keygrabber = awful.keygrabber({
 
 local current_state = "main"
 
-local function update_popup(key)
+local function update_popup(key, mod)
 	if key == "start" then
 		keygrabber:start()
 		popup.visible = true
@@ -111,6 +111,20 @@ local function update_popup(key)
 		popup.visible = false
 		return true
 	end
+
+  mod = mod or {}
+
+  if gears.table.hasitem(mod, "Mod1") then
+    key = "a-" .. key
+  end
+
+  if gears.table.hasitem(mod, "Control") then
+    key = "c-" .. key
+  end
+
+  if gears.table.hasitem(mod, "Shift") then
+    key = "s-" .. key
+  end
 
 	local data = popup_data[current_state]
 
