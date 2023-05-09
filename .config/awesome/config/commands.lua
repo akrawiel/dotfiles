@@ -1,4 +1,15 @@
 local awful = require("awful")
+local gears = require("gears")
+
+local function get_clipboard_content()
+	local clipboard = io.popen("xclip -selection clipboard -o")
+
+	if clipboard ~= nil then
+		local content = clipboard:read("*a")
+		clipboard:close()
+		return content
+	end
+end
 
 return {
 	focusLeft = function()
@@ -91,6 +102,30 @@ return {
 		})
 	end,
 
+	clipboardToInbox = function()
+		local content = get_clipboard_content()
+
+		if content ~= nil then
+			local file = io.open(
+				string.format("%s/Sync/Logseq/pages/inbox.org", os.getenv("HOME")),
+				"a+"
+			)
+
+			if file ~= nil then
+				local current_content = file:read("*a")
+
+				local first_newline = "\n"
+
+				if gears.string.endswith(current_content, "\n") then
+					first_newline = ""
+				end
+
+				file:write(string.format("%s* %s\n", first_newline, content))
+
+				io.close(file)
+			end
+		end
+	end,
 	quickInbox = function()
 		awful.prompt.run({
 			prompt = " Inbox: ",
@@ -99,15 +134,7 @@ return {
 				{
 					{ "Control" },
 					"v",
-					function()
-						local clipboard = io.popen("xclip -selection clipboard -o")
-
-						if clipboard ~= nil then
-							local content = clipboard:read("*a")
-							clipboard:close()
-							return content
-						end
-					end,
+					get_clipboard_content,
 				},
 			},
 			exe_callback = function(input)
@@ -116,15 +143,20 @@ return {
 				end
 
 				local file = io.open(
-					string.format(
-						"%s/Sync/Logseq/pages/inbox.org",
-						os.getenv("HOME")
-					),
-					"a"
+					string.format("%s/Sync/Logseq/pages/inbox.org", os.getenv("HOME")),
+					"a+"
 				)
 
 				if file ~= nil then
-					file:write(string.format("\n* %s\n", input))
+					local current_content = file:read("*a")
+
+					local first_newline = "\n"
+
+					if gears.string.endswith(current_content, "\n") then
+						first_newline = ""
+					end
+
+					file:write(string.format("%s* %s\n", first_newline, input))
 
 					io.close(file)
 				end
@@ -244,9 +276,7 @@ return {
 	end,
 
 	lockScreen = function()
-		awful.spawn.with_shell(
-			"i3lock -c 008040"
-		)
+		awful.spawn.with_shell("i3lock -c 008040")
 	end,
 
 	audioLower = function()
