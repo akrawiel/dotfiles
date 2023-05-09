@@ -197,13 +197,18 @@ return {
 	end)(),
 	music = {
 		{
+			shortcut = "b",
+			run = "flatpak run com.rafaelmardojai.Blanket",
+			description = "Blanket soundboard",
+		},
+		{
 			shortcut = "r",
-			run = "de.haeckerfelix.Shortwave",
+			run = "flatpak run de.haeckerfelix.Shortwave",
 			description = "Shortwave radio",
 		},
 		{
 			shortcut = "s",
-			run = "spotify",
+			run = "flatpak run com.spotify.Client",
 			description = "Spotify",
 		},
 	},
