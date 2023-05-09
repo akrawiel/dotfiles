@@ -315,6 +315,7 @@ awful.screen.connect_for_each_screen(function(s)
 			layout = wibox.layout.fixed.horizontal,
 			wibox.widget.systray(),
 			wibox.container.margin(currency_box, 8, 2),
+			require("config.battery_widget"),
 			wibox.container.margin(cpu_governor, 8, 2),
 			wibox.container.margin(cpu_usage_box, 8, 2),
 			wibox.container.margin(ram_usage_box, 8, 2),
