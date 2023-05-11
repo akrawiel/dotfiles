@@ -1,0 +1,4 @@
+browser re.sonny.Junction
+
+bind-key j down
+bind-key k up
