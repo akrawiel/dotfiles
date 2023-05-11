@@ -36,10 +36,6 @@ return require("packer").startup(function(use)
 
 	-- plugins
 	use("arthurxavierx/vim-caser")
-	use({
-		"cshuaimin/ssr.nvim",
-		module = "ssr",
-	})
 	use("editorconfig/editorconfig-vim")
 	use({
 		"echasnovski/mini.nvim",

@@ -202,10 +202,6 @@ nnoremapSilent('<M-k>', [[:m .-2<CR>==]])
 nnoremapSilent('<C-j>', [[<cmd>cnext<CR>]])
 nnoremapSilent('<C-k>', [[<cmd>cprev<CR>]])
 
--- Code operations
-
-nnoremapSilent('<space>cR', '', { callback = function() require('ssr').open() end })
-
 -- Text operations
 
 vnoremapSilent('<space>tr', [[:!tac<CR>]])
