@@ -45,7 +45,7 @@ return {
 			description = "music",
 		},
     {
-      shortcut = "c-v",
+      shortcut = "m-Tab",
       command = "clipboardToInbox",
       description = "Clipboard to inbox"
     }

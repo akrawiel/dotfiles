@@ -118,6 +118,10 @@ local function update_popup(key, mod)
     key = "a-" .. key
   end
 
+  if gears.table.hasitem(mod, "Mod4") then
+    key = "m-" .. key
+  end
+
   if gears.table.hasitem(mod, "Control") then
     key = "c-" .. key
   end
