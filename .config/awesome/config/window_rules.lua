@@ -30,6 +30,9 @@ return {
 	-- Floating clients.
 	{
 		rule_any = {
+			modal = {
+				true,
+			},
 			instance = {
 				"DTA", -- Firefox addon DownThemAll.
 				"copyq", -- Includes session name in class.
@@ -137,7 +140,13 @@ return {
 	},
 	{
 		rule_any = {
-			class = { "Evolution", "thunderbird-beta", "thunderbird", "Thunderbird", "Mail" },
+			class = {
+				"Evolution",
+				"thunderbird-beta",
+				"thunderbird",
+				"Thunderbird",
+				"Mail",
+			},
 		},
 		callback = TAG("F2"),
 	},
