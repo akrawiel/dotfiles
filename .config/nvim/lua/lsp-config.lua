@@ -111,7 +111,7 @@ return function()
 		},
 		elixirls = {
 			params = {
-				cmd = { "/usr/bin/elixir-ls" },
+				cmd = { string.format("%s/Bin/elixir-ls/language_server.sh", os.getenv("HOME")) },
 			},
 		},
 		tailwindcss = true,
