@@ -41,8 +41,8 @@ gui:
     unstagedChangesColor:
       - red       # Red
 os:
-  editCommand: 'nvr'
-  editCommandTemplate: '{{editor}} --remote {{filename}}'
+  edit: 'nvr --remote {{filename}}'
+  editAtLine: 'nvr --remote +{{line}} {{filename}}'
 reporting: 'off'
 update:
   method: never
