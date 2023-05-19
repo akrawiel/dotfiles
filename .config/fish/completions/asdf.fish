@@ -1,0 +1,1 @@
+/home/akrawiel/.asdf/completions/asdf.fish
