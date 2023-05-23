@@ -69,6 +69,7 @@ vim.keymap.set('n', '<F4>', [[<cmd>Lf<CR>]])
 -- Pounce
 
 nnoremapSilent('s', [[<cmd>Pounce<CR>]])
+nnoremapSilent('S', [[<cmd>PounceRepeat<CR>]])
 vnoremapSilent('s', [[<cmd>Pounce<CR>]])
 onoremapSilent('z', [[<cmd>Pounce<CR>]])
 
