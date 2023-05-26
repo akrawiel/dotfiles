@@ -30,7 +30,7 @@ local function popen_msg(process)
 	return string.format("%s | %s | %s", msg, process, os.date())
 end
 
-local last_tasks_count = 10
+local last_tasks_count = 20
 
 local task_textboxes = {}
 
