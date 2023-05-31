@@ -7,6 +7,10 @@ return function()
 			c.fullscreen = not c.fullscreen
 			c:raise()
 		end),
+		awful.key({ modkey }, "m", function(c)
+			c.maximized = not c.maximized
+			c:raise()
+		end),
 		awful.key({ modkey }, "w", function(c)
 			c:kill()
 		end),
