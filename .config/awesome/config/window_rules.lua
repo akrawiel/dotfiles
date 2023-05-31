@@ -86,8 +86,9 @@ return {
 
 	-- xpad floating
 	{
-		rule = { class = "xpad" },
+		rule_any = { class = "xpad" },
 		properties = {
+			above = true,
 			floating = true,
 			ontop = true,
 		},
