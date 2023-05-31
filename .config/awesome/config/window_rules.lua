@@ -110,7 +110,12 @@ return {
 	},
 	{
 		rule = { class = "re.sonny.Junction" },
-		properties = { placement = awful.placement.centered },
+		properties = {
+			floating = true,
+			placement = awful.placement.centered,
+			width = 640,
+			height = 240,
+		},
 	},
 	{
 		rule = { instance = "EditorAlacritty" },
