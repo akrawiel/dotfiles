@@ -76,10 +76,11 @@ return {
 
 	-- FreeTube unmaximized
 	{
-		rule = { class = "FreeTube" },
+		rule_any = { class = "FreeTube" },
 		properties = {
 			floating = false,
 			maximized = false,
+			fullscreen = false,
 		},
 	},
 
