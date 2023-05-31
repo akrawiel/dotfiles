@@ -22,7 +22,6 @@ set -gx GIT_PAGER 'delta'
 set -gx GPG_TTY (tty)
 set -gx LANG en_US.UTF-8
 set -gx LC_ALL C.UTF-8
-set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
 set -gx NNN_PLUG 'd:dragdrop;z:autojump;G:getplugs;R:gitroot;r:renamer'
 set -gx PROJECT_PATHS "$HOME/Projects"
 set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
