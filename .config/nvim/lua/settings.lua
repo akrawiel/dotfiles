@@ -38,7 +38,7 @@ vim.opt.undofile = true
 vim.opt.undodir = vim.fn.expand '~/.config/nvim/undo'
 vim.opt.undolevels = 100
 vim.opt.backspace = { 'indent' , 'eol' , 'start' }
-vim.opt.mouse = 'a'
+vim.opt.mouse = ''
 vim.opt.mousemodel = 'extend'
 
 vim.opt.hidden = true
