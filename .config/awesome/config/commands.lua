@@ -265,6 +265,20 @@ return {
 						awful.tag.incmwfact(0.05)
 					end,
 				},
+				{
+					{},
+					"j",
+					function()
+						awful.client.incwfact(-0.05)
+					end,
+				},
+				{
+					{},
+					"k",
+					function()
+						awful.client.incwfact(0.05)
+					end,
+				},
 			},
 			stop_key = "Escape",
 			stop_callback = function()
