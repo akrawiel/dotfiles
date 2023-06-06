@@ -40,26 +40,20 @@ end
 -- File handling
 
 nnoremap('<space>fs', [[<cmd>update<CR>]])
-nnoremap('<space>fS', [[<cmd>wq<CR>]])
-nnoremap('<space>qq', [[<cmd>qa<CR>]])
-nnoremap('<space>zz', [[<cmd>wqa<CR>]])
 
 -- Barbar
 
 nnoremapSilent('<space>bc', [[<cmd>bufdo :bwipeout<CR>]])
 nnoremapSilent('<space>bd', [[<cmd>BufferClose<CR>]])
 nnoremapSilent('<space>bD', [[<cmd>BufferClose!<CR>]])
-nnoremapSilent('<space>bp', [[<cmd>BufferPin<CR>]])
 nnoremapSilent('<space>bh', [[<cmd>BufferMovePrevious<CR>]])
 nnoremapSilent('<space>bl', [[<cmd>BufferMoveNext<CR>]])
 nnoremapSilent('<space>bo', [[<cmd>BufferCloseAllButCurrent<CR>]])
 nnoremapSilent('gt', [[<cmd>BufferNext<CR>]])
 nnoremapSilent('gT', [[<cmd>BufferPrevious<CR>]])
+nnoremapSilent('<C-l>', [[<cmd>BufferNext<CR>]])
+nnoremapSilent('<C-h>', [[<cmd>BufferPrevious<CR>]])
 nnoremapSilent('<space><tab>', [[<cmd>BufferPick<CR>]])
-nnoremapSilent('<space>1', [[<cmd>BufferGoto 1<CR>]])
-nnoremapSilent('<space>2', [[<cmd>BufferGoto 2<CR>]])
-nnoremapSilent('<space>3', [[<cmd>BufferGoto 3<CR>]])
-nnoremapSilent('<space>4', [[<cmd>BufferGoto 4<CR>]])
 
 -- Function keys
 
@@ -140,24 +134,35 @@ nnoremapSilent('<space>cd', [[<cmd>lua require('telescope.builtin').diagnostics(
 nnoremapSilent('<space>cD', [[<cmd>lua require('telescope.builtin').diagnostics()<CR>]])
 nnoremapSilent('<space>co', [[<cmd>lua require('telescope.builtin').treesitter()<CR>]])
 nnoremapSilent('<space>cO', [[<cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<CR>]])
-nnoremapSilent('<space>ct', [[<cmd>lua require('telescope.builtin').lsp_type_definitions()<CR>]])
-nnoremapSilent('<space>fb', [[<cmd>lua require('telescope.builtin').buffers()<CR>]])
-nnoremapSilent('<space>ff', [[<cmd>lua require('telescope.builtin').registers()<CR>]])
-nnoremapSilent('<space>fg', [[<cmd>lua require('telescope.builtin').git_status()<CR>]])
-nnoremapSilent('<space>fG', [[<cmd>lua require('telescope.builtin').grep_string({ search = "<<<<<<<" })<CR>]])
-nnoremapSilent('<space>fp', [[<cmd>lua require('telescope-config').search_config()<CR>]])
-nnoremapSilent('<space>fr', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]])
-nnoremapSilent('<space>fR', [[<cmd>lua require('telescope.builtin').live_grep({ additional_args = { "-s" } })<CR>]])
-nnoremapSilent('<space>fq', [[<cmd>lua require('telescope.builtin').quickfix()<CR>]])
-nnoremapSilent('<space>fo', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]])
-nnoremapSilent('<space>f/', [[<cmd>lua require('telescope.builtin').search_history()<CR>]])
+nnoremapSilent('<space>r', [[<cmd>lua require('telescope.builtin').registers()<CR>]])
+nnoremapSilent('<space>g', [[<cmd>lua require('telescope.builtin').git_status()<CR>]])
+nnoremapSilent('<space>G', [[<cmd>lua require('telescope.builtin').grep_string({ search = "<<<<<<<" })<CR>]])
+vim.keymap.set('n', '<space>fp', function()
+	require("telescope.builtin").find_files({
+		prompt_title = "Config",
+		cwd = vim.fn.stdpath("config"),
+		file_ignore_patterns = { "undo/.*" },
+		follow = true,
+	})
+end)
+vim.keymap.set('n', '<space>fr', function()
+  local search = vim.fn.input('Enter search term: ')
+
+  if #search > 0 then
+    require('telescope.builtin').grep_string({ search = search })
+  else
+    print('No search term provided')
+  end
+end)
+nnoremapSilent('<space>j', [[<cmd>lua require('telescope.builtin').jumplist()<CR>]])
+nnoremapSilent('<space>q', [[<cmd>lua require('telescope.builtin').quickfix()<CR>]])
+nnoremapSilent('<space>o', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]])
+nnoremapSilent('<space>h', [[<cmd>lua require('telescope.builtin').search_history()<CR>]])
 nnoremapSilent('<space>.', [[<cmd>lua require('telescope.builtin').find_files({ hidden = true, follow = true, cwd = require('telescope.utils').buffer_dir('.') })<CR>]])
 nnoremapSilent('<space>/', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]])
-nnoremapSilent('<space>t.', [[<cmd>lua require('telescope.builtin').symbols({ sources = { 'emoji', 'kaomoji' } })<CR>]])
 nnoremapSilent('<space><bs>', [[<cmd>lua require('telescope.builtin').resume()<CR>]])
 nnoremapSilent('<space><return>', [[<cmd>lua require('telescope.builtin').commands()<CR>]])
 nnoremapSilent('<space><space>', [[<cmd>lua require('telescope.builtin').find_files({ find_command = { 'fd', '--type', 'f', '--hidden', '--exclude', '.git' } })<CR>]])
-nnoremapSilent('<space>n', [[<cmd>lua require('telescope.builtin').find_files({ hidden = true, follow = true, cwd = "~/Dropbox/Documents/OrgSync" })<CR>]])
 
 -- Windows
 
@@ -208,20 +213,6 @@ nnoremapSilent('<C-k>', [[<cmd>cprev<CR>]])
 vnoremapSilent('<space>tr', [[:!tac<CR>]])
 vnoremapSilent('<space>ts', [[:!sort<CR>]])
 vnoremapSilent('<space>tu', [[:!uniq<CR>]])
-
--- Ex commands
-
-nnoremap('<space>ss', [[:<C-u>%sm/]])
-vnoremap('<space>ss', [[:<C-u>'<,'>sm/]])
-
-nnoremap('<space>sf', [[:<C-u>%sm/<C-r>//]])
-vnoremap('<space>sf', [[:<C-u>'<,'>sm/<C-r>//]])
-
-nnoremap('<space>so', [[:<C-u>so<CR>]])
-vnoremap('<space>so', [[:<C-u>'<,'>so<CR>]])
-
-nnoremap('<space>x', [[:<C-u>]])
-vnoremap('<space>x', [[:<C-u>]])
 
 -- Auto keybindings reload
 

@@ -78,16 +78,3 @@ require("telescope").setup({
 
 require("telescope").load_extension("fzf")
 require("telescope").load_extension("ui-select")
-
-local M = {}
-
-M.search_config = function()
-	require("telescope.builtin").find_files({
-		prompt_title = "Config",
-		cwd = "~/.config/nvim",
-		file_ignore_patterns = { "undo/.*" },
-		follow = true,
-	})
-end
-
-return M
