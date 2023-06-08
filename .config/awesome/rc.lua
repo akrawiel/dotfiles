@@ -115,6 +115,7 @@ end
 
 awful.popup_module = require("config.popup")
 awful.timewarrior_popup = require("config.timewarrior_popup")
+awful.media_popup = require("config.media_popup")
 
 -- Tag definitions
 local tag_names = gears.table.join(

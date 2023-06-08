@@ -216,5 +216,10 @@ return {
 			run = "flatpak run com.spotify.Client",
 			description = "Spotify",
 		},
+    {
+      shortcut = "m",
+      command = "runMediaPopup",
+      description = "Media center",
+    },
 	},
 }
