@@ -111,8 +111,6 @@ return require("packer").startup(function(use)
 			require("telescope-config")
 		end,
 	})
-	use("nvim-telescope/telescope-symbols.nvim")
-	use("nvim-telescope/telescope-ui-select.nvim")
 	use({
 		"nvim-telescope/telescope-fzf-native.nvim",
 		run = "make",
@@ -126,12 +124,6 @@ return require("packer").startup(function(use)
 	})
 	use("nvim-treesitter/nvim-treesitter-context")
 	use("nvim-treesitter/nvim-treesitter-textobjects")
-	use({
-		"ptzz/lf.vim",
-		setup = function()
-			vim.g.lf_map_keys = 0
-		end,
-	})
 	use("romgrk/barbar.nvim")
 	use({
 		"rlane/pounce.nvim",
@@ -145,7 +137,6 @@ return require("packer").startup(function(use)
 	use("tpope/vim-repeat")
 	use("tpope/vim-speeddating")
 	use("tpope/vim-surround")
-	use("voldikss/vim-floaterm")
 
 	-- colorschemes
 	use({
