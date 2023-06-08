@@ -49,9 +49,8 @@ map <a-[> &{{
   nvr --remote $f
 }}
 
-map <c-n>
-map <c-n>d :mkdir
-map <c-n>f :touch
+map a
+map a :create
 
 map w
 map wd :dragdrop
@@ -59,24 +58,22 @@ map we :extract
 
 cmd dragdrop &dragon-drop (string split "\n" "$fx")
 
-cmd mkdir %{{
-  printf "New directory: "
-  read -l newDir
-  if test -n "$newDir"
-    mkdir -p "$newDir"
-    echo "Created $newDir"
-  end
-}}
-
-cmd touch %{{
-  printf "New file: "
-  read -l newFile
-  if test -n "$newFile"
-    set -l realFilePath (realpath "$newFile")
-    set -l baseDirName (dirname "$realFilePath")
-    mkdir -p "$baseDirName" &> /dev/null
-    touch "$realFilePath"
-    echo "Created $newFile"
+cmd create %{{
+  printf "New file/directory: "
+  read -l path
+  if test -n "$path"
+    if string match -r '/$' "$path"
+      mkdir -p "$path"
+      echo "Created directory: $path"
+    else
+      set -l realFilePath (realpath "$path")
+      set -l baseDirName (dirname "$realFilePath")
+      mkdir -p "$baseDirName" &> /dev/null
+      touch "$realFilePath"
+      echo "Created file: $path"
+    end
+  else
+    echo "No file/directory created"
   end
 }}
 
@@ -120,6 +117,8 @@ cmd reratio &{{
 cmd floatermcompatibleopen &{{
   if type -q "floaterm"
     floaterm $f
+  else if test -n "$NVIM"
+    nvr --servername "$NVIM" --remote $f
   else
     open $f
   end
