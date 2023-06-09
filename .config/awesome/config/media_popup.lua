@@ -132,9 +132,9 @@ local function redraw_players()
 	for index, player in pairs(players) do
 		local textbox = wibox.widget.textbox(
 			player.name
-				.. (player.status == "Playing" and " ▶" or "")
-				.. (player.status == "Paused" and " ⏸" or "")
-				.. (player.status == "Stopped" and " ⏹" or "")
+				.. (player.status == "Playing" and " " or "")
+				.. (player.status == "Paused" and " " or "")
+				.. (player.status == "Stopped" and " " or "")
 		)
 		local container = wibox.widget({
 			widget = wibox.container.background,
@@ -154,8 +154,8 @@ local function redraw_sinks()
 	for index, sink in pairs(sinks) do
 		local left_textbox = wibox.widget.textbox(
 			tostring(sink.displayName)
-				.. (sink.name == default_sink and " ✅" or "")
-				.. (sink.mute and " 🔇" or "")
+				.. (sink.name == default_sink and "  " or "")
+				.. (sink.mute and " 󰝟 " or "")
 		)
 		local right_textbox = wibox.widget.textbox(sink.volume)
 		local container = wibox.widget({
@@ -188,8 +188,8 @@ local function redraw_sources()
 	for index, source in pairs(sources) do
 		local left_textbox = wibox.widget.textbox(
 			tostring(source.displayName)
-				.. (source.name == default_source and " ✅" or "")
-				.. (source.mute and " 🔇" or "")
+				.. (source.name == default_source and "  " or "")
+				.. (source.mute and " 󰝟 " or "")
 		)
 		local right_textbox = wibox.widget.textbox(source.volume)
 		local container = wibox.widget({
