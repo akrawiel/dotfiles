@@ -1,5 +1,7 @@
-require 'plugins'
+require("plugins")
 
-require 'settings'
+require("commands")
+require("options")
+require("autocommands")
 
-require 'keybindings'
+require("keybindings")
