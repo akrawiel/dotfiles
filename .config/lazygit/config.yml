@@ -16,6 +16,14 @@ customCommands:
     key: '<c-t>'
     loadingText: 'Pushing tags to repository...'
     stream: yes
+keybinding:
+  universal:
+    prevBlock-alt: 'h'
+    nextBlock-alt: 'l'
+    prevTab: 'H'
+    nextTab: 'L'
+    scrollLeft: null
+    scrollRight: null
 gui:
   language: 'en'
   scrollPastBottom: true
