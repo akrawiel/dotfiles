@@ -5,6 +5,7 @@ fish_add_path $HOME/.yarn/bin
 fish_add_path $HOME/go/bin
 fish_add_path $HOME/Applications
 fish_add_path $HOME/AppImages
+fish_add_path $HOME/Bin
 fish_add_path $HOME/.local/bin
 fish_add_path $HOME/.spicetify
 fish_add_path /opt/applications
