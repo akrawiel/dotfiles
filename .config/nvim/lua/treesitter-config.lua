@@ -14,6 +14,7 @@ require'nvim-treesitter.configs'.setup {
     "markdown",
     "org",
     "php",
+    "prisma",
     "python",
     "regex",
     "scss",
