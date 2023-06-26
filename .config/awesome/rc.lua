@@ -124,17 +124,17 @@ local tag_names = gears.table.join(
 )
 
 local function assign_tag_screen(tag_name)
-  local number_tag_name = tonumber(tag_name)
+	local number_tag_name = tonumber(tag_name)
 
-  if number_tag_name and number_tag_name <= 2 then
-    return { "DP-3-3", "DP1-3" }
-  end
+	if number_tag_name and number_tag_name <= 2 then
+		return { "DP-3-3", "DP1-3" }
+	end
 
-  if number_tag_name and number_tag_name >= 2 then
-    return { "DP-3-2", "DP1-2" }
-  end
+	if number_tag_name and number_tag_name >= 2 then
+		return { "DP-3-2", "DP1-2" }
+	end
 
-  return { "eDP1" }
+	return { "eDP1" }
 end
 
 for _, tagName in pairs(tag_names) do
@@ -161,12 +161,12 @@ local function handle_tag_assignments()
 
 		local s = screen.primary
 
-    for _, screen_assignment in pairs(screen_assignments) do
-      if gears.table.hasitem(connected_display_names, screen_assignment) then
-        s = connected_displays[screen_assignment]
-        break
-      end
-    end
+		for _, screen_assignment in pairs(screen_assignments) do
+			if gears.table.hasitem(connected_display_names, screen_assignment) then
+				s = connected_displays[screen_assignment]
+				break
+			end
+		end
 
 		tag.screen = s
 		tag.layout = s.geometry.width > s.geometry.height
@@ -175,10 +175,10 @@ local function handle_tag_assignments()
 	end
 
 	for s in screen do
-    if s and s.tags and s.tags[1] then
-      s.tags[1].selected = true
-      set_wallpaper(s)
-    end
+		if s and s.tags and s.tags[1] then
+			s.tags[1].selected = true
+			set_wallpaper(s)
+		end
 	end
 end
 
@@ -205,9 +205,22 @@ awful.screen.connect_for_each_screen(function(s)
 
 	-- CPU & RAM
 	local cpu_usage_box = wibox.widget.textbox("")
-	vicious.register(cpu_usage_box, vicious.widgets.cpu, function(_, args)
-		return "<b>C</b>" .. string.format("%03d", args[1])
-	end, 1)
+	-- local function get_cpu_usage()
+	-- 	awful.spawn.easy_async_with_shell(
+	--      [[
+	--        lscpu | jq -Rr 'select(. | startswith("CPU(s) scaling MHz")) | split(" ") | last | sub("%"; "")'
+	--      ]],
+	-- 		function(out)
+	--        local success, frequency = pcall(tonumber, out)
+	--        cpu_usage_box.markup = "<b>C</b>" .. string.format("%03d", success and frequency or 0)
+	--      end
+	--    )
+	--
+	-- 	return true
+	-- end
+	--
+	-- gears.timer.start_new(2, get_cpu_usage)
+	-- get_cpu_usage()
 
 	local cpu_governor = wibox.widget.textbox("")
 	vicious.register(cpu_governor, vicious.widgets.cpufreq, function(_, args)
