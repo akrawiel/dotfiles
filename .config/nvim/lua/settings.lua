@@ -54,7 +54,7 @@ vim.opt.signcolumn = 'yes'
 vim.opt.termguicolors = true
 vim.opt.showmode = false
 vim.opt.timeoutlen = 1000
-vim.opt.conceallevel = 0
+vim.opt.conceallevel = 1
 vim.opt.list = true
 vim.opt.lcs = "tab:> ,eol:⏎,leadmultispace:· ,nbsp:·"
 vim.opt.completeopt = { 'menuone', 'noselect' , 'noinsert' }
@@ -66,7 +66,6 @@ vim.opt.statusline = '%-10.10(%#StatusLineBold#%{mode()}%#StatusLine# %m%) %= %#
 vim.cmd [[
   au BufNew,BufReadPost,BufReadPre,BufEnter *.md setlocal tw=80
   au BufNew,BufReadPost,BufReadPre,BufEnter *.md setlocal colorcolumn=80
-  au BufNew,BufReadPost,BufReadPre,BufEnter * setlocal conceallevel=0
 ]]
 
 vim.api.nvim_create_autocmd('TermOpen', { command = 'startinsert', pattern = '*' })
