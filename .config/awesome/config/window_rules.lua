@@ -138,7 +138,7 @@ return {
 		callback = TAG("5"),
 	},
 	{
-		rule_any = { class = { "Spotify" }, icon_name = { "Blanket", "Shortwave" } },
+		rule_any = { class = { "Spotify", "KeePassXC" }, icon_name = { "Blanket", "Shortwave" } },
 		callback = TAG("9"),
 	},
 	{
