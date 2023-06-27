@@ -195,6 +195,7 @@ nnoremapSilent(
 	"<space><space>",
 	[[<cmd>lua require('telescope.builtin').find_files({ find_command = { 'fd', '--type', 'f', '--hidden', '--exclude', '.git' } })<CR>]]
 )
+vim.keymap.set("n", "<space>n", [[<cmd>Telescope neorg find_norg_files<CR>]], { silent = true })
 
 -- Windows
 

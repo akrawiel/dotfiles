@@ -50,7 +50,9 @@ return require("packer").startup(function(use)
 		end,
 	})
 	use("hrsh7th/cmp-buffer")
+	use("hrsh7th/cmp-cmdline")
 	use("hrsh7th/cmp-nvim-lsp")
+	use("hrsh7th/cmp-path")
 	use({
 		"hrsh7th/nvim-cmp",
 		config = function()
@@ -104,6 +106,45 @@ return require("packer").startup(function(use)
 		end,
 	})
 	use("nvim-lua/plenary.nvim")
+	use({
+		"nvim-neorg/neorg",
+		config = function()
+			require("neorg").setup({
+				load = {
+					["core.defaults"] = {},
+					["core.concealer"] = {
+						config = {
+							icon_preset = "basic",
+						},
+					},
+					["core.completion"] = {
+						config = {
+							engine = "nvim-cmp",
+							name = "[Neorg]",
+						},
+					},
+					["core.integrations.nvim-cmp"] = {},
+					["core.integrations.telescope"] = {},
+					["core.dirman"] = {
+						config = {
+							workspaces = {
+								notes = string.format("%s/Sync/Norg", os.getenv("HOME")),
+							},
+							default_workspace = "notes",
+						},
+					},
+					["core.journal"] = {
+						config = {
+							journal_folder = "journals",
+							strategy = "flat",
+						},
+					},
+				},
+			})
+		end,
+		run = ":Neorg sync-parsers",
+		requires = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope" },
+	})
 	use({
 		"nvim-orgmode/orgmode",
 		config = function()
