@@ -72,12 +72,7 @@ local function tmuxOrTerminal(cmd)
 end
 
 nnoremapSilent("<F3>", [[<cmd>noh<CR>]])
-vim.keymap.set("n", "<F4>", function()
-	tmuxOrTerminal({
-		"lf",
-		"'" .. vim.fn.expand("%:p") .. "'",
-	})
-end, { silent = true })
+vim.keymap.set("n", "<F4>", [[<cmd>Oil<CR>]], { silent = true })
 
 -- Pounce
 

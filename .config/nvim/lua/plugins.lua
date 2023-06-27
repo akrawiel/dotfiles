@@ -140,6 +140,12 @@ return require("packer").startup(function(use)
 		end,
 	})
 	use("saadparwaiz1/cmp_luasnip")
+	use({
+		"stevearc/oil.nvim",
+		config = function()
+			require("oil").setup()
+		end,
+	})
 	use("tpope/vim-repeat")
 	use("tpope/vim-speeddating")
 	use("tpope/vim-surround")
