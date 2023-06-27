@@ -52,7 +52,7 @@ local keybindings = {
 		{ "<space>j", tb.jumplist },
 		{ "<space>k", '"+' },
 		{ "<space>.", kc.filescurdir },
-    { "<space>n", cmd("Telescope neorg find_norg_files") },
+		{ "<space>n", kc.tex("neorg", "find_norg_files") },
 		{ "<space>o", tb.oldfiles },
 		{ "<space>Ps", cmd("PackerSync") },
 		{ "<space>q", tb.quickfix },

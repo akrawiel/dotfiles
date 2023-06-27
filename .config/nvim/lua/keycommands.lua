@@ -91,6 +91,13 @@ local function files()
 	tb.find_files({ find_command = { "fd", "--type", "f", "--hidden", "--exclude", ".git" } })
 end
 
+local function tex(extension, func, ...)
+	local arguments = { ... }
+	return function()
+		require("telescope").extensions[extension][func](arguments)
+	end
+end
+
 return {
 	config = config,
 	conflictmarkers = conflictmarkers,
@@ -100,5 +107,6 @@ return {
 	grepstr = grepstr,
 	hlcword = hlcword,
 	hlsword = hlsword,
+	tex = tex,
 	tmux = tmux,
 }
