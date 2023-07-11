@@ -67,11 +67,3 @@ vim.cmd [[
   au BufNew,BufReadPost,BufReadPre,BufEnter *.md setlocal tw=80
   au BufNew,BufReadPost,BufReadPre,BufEnter *.md setlocal colorcolumn=80
 ]]
-
-vim.api.nvim_create_autocmd('TermOpen', { command = 'startinsert', pattern = '*' })
-vim.api.nvim_create_autocmd('TermClose', { callback = function(event)
-  if not event.status then
-    vim.api.nvim_input('<CR>')
-  end
-end, pattern = '*' })
-vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, { command = 'set ft=html', pattern = '*.njk' })
