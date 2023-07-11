@@ -31,6 +31,8 @@ local keybindings = {
 		{ "N", "Nzzzv" },
 		{ "s", cmd("Pounce") },
 		{ "S", cmd("PounceRepeat") },
+		{ "<C-j>", cmd("cnext") },
+		{ "<C-k>", cmd("cprev") },
 		{ "<space>bc", cmd("bufdo :bwipeout") },
 		{ "<space>bd", cmd("BufferClose") },
 		{ "<space>bD", cmd("BufferClose!") },
