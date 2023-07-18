@@ -205,22 +205,9 @@ awful.screen.connect_for_each_screen(function(s)
 
 	-- CPU & RAM
 	local cpu_usage_box = wibox.widget.textbox("")
-	-- local function get_cpu_usage()
-	-- 	awful.spawn.easy_async_with_shell(
-	--      [[
-	--        lscpu | jq -Rr 'select(. | startswith("CPU(s) scaling MHz")) | split(" ") | last | sub("%"; "")'
-	--      ]],
-	-- 		function(out)
-	--        local success, frequency = pcall(tonumber, out)
-	--        cpu_usage_box.markup = "<b>C</b>" .. string.format("%03d", success and frequency or 0)
-	--      end
-	--    )
-	--
-	-- 	return true
-	-- end
-	--
-	-- gears.timer.start_new(2, get_cpu_usage)
-	-- get_cpu_usage()
+	vicious.register(cpu_usage_box, vicious.widgets.cpu, function(_, args)
+		return "<b>C</b>" .. string.format("%03d", args[1])
+	end, 2)
 
 	local cpu_governor = wibox.widget.textbox("")
 	vicious.register(cpu_governor, vicious.widgets.cpufreq, function(_, args)
