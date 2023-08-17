@@ -24,6 +24,12 @@ return function(options)
 		awful.key({}, "XF86AudioRaiseVolume", commands.audioRaise),
 		awful.key({}, "XF86AudioStop", commands.audioStop),
 
+		-- Alternative media keybindings
+		awful.key(ModControl, "h", commands.audioPrev),
+		awful.key(ModControl, "j", commands.audioPlay),
+		awful.key(ModControl, "k", commands.audioPlay),
+		awful.key(ModControl, "l", commands.audioNext),
+
 		-- Focus switching
 		awful.key(Mod, "h", commands.focusLeft),
 		awful.key(Mod, "j", commands.focusDown),
