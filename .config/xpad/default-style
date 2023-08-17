@@ -3,7 +3,7 @@ height 300
 width 300
 confirm_destroy 1
 edit_lock 0
-sticky_on_start 1
+sticky_on_start 0
 tray_enabled 1
 tray_click_configuration 1
 back rgb(255,238,153)
