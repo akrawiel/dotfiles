@@ -117,6 +117,15 @@ return {
 				},
 			},
 			tailwindcss = true,
+			volar = {
+				params = {
+					init_options = {
+						typescript = {
+							tsdk = "/usr/local/lib/node_modules/typescript/lib",
+						},
+					},
+				},
+			},
 		}
 
 		local capabilities = require("cmp_nvim_lsp").default_capabilities()
