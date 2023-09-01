@@ -130,7 +130,7 @@ return {
 		callback = TAG("3"),
 	},
 	{
-		rule = { class = "Brave-browser" },
+		rule = { class = "Brave-browser", class = "Brave-browser-nightly" },
 		callback = TAG("4"),
 	},
 	{
@@ -138,7 +138,10 @@ return {
 		callback = TAG("5"),
 	},
 	{
-		rule_any = { class = { "Spotify", "KeePassXC" }, icon_name = { "Blanket", "Shortwave" } },
+		rule_any = {
+			class = { "Spotify", "KeePassXC" },
+			icon_name = { "Blanket", "Shortwave" },
+		},
 		callback = TAG("9"),
 	},
 	{
