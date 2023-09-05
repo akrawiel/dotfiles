@@ -167,11 +167,6 @@ return {
 			description = "Qtile config",
 		},
 		{
-			shortcut = "c",
-			script = "edit-chorder-config.sh",
-			description = "Chorder config",
-		},
-		{
 			shortcut = "f",
 			script = "edit-fish-config.sh",
 			description = "Fish config",
