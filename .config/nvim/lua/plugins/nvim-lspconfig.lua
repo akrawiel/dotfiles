@@ -117,6 +117,7 @@ return {
 				},
 			},
 			tailwindcss = true,
+			emmet_language_server = true,
 			volar = {
 				params = {
 					init_options = {
