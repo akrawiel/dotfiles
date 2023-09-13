@@ -16,7 +16,7 @@ local keybindings = {
 		{ "<C-l>", cmd("BufferNext") },
 		{ "<F1>", tb.help_tags },
 		{ "<F3>", cmd("noh") },
-		{ "<F4>", cmd("Oil") },
+		{ "-", cmd("Oil") },
 		{ "gd", tb.lsp_definitions },
 		{ "gr", tb.lsp_references },
 		{ "gt", cmd("BufferNext") },
