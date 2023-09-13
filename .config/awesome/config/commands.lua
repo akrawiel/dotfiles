@@ -293,7 +293,7 @@ return {
 	end,
 
 	lockScreen = function()
-		awful.spawn.with_shell("i3lock -c 008040")
+		awful.spawn.with_shell("loginctl lock-session")
 	end,
 
 	audioLower = function()
