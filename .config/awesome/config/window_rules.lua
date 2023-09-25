@@ -122,6 +122,14 @@ return {
 		callback = TAG("1"),
 	},
 	{
+		rule = { class = "Lutris" },
+		callback = TAG("1"),
+	},
+	{
+		rule = { class = "steam" },
+		callback = TAG("2"),
+	},
+	{
 		rule = { instance = "ProjectAlacritty" },
 		callback = TAG("2"),
 	},
