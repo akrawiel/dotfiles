@@ -58,6 +58,7 @@ for i = 1, last_tasks_count do
 		textbox_task = textbox_task,
 		textbox_from = textbox_from,
 		textbox_to = textbox_to,
+		forced_height = 20,
 	})
 
 	ratio_container:ajust_ratio(2, 0.5, 0.25, 0.25)
