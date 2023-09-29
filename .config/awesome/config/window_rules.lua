@@ -3,7 +3,11 @@ local beautiful = require("beautiful")
 
 local function TAG(tag)
 	return function(c)
-		c:move_to_tag(awful.tag.find_by_name(nil, tag))
+		require("gears.timer").start_new(0.1, function()
+			c:move_to_tag(awful.tag.find_by_name(nil, tag))
+
+      return false
+		end)
 	end
 end
 
@@ -84,16 +88,6 @@ return {
 		},
 	},
 
-	-- xpad floating
-	{
-		rule_any = { class = "xpad" },
-		properties = {
-			above = true,
-			floating = true,
-			ontop = true,
-		},
-	},
-
 	-- Add titlebars to normal clients and dialogs
 	{
 		rule_any = { type = { "normal", "dialog" } },
@@ -138,7 +132,7 @@ return {
 		callback = TAG("3"),
 	},
 	{
-		rule = { class = "Brave-browser", class = "Brave-browser-nightly" },
+		rule_any = { class = { "Brave-browser", "Brave-browser-nightly" } },
 		callback = TAG("4"),
 	},
 	{
@@ -153,7 +147,9 @@ return {
 		callback = TAG("9"),
 	},
 	{
-		rule_any = { class = { "Slack", "Logseq" } },
+		rule_any = {
+			class = { "Slack", "Logseq", "xpad" },
+		},
 		callback = TAG("F1"),
 	},
 	{
