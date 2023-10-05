@@ -7,4 +7,4 @@ configuration {
   terminal: "kitty";
 }
 
-@theme "/home/akrawiel/.local/share/rofi/themes/catppuccin-frappe.rasi"
+@theme "catppuccin-frappe-mini"
