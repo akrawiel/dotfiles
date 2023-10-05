@@ -21,6 +21,7 @@ local keybindings = {
 		{ "gr", tb.lsp_references },
 		{ "gt", cmd("BufferNext") },
 		{ "gT", cmd("BufferPrevious") },
+		{ "gx", cmd('silent exec "!setsid xdg-open <cWORD>"') },
 		{ "#", kc.hlcword },
 		{ "*", kc.hlcword },
 		{ "<leader>d", kc.tmux({ "lazydocker" }) },
