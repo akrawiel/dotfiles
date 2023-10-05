@@ -91,6 +91,10 @@ local function files()
 	tb.find_files({ find_command = { "fd", "--type", "f", "--hidden", "--exclude", ".git" } })
 end
 
+local function filesorg()
+	tb.find_files({ follow = true, cwd = string.format("%s/Sync/Logseq", os.getenv("HOME")) })
+end
+
 local function tex(extension, func, ...)
 	local arguments = { ... }
 	return function()
@@ -104,6 +108,7 @@ return {
 	curbufdiag = curbufdiag,
 	filescurdir = filescurdir,
 	files = files,
+	filesorg = filesorg,
 	grepstr = grepstr,
 	hlcword = hlcword,
 	hlsword = hlsword,
