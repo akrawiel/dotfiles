@@ -55,7 +55,7 @@ local keybindings = {
 		{ "<space>j", tb.jumplist },
 		{ "<space>k", '"+' },
 		{ "<space>.", kc.filescurdir },
-		{ "<space>n", kc.tex("neorg", "find_norg_files") },
+		{ "<space>n", kc.filesorg },
 		{ "<space>o", tb.oldfiles },
 		{ "<space>S", cmd("Lazy sync") },
 		{ "<space>q", tb.quickfix },
