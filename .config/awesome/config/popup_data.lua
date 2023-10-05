@@ -79,14 +79,19 @@ return {
 			description = "Restart Awesome",
 		},
 		{
-			shortcut = "c",
+			shortcut = "C",
 			switch = "cpu-governors",
 			description = "CPU governors",
 		},
 		{
-			shortcut = "d",
-			script = "autorandr.sh",
-			description = "Autorandr cycle",
+			shortcut = "w",
+			script = "autorandr-work.sh",
+			description = "Autorandr work",
+		},
+		{
+			shortcut = "c",
+			script = "autorandr-common.sh",
+			description = "Autorandr common",
 		},
 		{
 			shortcut = "l",
