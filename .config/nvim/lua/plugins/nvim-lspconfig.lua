@@ -61,27 +61,7 @@ return {
 			dartls = true,
 			dockerls = true,
 			docker_compose_language_service = true,
-			rust_analyzer = {
-				on_attach = function(client)
-					client.server_capabilities.document_formatting = true
-				end,
-				params = {
-					settings = {
-						["rust-analyzer"] = {
-							assist = {
-								importGranularity = "module",
-								importPrefix = "by_self",
-							},
-							rustfmt = {
-								enableRangeFormatting = true,
-							},
-							procMacro = {
-								enable = true,
-							},
-						},
-					},
-				},
-			},
+			rust_analyzer = true,
 			pylsp = true,
 			lua_ls = {
 				params = {
