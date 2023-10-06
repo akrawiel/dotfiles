@@ -60,7 +60,7 @@ return {
 		awful.spawn.with_shell("tenorSelector")
 	end,
 	runPopup = function()
-		awful.popup_module.update_popup("start")
+		awful.spawn("chorder")
 	end,
 	runTimewarriorPopup = function()
 		awful.timewarrior_popup.update_popup("start")
