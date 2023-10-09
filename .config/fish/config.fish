@@ -15,7 +15,11 @@ fish_add_path /opt/android-sdk/tools
 fish_add_path /opt/android-sdk/tools/bin
 fish_add_path /var/lib/flatpak/exports/bin
 
+
 # global variables
+
+set -gx PLAYDATE_SDK_PATH $HOME/Applications/PlaydateSDK
+fish_add_path $PLAYDATE_SDK_PATH/bin
 
 set -gx ANDROID_SDK_ROOT '/opt/android-sdk'
 set -gx EDITOR nvim
