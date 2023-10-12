@@ -9,7 +9,6 @@ end
 
 setxkbmap pl -option caps:ctrl_modifier -option compose:sclk
 xset s off
-xpad -s -N &
 
 runSingleInstance 'numlockx'
 runSingleInstance 'flameshot'
