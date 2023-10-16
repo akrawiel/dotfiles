@@ -171,7 +171,6 @@ return {
 		},
 		callback = TAG("F3"),
 	},
-
 	{
 		rule_any = {
 			class = { "dev.kodespresso.timewarriorpopup", "chorder" },
@@ -183,6 +182,18 @@ return {
 			above = true,
 			opacity = 0.9,
 			placement = awful.placement.centered,
+		},
+	},
+	{
+		rule_any = {
+			instance = { "freetubevideo" },
+		},
+		properties = {
+			floating = true,
+			placement = awful.placement.centered,
+			modal = true,
+			raise = true,
+			ontop = true,
 		},
 	},
 }
