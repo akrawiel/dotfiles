@@ -6,7 +6,7 @@ local function TAG(tag)
 		require("gears.timer").start_new(0.1, function()
 			c:move_to_tag(awful.tag.find_by_name(nil, tag))
 
-      return false
+			return false
 		end)
 	end
 end
@@ -170,5 +170,19 @@ return {
 			class = { "Ferdium", "Signal" },
 		},
 		callback = TAG("F3"),
+	},
+
+	{
+		rule_any = {
+			class = { "dev.kodespresso.timewarriorpopup", "chorder" },
+		},
+		properties = {
+			modal = true,
+			floating = true,
+			ontop = true,
+			above = true,
+			opacity = 0.9,
+			placement = awful.placement.centered,
+		},
 	},
 }
