@@ -128,7 +128,7 @@ return {
 		callback = TAG("2"),
 	},
 	{
-		rule = { class = "Firefox Developer Edition", "Firefox" },
+		rule = { class = "Firefox Developer Edition", "Firefox", "firefox", "Navigator" },
 		callback = TAG("3"),
 	},
 	{
