@@ -26,7 +26,7 @@ local keybindings = {
 		{ "*", kc.hlcword },
 		{ "<leader>d", kc.tmux({ "lazydocker" }) },
 		{ "<leader>g", kc.tmux({ "lazygit" }) },
-		{ "<leader>p", cmd("lua vim.lsp.buf.format { async = true }") },
+		{ "<leader>p", cmd("Format") },
 		{ "<leader>t", kc.tmux({}) },
 		{ "n", "nzzzv" },
 		{ "N", "Nzzzv" },
