@@ -14,6 +14,7 @@ return {
 				"heex",
 				"javascript",
 				"json",
+				"latex",
 				"lua",
 				"markdown",
 				"org",
