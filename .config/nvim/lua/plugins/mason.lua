@@ -25,6 +25,7 @@ return {
 			"tailwindcss-language-server",
 			"typescript-language-server",
 			"vue-language-server",
+			"xo",
 			"yamllint",
 		},
 	},
