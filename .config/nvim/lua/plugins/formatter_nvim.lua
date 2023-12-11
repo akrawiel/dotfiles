@@ -18,13 +18,21 @@ return {
 			}
 		end
 
+    local xo_setup = { xo }
+    local eslintd_prettierd_setup = { require("formatter.filetypes.javascript").eslint_d, require("formatter.filetypes.javascript").prettierd }
+
 		formatter.setup({
 			log_level = vim.log.levels.WARN,
 			filetype = {
-				javascript = { xo },
-				javascriptreact = { xo },
-				typescript = { xo },
-				typescriptreact = { xo },
+				-- javascript = { xo },
+				-- javascriptreact = { xo },
+				-- typescript = { xo },
+				-- typescriptreact = { xo },
+
+				javascript = eslintd_prettierd_setup,
+				javascriptreact = eslintd_prettierd_setup,
+				typescript = eslintd_prettierd_setup,
+				typescriptreact = eslintd_prettierd_setup,
 
 				dart = { require("formatter.filetypes.dart").dartformat },
 				lua = { require("formatter.filetypes.lua").stylua },
