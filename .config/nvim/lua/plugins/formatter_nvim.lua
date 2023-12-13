@@ -33,6 +33,8 @@ return {
 				javascriptreact = eslintd_prettierd_setup,
 				typescript = eslintd_prettierd_setup,
 				typescriptreact = eslintd_prettierd_setup,
+				vue = eslintd_prettierd_setup,
+				svelte = eslintd_prettierd_setup,
 
 				dart = { require("formatter.filetypes.dart").dartformat },
 				lua = { require("formatter.filetypes.lua").stylua },
