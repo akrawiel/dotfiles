@@ -18,34 +18,24 @@ return {
 			}
 		end
 
-    local eslintd_prettierd_setup = {
-			require("formatter.filetypes.javascript").eslint_d,
-			require("formatter.filetypes.javascript").prettierd
-		}
-
 		local js_setup = {}
 
-		if vim.fn.findfile(".xo-config.json") ~= nil then
-			table.insert(js_setup, xo)
-		elseif vim.fn.findfile(".eslintrc.js") ~= nil
-			or vim.fn.findfile(".eslintrc.json") ~= nil
-			or vim.fn.findfile(".eslintrc") ~= nil
-		then
-			table.insert(
-				js_setup,
-				require("formatter.filetypes.javascript").eslint_d
-			)
+		local function has_file(...)
+			return #vim.fs.find({ ... }, {
+				path = vim.fn.getcwd(),
+			}) > 0
 		end
 
-		if vim.fn.findfile(".prettierrc") ~= nil
-			or vim.fn.findfile(".prettierrc.json") ~= nil
-			or vim.fn.findfile(".prettierrc.js") ~= nil
-			or vim.fn.findfile("prettier.config.js") ~= nil
-		then
-			table.insert(
-				js_setup,
-				require("formatter.filetypes.javascript").prettierd
-			)
+		if has_file(".xo-config.json") then
+			table.insert(js_setup, xo)
+		end
+
+		if has_file(".eslintrc.js", ".eslintrc.json", ".eslintrc") then
+			table.insert(js_setup, require("formatter.filetypes.javascript").eslint_d)
+		end
+
+		if has_file(".prettierrc", ".prettierrc.json", ".prettierrc.js", "prettier.config.js") then
+			table.insert(js_setup, require("formatter.filetypes.javascript").prettierd)
 		end
 
 		formatter.setup({
@@ -62,9 +52,9 @@ return {
 				lua = { require("formatter.filetypes.lua").stylua },
 				markdown = { require("formatter.filetypes.markdown").denofmt },
 
-        css = { require("formatter.filetypes.css").prettierd },
-        scss = { require("formatter.filetypes.css").prettierd },
-        html = { require("formatter.filetypes.html").prettierd },
+				css = { require("formatter.filetypes.css").prettierd },
+				scss = { require("formatter.filetypes.css").prettierd },
+				html = { require("formatter.filetypes.html").prettierd },
 			},
 		})
 	end,
