@@ -8,14 +8,16 @@ return {
 			require("null-ls").builtins.diagnostics.yamllint,
 		}
 
-		if vim.fn.findfile(".xo-config.json") ~= nil then
+		local function has_file(...)
+			return #vim.fs.find({ ... }, {
+				path = vim.fn.getcwd(),
+			}) > 0
+		end
+
+		if has_file(".xo-config.json") then
 			table.insert(sources, require("null-ls").builtins.code_actions.xo)
 			table.insert(sources, require("null-ls").builtins.diagnostics.xo)
-		elseif
-			vim.fn.findfile(".eslintrc.js") ~= nil
-			or vim.fn.findfile(".eslintrc.json") ~= nil
-			or vim.fn.findfile(".eslintrc") ~= nil
-		then
+		elseif has_file(".eslintrc.js", ".eslintrc.json", ".eslintrc") then
 			table.insert(sources, require("null-ls").builtins.code_actions.eslint_d)
 			table.insert(sources, require("null-ls").builtins.diagnostics.eslint_d)
 		end
