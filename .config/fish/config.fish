@@ -6,15 +6,10 @@ fish_add_path $HOME/go/bin
 fish_add_path $HOME/Applications
 fish_add_path $HOME/AppImages
 fish_add_path $HOME/Bin
-fish_add_path $HOME/Bin/flutter/bin
 fish_add_path $HOME/.local/bin
 fish_add_path $HOME/.spicetify
 fish_add_path /opt/applications
-fish_add_path /opt/android-sdk/platform-tools
-fish_add_path /opt/android-sdk/tools
-fish_add_path /opt/android-sdk/tools/bin
 fish_add_path /var/lib/flatpak/exports/bin
-
 
 # global variables
 
@@ -32,6 +27,7 @@ set -gx NNN_PLUG 'd:dragdrop;z:autojump;G:getplugs;R:gitroot;r:renamer'
 set -gx PROJECT_PATHS "$HOME/Projects"
 set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 set -gx XDG_CONFIG_HOME $HOME/.config
+set -gx DOCKER_USER (id -u):(id -g)
 
 # abbreviations
 
@@ -41,12 +37,6 @@ abbr -a tt timew tag
 abbr -a tct timew continue @2
 
 abbr -a gcl git clone
-
-abbr -a s swallow
-
-abbr -a L --position anywhere "| less"
-abbr -a R --position anywhere "| rg"
-abbr -a C --position anywhere "| xclip -selection clipboard"
 
 abbr -a m --set-cursor 'math "%"'
 
