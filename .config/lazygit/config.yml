@@ -16,6 +16,12 @@ customCommands:
     key: '<c-t>'
     loadingText: 'Pushing tags to repository...'
     stream: yes
+  - command: 'git pull --rebase'
+    context: 'global'
+    description: 'pull & rebase'
+    key: '<c-p>'
+    loadingText: 'Pulling and rebasing...'
+    stream: yes
 keybinding:
   universal:
     prevBlock-alt: 'h'
