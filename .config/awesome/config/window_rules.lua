@@ -128,8 +128,12 @@ return {
 		callback = TAG("2"),
 	},
 	{
-		rule = { class = "Firefox Developer Edition", "Firefox", "firefox", "Navigator" },
+		rule_any = { instance = { "firefox" }, class = { "firefox" } },
 		callback = TAG("3"),
+	},
+	{
+		rule_any = { instance = { "firefox-esr" }, class = { "firefox-esr" } },
+		callback = TAG("4"),
 	},
 	{
 		rule_any = { class = { "Brave-browser", "Brave-browser-nightly" } },
