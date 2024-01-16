@@ -1,3 +1,9 @@
+# local fish config
+
+if test -e "$HOME/.config/fish/local.fish"
+	source "$HOME/.config/fish/local.fish"
+end
+
 # paths
 
 fish_add_path $HOME/.cargo/bin

@@ -1,6 +1,7 @@
 \.luarc.json
 \.git
 \.gitignore
+\.local.fish
 LICENSE
 README.md
 
