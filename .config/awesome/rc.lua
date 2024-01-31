@@ -4,6 +4,7 @@ pcall(require, "luarocks.loader")
 local awful = require("awful")
 local beautiful = require("beautiful")
 local gears = require("gears")
+local d = require("gears.debug")
 local naughty = require("naughty")
 local wibox = require("wibox")
 local vicious = require("vicious")
@@ -184,6 +185,35 @@ end
 
 handle_tag_assignments()
 
+-- Battery & volume
+local battery_widget = require("config.battery_widget")
+local volume_speaker_widget = require("config.volume_speaker_widget")
+local volume_microphone_widget = require("config.volume_microphone_widget")
+
+-- CPU & RAM
+local cpu_usage_box = wibox.widget.textbox("")
+vicious.register(cpu_usage_box, vicious.widgets.cpu, function(_, args)
+	return "<b>C</b>" .. string.format("%03d", args[1])
+end, 2)
+
+local cpu_governor = wibox.widget.textbox("")
+vicious.register(cpu_governor, vicious.widgets.cpufreq, function(_, args)
+	local governor_state = {
+		["↯"] = "OND",
+		["⌁"] = "POW",
+		["¤"] = "USR",
+		["⚡"] = "PRF",
+		["⊚"] = "CON",
+	}
+
+	return "<b>G</b>" .. governor_state[args[5]]
+end, 5, "cpu0")
+
+local ram_usage_box = wibox.widget.textbox("")
+vicious.register(ram_usage_box, vicious.widgets.mem, function(_, args)
+	return "<b>R</b>" .. string.format("%03d", args[1])
+end, 1)
+
 awful.screen.connect_for_each_screen(function(s)
 	set_wallpaper(s)
 
@@ -202,30 +232,6 @@ awful.screen.connect_for_each_screen(function(s)
 		fg = "black",
 		visible = false,
 	})
-
-	-- CPU & RAM
-	local cpu_usage_box = wibox.widget.textbox("")
-	vicious.register(cpu_usage_box, vicious.widgets.cpu, function(_, args)
-		return "<b>C</b>" .. string.format("%03d", args[1])
-	end, 2)
-
-	local cpu_governor = wibox.widget.textbox("")
-	vicious.register(cpu_governor, vicious.widgets.cpufreq, function(_, args)
-		local governor_state = {
-			["↯"] = "OND",
-			["⌁"] = "POW",
-			["¤"] = "USR",
-			["⚡"] = "PRF",
-			["⊚"] = "CON",
-		}
-
-		return "<b>G</b>" .. governor_state[args[5]]
-	end, 5, "cpu0")
-
-	local ram_usage_box = wibox.widget.textbox("")
-	vicious.register(ram_usage_box, vicious.widgets.mem, function(_, args)
-		return "<b>R</b>" .. string.format("%03d", args[1])
-	end, 1)
 
 	-- Tasklist
 	local tasklist_buttons = gears.table.join(
@@ -274,12 +280,12 @@ awful.screen.connect_for_each_screen(function(s)
 		{
 			layout = wibox.layout.fixed.horizontal,
 			wibox.widget.systray(),
-			require("config.battery_widget"),
+			battery_widget,
 			wibox.container.margin(cpu_governor, 8, 2),
 			wibox.container.margin(cpu_usage_box, 8, 2),
 			wibox.container.margin(ram_usage_box, 8, 2),
-			require("config.volume_speaker_widget"),
-			require("config.volume_microphone_widget"),
+			volume_speaker_widget,
+			volume_microphone_widget,
 			wibox.widget.textclock(),
 		},
 	})
