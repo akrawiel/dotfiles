@@ -28,14 +28,14 @@ return {
 
 		if has_file(".xo-config.json") then
 			table.insert(js_setup, xo)
-		end
+		else
+			if has_file(".eslintrc.js", ".eslintrc.json", ".eslintrc") then
+				table.insert(js_setup, require("formatter.filetypes.javascript").eslint_d)
+			end
 
-		if has_file(".eslintrc.js", ".eslintrc.json", ".eslintrc") then
-			table.insert(js_setup, require("formatter.filetypes.javascript").eslint_d)
-		end
-
-		if has_file(".prettierrc", ".prettierrc.json", ".prettierrc.js", "prettier.config.js") then
-			table.insert(js_setup, require("formatter.filetypes.javascript").prettierd)
+			if has_file(".prettierrc", ".prettierrc.json", ".prettierrc.js", "prettier.config.js") then
+				table.insert(js_setup, require("formatter.filetypes.javascript").prettierd)
+			end
 		end
 
 		formatter.setup({
@@ -55,6 +55,7 @@ return {
 				css = { require("formatter.filetypes.css").prettierd },
 				scss = { require("formatter.filetypes.css").prettierd },
 				html = { require("formatter.filetypes.html").prettierd },
+				json = { require("formatter.filetypes.html").prettierd },
 			},
 		})
 	end,
