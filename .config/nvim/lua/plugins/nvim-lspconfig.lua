@@ -34,6 +34,7 @@ return {
 		end
 
 		local servers = {
+			eslint = true,
 			tsserver = {
 				on_attach = function(client)
 					client.server_capabilities.document_formatting = false
@@ -97,7 +98,24 @@ return {
 				},
 			},
 			tailwindcss = true,
-			emmet_language_server = true,
+			emmet_language_server = {
+				params = {
+					filetypes = {
+						"css",
+						"eruby",
+						"html",
+						"htmldjango",
+						"javascriptreact",
+						"less",
+						"pug",
+						"sass",
+						"scss",
+						"svelte",
+						"typescriptreact",
+						"vue",
+					},
+				},
+			},
 			volar = {
 				params = {
 					init_options = {
