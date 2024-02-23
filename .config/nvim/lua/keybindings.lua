@@ -1,6 +1,9 @@
 local kc = require("keycommands")
 local tb = require("telescope.builtin")
 
+vim.g.mapleader = ","
+vim.g.maplocalleader = ","
+
 local cmd = function(cmd)
 	return function()
 		vim.cmd(cmd)
