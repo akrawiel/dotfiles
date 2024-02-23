@@ -3,6 +3,8 @@ git:
   autoRefresh: false
   overrideGpg: true
   parseEmoji: true
+  branchLogCmd: 'git log --graph --color=always --decorate --oneline {{branchName}} --'
+  allBranchesLogCmd: 'git log --graph --all --color=always --decorate --oneline'
 customCommands:
   - command: 'git push --force-with-lease'
     context: 'global'
