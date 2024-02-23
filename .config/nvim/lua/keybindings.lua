@@ -29,7 +29,7 @@ local keybindings = {
 		{ "*", kc.hlcword },
 		{ "<leader>d", kc.tmux({ "lazydocker" }) },
 		{ "<leader>g", kc.tmux({ "lazygit" }) },
-		{ "<leader>p", cmd("Format") },
+		{ "<leader><return>", cmd("Format") },
 		{ "<leader>t", kc.tmux({}) },
 		{ "n", "nzzzv" },
 		{ "N", "Nzzzv" },
