@@ -1,5 +1,5 @@
 return {
-	"jose-elias-alvarez/null-ls.nvim",
+	"nvimtools/none-ls.nvim",
 	config = function()
 		local sources = {
 			require("null-ls").builtins.diagnostics.fish,
