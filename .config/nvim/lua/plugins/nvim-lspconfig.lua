@@ -35,6 +35,7 @@ return {
 
 		local servers = {
 			eslint = true,
+			jsonls = true,
 			tsserver = {
 				on_attach = function(client)
 					client.server_capabilities.document_formatting = false

@@ -3,8 +3,7 @@ return {
 	config = function()
 		local sources = {
 			require("null-ls").builtins.diagnostics.fish,
-			require("null-ls").builtins.diagnostics.jsonlint,
-			require("null-ls").builtins.diagnostics.luacheck,
+			require("null-ls").builtins.diagnostics.selene,
 			require("null-ls").builtins.diagnostics.yamllint,
 		}
 
