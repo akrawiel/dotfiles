@@ -56,6 +56,7 @@ return {
 				scss = { require("formatter.filetypes.css").prettierd },
 				html = { require("formatter.filetypes.html").prettierd },
 				json = { require("formatter.filetypes.html").prettierd },
+				xml = { require("formatter.filetypes.xml").tidy },
 			},
 		})
 	end,
