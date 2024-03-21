@@ -8,10 +8,13 @@ function xgit
       git branch --merged | rg -v "^\*|$value" | xargs -r git branch -d
     case prettier-diff prettier pd
       set value (default "$arg1" (git branch --show-current))
-      git diff --name-only --diff-filter=ABCMRTUX "origin/$value" | sed 's/^app\///' | rg -e '.(j|t)sx?$' | xargs yarn prettier --write
+      git diff --name-only --diff-filter=ABCMRTUX "origin/$value" | rg -e '.(j|t)sx?$' | xargs yarn prettier --write
     case eslint-diff eslint ed
       set value (default "$arg1" (git branch --show-current))
-      git diff --name-only --diff-filter=ABCMRTUX "origin/$value" | sed 's/^app\///' | rg -e '.(j|t)sx?$' | xargs yarn eslint --fix
+      git diff --name-only --diff-filter=ABCMRTUX "origin/$value" | rg -e '.(j|t)sx?$' | xargs yarn eslint --fix
+    case xo-diff xo
+      set value (default "$arg1" (git branch --show-current))
+      git diff --name-only --diff-filter=ABCMRTUX "origin/$value" | rg -e '.(j|t)sx?$' | xargs yarn xo --fix
     case "*"
       echo -s (set_color red) "COMMAND UNKNOWN " (set_color normal) $option
   end
