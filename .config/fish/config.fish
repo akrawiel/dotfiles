@@ -4,25 +4,14 @@ if test -e "$HOME/.config/fish/local.fish"
 	source "$HOME/.config/fish/local.fish"
 end
 
-# paths
-
-fish_add_path $HOME/.cargo/bin
-fish_add_path $HOME/.yarn/bin
-fish_add_path $HOME/go/bin
-fish_add_path $HOME/Applications
-fish_add_path $HOME/AppImages
-fish_add_path $HOME/Bin
-fish_add_path $HOME/.local/bin
-fish_add_path $HOME/.spicetify
-fish_add_path /opt/applications
-fish_add_path /var/lib/flatpak/exports/bin
-
 # global variables
 
 set -gx PLAYDATE_SDK_PATH $HOME/Applications/PlaydateSDK
 fish_add_path $PLAYDATE_SDK_PATH/bin
 
+set -gx ANDROID_AVD_HOME '/opt/android-sdk/avd'
 set -gx ANDROID_SDK_ROOT '/opt/android-sdk'
+set -gx JAVA_HOME '/usr/lib64/jvm/java'
 set -gx EDITOR nvim
 set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --exclude .git'
 set -gx GIT_PAGER 'delta'
@@ -34,6 +23,20 @@ set -gx PROJECT_PATHS "$HOME/Projects"
 set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 set -gx XDG_CONFIG_HOME $HOME/.config
 set -gx DOCKER_USER (id -u):(id -g)
+
+# paths
+
+fish_add_path $HOME/.cargo/bin
+fish_add_path $HOME/.yarn/bin
+fish_add_path $HOME/go/bin
+fish_add_path $HOME/Applications
+fish_add_path $HOME/AppImages
+fish_add_path $HOME/Bin
+fish_add_path $HOME/.local/bin
+fish_add_path $HOME/.spicetify
+fish_add_path $ANDROID_SDK_ROOT/cmdline-tools/latest/bin
+fish_add_path /opt/applications
+fish_add_path /var/lib/flatpak/exports/bin
 
 # abbreviations
 
