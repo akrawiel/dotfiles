@@ -37,6 +37,7 @@ gui:
   scrollPastBottom: true
   showRandomTip: false
   showIcons: true
+  filterMode: 'fuzzy'
   theme:
     lightTheme: false
     activeBorderColor:
