@@ -59,5 +59,21 @@ return {
 				xml = { require("formatter.filetypes.xml").tidy },
 			},
 		})
+
+		local group = vim.api.nvim_create_augroup("FormatterAutogroup", { clear = true })
+		vim.api.nvim_create_autocmd("User", {
+			callback = function()
+				vim.notify("Formatting...", vim.log.levels.INFO)
+			end,
+			group = group,
+			pattern = "FormatterPre",
+		})
+		vim.api.nvim_create_autocmd("User", {
+			callback = function()
+				vim.notify("Formatted", vim.log.levels.INFO)
+			end,
+			group = group,
+			pattern = "FormatterPost",
+		})
 	end,
 }
