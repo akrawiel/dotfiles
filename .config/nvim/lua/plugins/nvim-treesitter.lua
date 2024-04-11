@@ -2,8 +2,6 @@ return {
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
 	config = function()
-		require("orgmode").setup_ts_grammar()
-
 		require("nvim-treesitter.configs").setup({
 			ensure_installed = {
 				"css",
