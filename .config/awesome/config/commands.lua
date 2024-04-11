@@ -307,17 +307,17 @@ return {
 	end,
 	audioNext = function()
 		awful.spawn.with_shell(
-			"playerctl -p $(playerctl -l | rofi -dmenu -auto-select) next"
+			"playerctl next"
 		)
 	end,
 	audioPlay = function()
 		awful.spawn.with_shell(
-			"playerctl -p $(playerctl -l | rofi -dmenu -auto-select) play-pause"
+			"playerctl play-pause"
 		)
 	end,
 	audioPrev = function()
 		awful.spawn.with_shell(
-			"playerctl -p $(playerctl -l | rofi -dmenu -auto-select) previous"
+			"playerctl previous"
 		)
 	end,
 	audioRaise = function()
