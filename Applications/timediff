@@ -1,0 +1,14 @@
+#!/usr/bin/env -S deno run --allow-env --ext=js
+
+import {DateTime, Interval} from 'npm:luxon';
+
+const [start, end] = Deno.args
+
+console.log(`Time difference ${start} » ${end}`)
+
+console.log(
+	Interval.fromDateTimes(
+		DateTime.fromISO(start),
+		DateTime.fromISO(end),
+	).toDuration().rescale().toHuman()
+)
