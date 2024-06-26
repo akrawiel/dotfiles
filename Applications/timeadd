@@ -1,0 +1,19 @@
+#!/usr/bin/env -S deno run --allow-env --ext=js
+
+import {Duration} from 'npm:luxon';
+
+const durations = Deno.args
+
+console.log(`Time addition ${durations.join(' + ')}`)
+
+let baseDuration = Duration.fromMillis(0)
+
+for (const rawDuration of durations) {
+	const duration = Duration.fromISOTime(rawDuration)
+
+	baseDuration = baseDuration.plus(duration)
+}
+
+console.log(
+	baseDuration.rescale().toHuman()
+)
