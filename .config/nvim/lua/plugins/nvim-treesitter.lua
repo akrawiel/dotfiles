@@ -22,6 +22,7 @@ return {
 				"regex",
 				"scss",
 				"svelte",
+				"templ",
 				"toml",
 				"tsx",
 				"typescript",

@@ -21,13 +21,19 @@ return {
 		local js_setup = {}
 
 		local function has_file(...)
-			return #vim.fs.find({ ... }, {
-				path = vim.fn.getcwd(),
-			}) > 0
+			for _, file in pairs({ ... }) do
+				if #vim.fn.findfile(file, string.format("%s/%s", vim.fn.getcwd(), "**1")) > 0 then
+					return true
+				end
+			end
+
+			return false
 		end
 
 		if has_file(".xo-config.json") then
 			table.insert(js_setup, xo)
+		elseif has_file("biome.json", "biome.jsonc") then
+			table.insert(js_setup, require("formatter.filetypes.javascript").biome)
 		else
 			if has_file(".eslintrc.js", ".eslintrc.json", ".eslintrc") then
 				table.insert(js_setup, require("formatter.filetypes.javascript").eslint_d)
@@ -56,6 +62,7 @@ return {
 				scss = { require("formatter.filetypes.css").prettierd },
 				html = { require("formatter.filetypes.html").prettierd },
 				json = { require("formatter.filetypes.html").prettierd },
+				jsonc = { require("formatter.filetypes.javascript").biome },
 				xml = { require("formatter.filetypes.xml").tidy },
 			},
 		})

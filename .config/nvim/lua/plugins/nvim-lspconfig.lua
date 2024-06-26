@@ -25,6 +25,16 @@ return {
 			buf_set_keymap("n", "<space>cf", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 		end
 
+		local function has_file(...)
+			for _, file in pairs({ ... }) do
+				if #vim.fn.findfile(file, string.format("%s/%s", vim.fn.getcwd(), "**1")) > 0 then
+					return true
+				end
+			end
+
+			return false
+		end
+
 		local function javascript_root(filename)
 			return util.root_pattern(".eslintrc")(filename)
 				or util.root_pattern(".eslintrc.js")(filename)
@@ -34,7 +44,9 @@ return {
 		end
 
 		local servers = {
+			jdtls = false,
 			eslint = true,
+			biome = has_file("biome.json") or has_file("biome.jsonc"),
 			jsonls = true,
 			tsserver = {
 				on_attach = function(client)
@@ -43,6 +55,11 @@ return {
 				end,
 				params = {
 					root_dir = javascript_root,
+					init_options = {
+						preferences = {
+							importModuleSpecifierEnding = "minimal",
+						},
+					},
 				},
 			},
 			svelte = {

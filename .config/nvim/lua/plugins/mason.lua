@@ -3,6 +3,7 @@ return {
 	cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUninstall", "MasonUninstallAll", "MasonLog" },
 	opts = {
 		ensure_installed = {
+			"biome",
 			"css-lsp",
 			"deno",
 			"docker-compose-language-service",
