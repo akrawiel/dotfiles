@@ -80,7 +80,7 @@ return {
 
 	-- FreeTube unmaximized
 	{
-		rule_any = { class = "FreeTube" },
+		rule_any = { class = { "freetube" } },
 		properties = {
 			floating = false,
 			maximized = false,

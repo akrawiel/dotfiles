@@ -55,6 +55,7 @@ awful.util.shell = "/usr/bin/fish"
 
 -- Layouts
 awful.layout.layouts = {
+	awful.layout.suit.corner.nw,
 	awful.layout.suit.tile.right,
 	awful.layout.suit.tile.bottom,
 }
@@ -189,6 +190,7 @@ handle_tag_assignments()
 local battery_widget = require("config.battery_widget")
 local volume_speaker_widget = require("config.volume_speaker_widget")
 local volume_microphone_widget = require("config.volume_microphone_widget")
+local cpu_widget = require("config.cpu_widget")
 
 -- CPU & RAM
 local cpu_usage_box = wibox.widget.textbox("")
@@ -208,6 +210,19 @@ vicious.register(cpu_governor, vicious.widgets.cpufreq, function(_, args)
 
 	return "<b>G</b>" .. governor_state[args[5]]
 end, 5, "cpu0")
+
+local cpu_power_box = wibox.widget.textbox("")
+vicious.register(cpu_power_box, cpu_widget, function(_, args)
+	local values_map = {
+		["performance"] = "PRF",
+		["balanced"] = "BAL",
+		["power-saver"] = "SAV",
+	}
+
+	local value = values_map[args[1]] or string.upper(string.sub(args[1], 0, 3))
+
+	return "<b>P</b>" .. value
+end, 5)
 
 local ram_usage_box = wibox.widget.textbox("")
 vicious.register(ram_usage_box, vicious.widgets.mem, function(_, args)
@@ -282,6 +297,7 @@ awful.screen.connect_for_each_screen(function(s)
 			wibox.widget.systray(),
 			battery_widget,
 			wibox.container.margin(cpu_governor, 8, 2),
+			wibox.container.margin(cpu_power_box, 8, 2),
 			wibox.container.margin(cpu_usage_box, 8, 2),
 			wibox.container.margin(ram_usage_box, 8, 2),
 			volume_speaker_widget,
