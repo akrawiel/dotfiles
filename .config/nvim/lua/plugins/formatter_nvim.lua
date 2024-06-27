@@ -19,6 +19,9 @@ return {
 		end
 
 		local js_setup = {}
+		local css_setup = {}
+		local json_setup = {}
+		local html_setup = {}
 
 		local function has_file(...)
 			for _, file in pairs({ ... }) do
@@ -34,6 +37,8 @@ return {
 			table.insert(js_setup, xo)
 		elseif has_file("biome.json", "biome.jsonc") then
 			table.insert(js_setup, require("formatter.filetypes.javascript").biome)
+			table.insert(json_setup, require("formatter.filetypes.javascript").biome)
+			table.insert(css_setup, require("formatter.filetypes.javascript").biome)
 		else
 			if has_file(".eslintrc.js", ".eslintrc.json", ".eslintrc") then
 				table.insert(js_setup, require("formatter.filetypes.javascript").eslint_d)
@@ -41,6 +46,9 @@ return {
 
 			if has_file(".prettierrc", ".prettierrc.json", ".prettierrc.js", "prettier.config.js") then
 				table.insert(js_setup, require("formatter.filetypes.javascript").prettierd)
+				table.insert(json_setup, require("formatter.filetypes.javascript").prettierd)
+				table.insert(css_setup, require("formatter.filetypes.javascript").prettierd)
+				table.insert(html_setup, require("formatter.filetypes.javascript").prettierd)
 			end
 		end
 
@@ -58,10 +66,10 @@ return {
 				lua = { require("formatter.filetypes.lua").stylua },
 				markdown = { require("formatter.filetypes.markdown").denofmt },
 
-				css = { require("formatter.filetypes.css").prettierd },
-				scss = { require("formatter.filetypes.css").prettierd },
-				html = { require("formatter.filetypes.html").prettierd },
-				json = { require("formatter.filetypes.html").prettierd },
+				css = css_setup,
+				scss = css_setup,
+				html = html_setup,
+				json = json_setup,
 				jsonc = { require("formatter.filetypes.javascript").biome },
 				xml = { require("formatter.filetypes.xml").tidy },
 			},

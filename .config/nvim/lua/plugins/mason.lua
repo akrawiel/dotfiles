@@ -5,6 +5,7 @@ return {
 		ensure_installed = {
 			"biome",
 			"css-lsp",
+			"cssmodules-language-server",
 			"deno",
 			"docker-compose-language-service",
 			"dockerfile-language-server",
@@ -20,6 +21,7 @@ return {
 			"python-lsp-server",
 			"rust-analyzer",
 			"selene",
+			"stylelint-lsp",
 			"stylua",
 			"svelte-language-server",
 			"tailwindcss-language-server",

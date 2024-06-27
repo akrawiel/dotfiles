@@ -19,6 +19,7 @@ return {
 			buf_set_keymap("n", "<C-S-j>", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
 			buf_set_keymap("n", "<C-S-k>", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
 			buf_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+			buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 			buf_set_keymap("n", "gk", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 			buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
 			buf_set_keymap("n", "<space>cr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
@@ -46,6 +47,27 @@ return {
 		local servers = {
 			jdtls = false,
 			eslint = true,
+			stylelint_lsp = {
+				params = {
+					filetypes = {
+						"css",
+						"less",
+						"scss",
+						"sugarss",
+					},
+				},
+			},
+			cssmodules_ls = {
+				on_attach = function(client, bufnr)
+					client.server_capabilities.definitionProvider = false
+					common_on_attach(client, bufnr)
+				end,
+				params = {
+					init_options = {
+						camelCase = true,
+					},
+				},
+			},
 			biome = has_file("biome.json") or has_file("biome.jsonc"),
 			jsonls = true,
 			tsserver = {
