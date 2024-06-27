@@ -140,7 +140,7 @@ return {
 		callback = TAG("4"),
 	},
 	{
-		rule_any = { class = { "FreeTube" } },
+		rule_any = { class = { "FreeTube", "figma-linux" } },
 		callback = TAG("5"),
 	},
 	{
