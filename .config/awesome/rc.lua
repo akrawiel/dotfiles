@@ -56,7 +56,6 @@ awful.util.shell = "/usr/bin/fish"
 -- Layouts
 awful.layout.layouts = {
 	awful.layout.suit.corner.nw,
-	awful.layout.suit.tile.right,
 	awful.layout.suit.tile.bottom,
 }
 
