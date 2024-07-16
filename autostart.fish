@@ -12,7 +12,7 @@ xset s off
 
 runSingleInstance 'numlockx'
 runSingleInstance 'flameshot'
-runSingleInstance 'redshift-gtk'
+runSingleInstance 'redshift -l 0:0 -t 3000:3000 -r' 'redshift'
 runSingleInstance 'nm-applet'
 runSingleInstance '/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1'
 runSingleInstance '/usr/libexec/polkit-gnome/polkit-gnome-authentication-agent-1'
