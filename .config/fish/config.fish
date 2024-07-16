@@ -23,6 +23,7 @@ set -gx PROJECT_PATHS "$HOME/Projects"
 set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 set -gx XDG_CONFIG_HOME $HOME/.config
 set -gx DOCKER_USER (id -u):(id -g)
+set -gx BUN_INSTALL "$HOME/.bun"
 
 # paths
 
@@ -35,6 +36,7 @@ fish_add_path $HOME/Bin
 fish_add_path $HOME/.local/bin
 fish_add_path $HOME/.spicetify
 fish_add_path $ANDROID_SDK_ROOT/cmdline-tools/latest/bin
+fish_add_path $BUN_INSTALL/bin
 fish_add_path /opt/applications
 fish_add_path /var/lib/flatpak/exports/bin
 
