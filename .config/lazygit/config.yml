@@ -30,14 +30,13 @@ keybinding:
     nextBlock-alt: 'l'
     prevTab: 'H'
     nextTab: 'L'
-    scrollLeft: null
-    scrollRight: null
+    scrollLeft: <disabled>
+    scrollRight: <disabled>
 gui:
   language: 'en'
   scrollPastBottom: true
   showRandomTip: false
   showIcons: true
-  filterMode: 'fuzzy'
   theme:
     lightTheme: false
     activeBorderColor:
