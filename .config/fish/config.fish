@@ -55,6 +55,12 @@ abbr -a m --set-cursor 'math "%"'
 
 source $HOME/.config/fish/project_aliases.fish
 
+# eww config
+
+if type -q eww
+  eww shell-completions --shell fish | source
+end
+
 # fzf plugin config
 
 fzf_configure_bindings --directory=\cf --git_log= --git_status= --history=\cr --variables=\cv --processes=\cp
@@ -102,3 +108,4 @@ gpgconf --launch gpg-agent
 if status is-interactive
     # Commands to run in interactive sessions can go here
 end
+
