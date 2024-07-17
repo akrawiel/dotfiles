@@ -2,6 +2,26 @@ return {
 	"catppuccin/nvim",
 	name = "catppuccin",
 	config = function()
-		vim.api.nvim_command([[:colorscheme catppuccin-frappe]])
+		require("catppuccin").setup({
+			flavour = "frappe",
+			integrations = {
+				barbar = true,
+				mason = true,
+				cmp = true,
+				native_lsp = {
+					enabled = true,
+				},
+				mini = {
+					enabled = true,
+				},
+				treesitter = true,
+				pounce = true,
+				telescope = {
+					enabled = true,
+				},
+			},
+		})
+
+		vim.cmd.colorscheme "catppuccin"
 	end,
 }
