@@ -102,6 +102,23 @@ local function tex(extension, func, ...)
 	end
 end
 
+local function mini(module, func, ...)
+	local arguments = { ... }
+	return function()
+		require("mini." .. module)[func](unpack(arguments))
+	end
+end
+
+local function bufdo(callback)
+	return function()
+		for _, buf in pairs(vim.api.nvim_list_bufs()) do
+			if vim.api.nvim_buf_is_valid(buf) then
+				callback(buf)
+			end
+		end
+	end
+end
+
 return {
 	config = config,
 	conflictmarkers = conflictmarkers,
@@ -114,4 +131,6 @@ return {
 	hlsword = hlsword,
 	tex = tex,
 	tmux = tmux,
+	mini = mini,
+	bufdo = bufdo
 }

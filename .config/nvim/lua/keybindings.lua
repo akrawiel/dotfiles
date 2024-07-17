@@ -15,16 +15,16 @@ local noSilent = { silent = false, noremap = true }
 
 local keybindings = {
 	n = {
-		{ "<C-h>", cmd("BufferPrevious") },
-		{ "<C-l>", cmd("BufferNext") },
+		{ "<C-h>", cmd("bprev") },
+		{ "<C-l>", cmd("bnext") },
 		{ "<F1>", tb.help_tags },
 		{ "<F3>", cmd("noh") },
 		{ "-", cmd("Oil") },
 		{ "_", cmd(string.format('silent exec "!thunar %s"', vim.fn.getcwd())) },
 		{ "gd", tb.lsp_definitions },
 		{ "gr", tb.lsp_references },
-		{ "gt", cmd("BufferNext") },
-		{ "gT", cmd("BufferPrevious") },
+		{ "gt", cmd("bnext") },
+		{ "gT", cmd("bprev") },
 		{ "gx", cmd('silent exec "!setsid xdg-open <cWORD>"') },
 		{ "#", kc.hlcword },
 		{ "*", kc.hlcword },
@@ -38,12 +38,19 @@ local keybindings = {
 		{ "S", cmd("PounceRepeat") },
 		{ "<C-j>", cmd("cnext") },
 		{ "<C-k>", cmd("cprev") },
-		{ "<space>bc", cmd("bufdo :bwipeout") },
-		{ "<space>bd", cmd("bwipeout") },
-		{ "<space>bD", cmd("BufferClose!") },
-		{ "<space>bh", cmd("BufferMovePrevious") },
-		{ "<space>bl", cmd("BufferMoveNext") },
-		{ "<space>bo", cmd("BufferCloseAllButCurrent") },
+		{ "<space>bc", kc.bufdo(function(buf)
+			kc.mini("bufremove", "wipeout", buf)()
+		end) },
+		{ "<space>bd", kc.mini("bufremove", "wipeout", 0) },
+		{ "<space>bD", kc.mini("bufremove", "wipeout", 0, true) },
+		{
+			"<space>bo",
+			kc.bufdo(function(buf)
+				if buf ~= vim.api.nvim_get_current_buf() then
+					kc.mini("bufremove", "wipeout", buf)()
+				end
+			end),
+		},
 		{ "<space><bs>", tb.resume },
 		{ "<space>ca", vim.lsp.buf.code_action },
 		{ "<space>cd", kc.curbufdiag },
@@ -66,7 +73,6 @@ local keybindings = {
 		{ "<space><return>", tb.commands },
 		{ "<space>r", tb.registers },
 		{ "<space><space>", kc.files },
-		{ "<space><tab>", cmd("BufferPick") },
 		{ "<space>/", tb.current_buffer_fuzzy_find },
 		{ "<space>wc", "<C-w>c" },
 		{ "<space>wh", "<C-w>h" },
