@@ -28,5 +28,12 @@ return {
 
 		-- bufremove
 		require("mini.bufremove").setup()
+
+		-- operators
+		require("mini.operators").setup({
+			sort = {
+				prefix = "",
+			},
+		})
 	end,
 }
