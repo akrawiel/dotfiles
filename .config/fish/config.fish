@@ -61,6 +61,18 @@ if type -q eww
   eww shell-completions --shell fish | source
 end
 
+# fnm
+
+if type -q fnm
+  fnm env --use-on-cd --log-level quiet | source
+end
+
+# ASDF golang
+
+if test -e "$HOME/.asdf/plugins/golang/set-env.fish"
+  source "$HOME/.asdf/plugins/golang/set-env.fish"
+end
+
 # fzf plugin config
 
 fzf_configure_bindings --directory=\cf --git_log= --git_status= --history=\cr --variables=\cv --processes=\cp
