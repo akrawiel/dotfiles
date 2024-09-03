@@ -1,3 +1,0 @@
-return {
-  "arthurxavierx/vim-caser"
-}
