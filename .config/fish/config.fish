@@ -23,6 +23,7 @@ set -gx PROJECT_PATHS "$HOME/Projects"
 set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 set -gx XDG_CONFIG_HOME $HOME/.config
 set -gx DOCKER_USER (id -u):(id -g)
+set -gx DOCKER_HOST "unix://$XDG_RUNTIME_DIR/docker.sock"
 set -gx BUN_INSTALL "$HOME/.bun"
 
 # paths
