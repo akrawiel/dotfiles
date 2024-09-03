@@ -45,7 +45,6 @@ return {
 		end
 
 		local servers = {
-			jdtls = false,
 			eslint = true,
 			stylelint_lsp = {
 				params = {
@@ -134,7 +133,7 @@ return {
 			},
 			elixirls = {
 				params = {
-					cmd = { string.format("%s/Bin/elixir-ls/language_server.sh", os.getenv("HOME")) },
+					cmd = { "elixir-ls" },
 				},
 			},
 			tailwindcss = true,

@@ -1,4 +1,8 @@
 return {
 	"williamboman/mason-lspconfig.nvim",
-	opts = {},
+	opts = {
+		ensure_installed = { "elixirls" },
+
+		automatic_installation = true,
+	},
 }
