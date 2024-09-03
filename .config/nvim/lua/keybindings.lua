@@ -38,9 +38,12 @@ local keybindings = {
 		{ "S", cmd("PounceRepeat") },
 		{ "<C-j>", cmd("cnext") },
 		{ "<C-k>", cmd("cprev") },
-		{ "<space>bc", kc.bufdo(function(buf)
-			kc.mini("bufremove", "wipeout", buf)()
-		end) },
+		{
+			"<space>bc",
+			kc.bufdo(function(buf)
+				kc.mini("bufremove", "wipeout", buf)()
+			end),
+		},
 		{ "<space>bd", kc.mini("bufremove", "wipeout", 0) },
 		{ "<space>bD", kc.mini("bufremove", "wipeout", 0, true) },
 		{
