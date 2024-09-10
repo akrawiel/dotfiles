@@ -294,6 +294,7 @@ return {
 
 	lockScreen = function()
 		awful.spawn.with_shell("loginctl lock-session")
+		awful.spawn.with_shell("xautolock -locknow")
 	end,
 
 	audioLower = function()
