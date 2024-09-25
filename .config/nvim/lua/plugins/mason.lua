@@ -5,7 +5,6 @@ return {
 		ensure_installed = {
 			"biome",
 			"css-lsp",
-			"cssmodules-language-server",
 			"deno",
 			"docker-compose-language-service",
 			"dockerfile-language-server",

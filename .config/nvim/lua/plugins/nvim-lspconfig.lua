@@ -56,17 +56,6 @@ return {
 					},
 				},
 			},
-			cssmodules_ls = {
-				on_attach = function(client, bufnr)
-					client.server_capabilities.definitionProvider = false
-					common_on_attach(client, bufnr)
-				end,
-				params = {
-					init_options = {
-						camelCase = true,
-					},
-				},
-			},
 			biome = has_file("biome.json") or has_file("biome.jsonc"),
 			jsonls = true,
 			ts_ls = {
@@ -76,11 +65,6 @@ return {
 				end,
 				params = {
 					root_dir = javascript_root,
-					init_options = {
-						preferences = {
-							importModuleSpecifierEnding = "minimal",
-						},
-					},
 				},
 			},
 			svelte = {
@@ -136,7 +120,8 @@ return {
 					cmd = { "elixir-ls" },
 				},
 			},
-			tailwindcss = true,
+			tailwindcss = has_file("tailwind.config.js", "tailwind.config.ts"),
+			unocss = has_file("unocss.config.js", "unocss.config.ts", "uno.config.js", "uno.config.ts"),
 			emmet_language_server = {
 				params = {
 					filetypes = {
@@ -159,7 +144,10 @@ return {
 				params = {
 					init_options = {
 						typescript = {
-							tsdk = "/usr/local/lib/node_modules/typescript/lib",
+							tsdk = string.format(
+								"%s/.local/share/nvim/mason/packages/vue-language-server/node_modules/typescript/lib",
+								os.getenv("HOME")
+							)
 						},
 					},
 				},
