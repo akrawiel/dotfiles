@@ -15,6 +15,7 @@ set -gx JAVA_HOME '/usr/lib64/jvm/java'
 set -gx EDITOR nvim
 set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --exclude .git'
 set -gx GIT_PAGER 'delta'
+set -gx DESKTOP_SESSION 'gnome'
 set -gx GPG_TTY (tty)
 set -gx LANG en_US.UTF-8
 set -gx LC_ALL C.UTF-8
