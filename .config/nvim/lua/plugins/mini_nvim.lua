@@ -29,6 +29,12 @@ return {
 		-- bufremove
 		require("mini.bufremove").setup()
 
+		-- splitjoin
+		require("mini.splitjoin").setup()
+
+		-- statusline
+		require("mini.statusline").setup()
+
 		-- operators
 		require("mini.operators").setup({
 			sort = {
