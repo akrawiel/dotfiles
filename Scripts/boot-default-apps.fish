@@ -1,6 +1,7 @@
 #!/usr/bin/env fish
 
-runSingleInstance 'xpad -s -N' 'xpad'
+runSingleInstance 'kitty -c ~/.config/kitty/kitty.notes.conf --class xpad env NVIM_APPNAME=nvim.notes nvim ~/.config/nvim.notes.data/notes.md' 'xpad'
+#runSingleInstance 'xpad -s -N' 'xpad'
 
 runSingleInstance 'firefox'
 runSingleInstance 'slack -s'
