@@ -1,6 +1,6 @@
 {
   "auto-save.nvim": { "branch": "main", "commit": "5fe9ab0c42f0457f2a973e814a6352b8eeb04730" },
   "catppuccin": { "branch": "main", "commit": "63685e1562ef53873c9764b483d7ac5c7a608922" },
-  "lazy.nvim": { "branch": "main", "commit": "460e1cd8f24e364d54543a4b0e83f6f4ec1f65fb" },
-  "mini.nvim": { "branch": "main", "commit": "e50cf9de614500a20e47cfc50e30a100042f91c3" }
+  "lazy.nvim": { "branch": "main", "commit": "1159bdccd8910a0fd0914b24d6c3d186689023d9" },
+  "mini.nvim": { "branch": "main", "commit": "848c5e8f428faf843051768e0d56104cd02aea1f" }
 }
