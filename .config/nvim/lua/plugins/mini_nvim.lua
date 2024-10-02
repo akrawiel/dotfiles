@@ -3,6 +3,11 @@ return {
 	config = function()
 		-- jump
 		require("mini.jump").setup({})
+		require("mini.jump2d").setup({
+			view = {
+				dim = true,
+			},
+		})
 
 		-- notify
 		local notify = require("mini.notify")
