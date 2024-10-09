@@ -11,6 +11,9 @@ fish_add_path $PLAYDATE_SDK_PATH/bin
 
 set -gx ANDROID_AVD_HOME '/opt/android-sdk/avd'
 set -gx ANDROID_SDK_ROOT '/opt/android-sdk'
+set -gx ANDROID_HOME '/opt/android-sdk'
+set -gx NDK_HOME "$ANDROID_HOME/ndk/$(ls -1 $ANDROID_HOME/ndk)"
+set -gx ANDROID_NDK_ROOT "$ANDROID_HOME/ndk/$(ls -1 $ANDROID_HOME/ndk)"
 set -gx JAVA_HOME '/usr/lib64/jvm/java'
 set -gx EDITOR nvim
 set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --exclude .git'
