@@ -56,7 +56,7 @@ return {
 					},
 				},
 			},
-			biome = has_file("biome.json") or has_file("biome.jsonc"),
+			biome = has_file("biome.json", "biome.jsonc"),
 			jsonls = true,
 			ts_ls = {
 				on_attach = function(client)
@@ -64,7 +64,8 @@ return {
 					client.server_capabilities.document_range_formatting = false
 				end,
 				params = {
-					root_dir = javascript_root,
+					root_dir = util.root_pattern("tsconfig.json", "jsconfig.json"),
+					enabled = has_file("tsconfig.json", "jsconfig.json"),
 				},
 			},
 			svelte = {
@@ -110,11 +111,7 @@ return {
 					},
 				},
 			},
-			denols = {
-				params = {
-					root_dir = util.root_pattern("deno.json", "deno.jsonc"),
-				},
-			},
+			denols = has_file("deno.json", "deno.jsonc"),
 			elixirls = {
 				params = {
 					cmd = { "elixir-ls" },
@@ -148,7 +145,7 @@ return {
 							tsdk = string.format(
 								"%s/.local/share/nvim/mason/packages/vue-language-server/node_modules/typescript/lib",
 								os.getenv("HOME")
-							)
+							),
 						},
 					},
 				},
@@ -177,9 +174,13 @@ return {
 				for param_key, param in pairs(server.params) do
 					result_params[param_key] = param
 				end
+
+				lsp[name].setup(result_params)
 			end
 
-			lsp[name].setup(result_params)
+			if type(server) == "boolean" and server == true then
+				lsp[name].setup({})
+			end
 		end
 	end,
 }
