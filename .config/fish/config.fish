@@ -6,15 +6,6 @@ end
 
 # global variables
 
-set -gx PLAYDATE_SDK_PATH $HOME/Applications/PlaydateSDK
-fish_add_path $PLAYDATE_SDK_PATH/bin
-
-set -gx ANDROID_AVD_HOME '/opt/android-sdk/avd'
-set -gx ANDROID_SDK_ROOT '/opt/android-sdk'
-set -gx ANDROID_HOME '/opt/android-sdk'
-set -gx NDK_HOME "$ANDROID_HOME/ndk/$(ls -1 $ANDROID_HOME/ndk)"
-set -gx ANDROID_NDK_ROOT "$ANDROID_HOME/ndk/$(ls -1 $ANDROID_HOME/ndk)"
-set -gx JAVA_HOME '/usr/lib64/jvm/java'
 set -gx EDITOR nvim
 set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --exclude .git'
 set -gx GIT_PAGER 'delta'
@@ -28,7 +19,28 @@ set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 set -gx XDG_CONFIG_HOME $HOME/.config
 set -gx DOCKER_USER (id -u):(id -g)
 set -gx DOCKER_HOST "unix://$XDG_RUNTIME_DIR/docker.sock"
-set -gx BUN_INSTALL "$HOME/.bun"
+
+if test -e '/opt/android-sdk'
+  set -gx ANDROID_AVD_HOME '/opt/android-sdk/avd'
+  set -gx ANDROID_SDK_ROOT '/opt/android-sdk'
+  set -gx ANDROID_HOME '/opt/android-sdk'
+  set -gx NDK_HOME "$ANDROID_HOME/ndk/$(ls -1 $ANDROID_HOME/ndk)"
+  set -gx ANDROID_NDK_ROOT "$ANDROID_HOME/ndk/$(ls -1 $ANDROID_HOME/ndk)"
+  fish_add_path $ANDROID_SDK_ROOT/cmdline-tools/latest/bin
+end
+
+if test -e '/usr/lib64/jvm/java'
+  set -gx JAVA_HOME '/usr/lib64/jvm/java'
+end
+
+if test -e "$HOME/Applications/PlaydateSDK"
+  set -gx PLAYDATE_SDK_PATH $HOME/Applications/PlaydateSDK
+  fish_add_path $PLAYDATE_SDK_PATH/bin
+end
+
+if test -e "$HOME/.bun"
+  set -gx BUN_INSTALL "$HOME/.bun"
+end
 
 # paths
 
@@ -40,7 +52,6 @@ fish_add_path $HOME/AppImages
 fish_add_path $HOME/Bin
 fish_add_path $HOME/.local/bin
 fish_add_path $HOME/.spicetify
-fish_add_path $ANDROID_SDK_ROOT/cmdline-tools/latest/bin
 fish_add_path $BUN_INSTALL/bin
 fish_add_path /opt/applications
 fish_add_path /var/lib/flatpak/exports/bin
