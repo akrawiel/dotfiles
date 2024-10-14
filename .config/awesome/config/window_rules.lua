@@ -145,8 +145,14 @@ return {
 	},
 	{
 		rule_any = {
-			class = { "Spotify", "KeePassXC" },
+			class = { "Spotify" },
 			icon_name = { "Blanket", "Shortwave" },
+		},
+		callback = TAG("8"),
+	},
+	{
+		rule_any = {
+			class = { "KeePassXC" },
 		},
 		callback = TAG("9"),
 	},

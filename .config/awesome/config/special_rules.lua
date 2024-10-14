@@ -6,7 +6,7 @@ local gears = require("gears")
 client.connect_signal("property::class", function(c)
   -- Spotify empty boot class
 	if c.class == "Spotify" then
-		c:move_to_tag(awful.tag.find_by_name(nil, "9"))
+		c:move_to_tag(awful.tag.find_by_name(nil, "8"))
 	end
 end)
 
