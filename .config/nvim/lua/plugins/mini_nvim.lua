@@ -40,6 +40,9 @@ return {
 		-- statusline
 		require("mini.statusline").setup()
 
+		-- ai (not AI)
+		require("mini.ai").setup()
+
 		-- operators
 		require("mini.operators").setup({
 			sort = {
