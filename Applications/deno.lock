@@ -2,6 +2,8 @@
   "version": "4",
   "specifiers": {
     "jsr:@std/encoding@*": "1.0.5",
+    "npm:luxon@*": "3.5.0",
+    "npm:luxon@3.3.0": "3.3.0",
     "npm:luxon@3.5.0": "3.5.0"
   },
   "jsr": {
@@ -10,8 +12,15 @@
     }
   },
   "npm": {
+    "luxon@3.3.0": {
+      "integrity": "sha512-An0UCfG/rSiqtAIiBPO0Y9/zAnHUZxAMiCpTd5h2smgsj7GGmcenvrvww2cqNA8/4A5ZrD1gJpHN2mIHZQF+Mg=="
+    },
     "luxon@3.5.0": {
       "integrity": "sha512-rh+Zjr6DNfUYR3bPwJEnuwDdqMbxZW7LOQfUN4B54+Cl+0o5zaU9RJ6bcidfDtC1cWCZXQ+nvX8bf6bAji37QQ=="
     }
+  },
+  "remote": {
+    "https://deno.land/std@0.184.0/_util/asserts.ts": "178dfc49a464aee693a7e285567b3d0b555dc805ff490505a8aae34f9cfb1462",
+    "https://deno.land/std@0.184.0/flags/mod.ts": "4d829c5bd1d657799cdeb487c6e418960efc6f4d8ce6cadc38a54b9ce266160a"
   }
 }
