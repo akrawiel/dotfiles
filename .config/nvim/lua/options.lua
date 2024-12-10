@@ -2,7 +2,6 @@ vim.opt.autoindent = true
 vim.opt.backspace = { "indent", "eol", "start" }
 vim.opt.backup = false
 vim.opt.backupcopy = "yes"
-vim.opt.clipboard = "unnamedplus"
 vim.opt.cmdheight = 2
 vim.opt.compatible = false
 vim.opt.completeopt = { "menuone", "noselect", "noinsert" }

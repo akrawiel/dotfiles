@@ -40,7 +40,7 @@ return {
 		-- statusline
 		require("mini.statusline").setup()
 
-		-- ai (not AI)
+		-- ai (not to be confused with AI)
 		require("mini.ai").setup()
 
 		-- operators

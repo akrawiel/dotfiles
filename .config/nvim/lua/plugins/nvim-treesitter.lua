@@ -11,6 +11,7 @@ return {
 				"go",
 				"heex",
 				"javascript",
+				"kotlin",
 				"json",
 				"latex",
 				"lua",
@@ -35,35 +36,6 @@ return {
 			},
 			indent = {
 				enable = true,
-			},
-			incremental_selection = {
-				enable = true,
-				keymaps = {
-					init_selection = "gnn",
-					node_incremental = "ai",
-					scope_incremental = "as",
-					node_decremental = "ad",
-				},
-			},
-			textobjects = {
-				select = {
-					enable = true,
-					lookahead = true,
-					keymaps = {
-						["ab"] = "@block.outer",
-						["ib"] = "@block.inner",
-						["af"] = "@function.outer",
-						["if"] = "@function.inner",
-						["aF"] = "@call.outer",
-						["iF"] = "@call.inner",
-						["ac"] = "@conditional.outer",
-						["ic"] = "@conditional.inner",
-						["aC"] = "@class.outer",
-						["iC"] = "@class.inner",
-						["aP"] = "@parameter.outer",
-						["iP"] = "@parameter.inner",
-					},
-				},
 			},
 		})
 	end,

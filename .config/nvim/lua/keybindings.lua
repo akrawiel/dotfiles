@@ -6,7 +6,7 @@ vim.g.maplocalleader = ","
 
 local cmd = function(cmd)
 	return function()
-		vim.cmd(cmd)
+		pcall(vim.cmd, cmd)
 	end
 end
 
@@ -109,6 +109,7 @@ local keybindings = {
 		{ ":", ":<C-g>u" },
 		{ "?", "?<C-g>u" },
 		{ "_", "_<C-g>u" },
+		{ "<C-j>", "<cmd>CodeCompanionActions<cr>" }
 	},
 	o = {
 		{ "z", cmd("Pounce") },
