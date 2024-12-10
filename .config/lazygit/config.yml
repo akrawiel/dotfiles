@@ -5,25 +5,6 @@ git:
   parseEmoji: true
   branchLogCmd: 'git log --graph --color=always --decorate --oneline {{branchName}} --'
   allBranchesLogCmd: 'git log --graph --all --color=always --decorate --oneline'
-customCommands:
-  - command: 'git push --force-with-lease'
-    context: 'global'
-    description: 'force push with lease'
-    key: '<c-f>'
-    loadingText: 'Force pushing with lease to repository...'
-    stream: yes
-  - command: 'git push --tags'
-    context: 'global'
-    description: 'push all tags'
-    key: '<c-t>'
-    loadingText: 'Pushing tags to repository...'
-    stream: yes
-  - command: 'git pull --rebase'
-    context: 'global'
-    description: 'pull & rebase'
-    key: '<c-p>'
-    loadingText: 'Pulling and rebasing...'
-    stream: yes
 keybinding:
   universal:
     prevBlock-alt: 'h'
