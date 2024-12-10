@@ -128,11 +128,11 @@ local function assign_tag_screen(tag_name)
 	local number_tag_name = tonumber(tag_name)
 
 	if number_tag_name and number_tag_name <= 2 then
-		return { "DP-3-3", "DP1-3" }
+		return { "DP-3-3", "DP-2-3", "DP-1-3", "DP1-3" }
 	end
 
 	if number_tag_name and number_tag_name >= 2 then
-		return { "DP-3-2", "DP1-2" }
+		return { "DP-3-2", "DP-2-2", "DP-1-2", "DP1-2" }
 	end
 
 	return { "eDP1" }
