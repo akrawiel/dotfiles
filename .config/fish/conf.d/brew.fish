@@ -12,4 +12,5 @@ for brew_path in $brew_paths
 end
 
 if not type -q brew
+  echo "Please install 'brew' first!"
 end
