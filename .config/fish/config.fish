@@ -91,7 +91,7 @@ end
 
 # fzf plugin config
 
-fzf_configure_bindings --directory=\cf --git_log= --git_status= --history=\cr --variables=\cv --processes=\cp
+fzf_configure_bindings --directory=\cf --git_log= --git_status= --history=\cr
 set fzf_fd_opts --hidden --exclude=.git
 
 function _open_with_editor
