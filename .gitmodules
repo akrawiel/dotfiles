@@ -1,0 +1,12 @@
+[submodule ".config/tmux/plugins/tmux-fingers"]
+	path = .config/tmux/plugins/tmux-fingers
+	url = https://github.com/Morantron/tmux-fingers.git
+[submodule ".config/tmux/plugins/tmux-sensible"]
+	path = .config/tmux/plugins/tmux-sensible
+	url = https://github.com/tmux-plugins/tmux-sensible.git
+[submodule ".config/tmux/plugins/tmux-yank"]
+	path = .config/tmux/plugins/tmux-yank
+	url = https://github.com/tmux-plugins/tmux-yank.git
+[submodule ".config/tmux/themes/nord"]
+	path = .config/tmux/themes/nord
+	url = https://github.com/nordtheme/tmux.git
