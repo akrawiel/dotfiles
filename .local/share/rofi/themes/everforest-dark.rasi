@@ -1,0 +1,104 @@
+	* {
+		bg-col: #2b3339;
+		bg-col-light: #303446;
+		border-col: #d3c6aa;
+		selected-col: #d3c6aa;
+		blue: #d3c6aa;
+		fg-col: #d3c6aa;
+		fg-col2: #2b3339;
+		grey: #737994;
+		font: "monospace 12";
+	}
+
+	element-text, element-icon , mode-switcher {
+		background-color: inherit;
+		text-color:       inherit;
+	}
+
+	window {
+		border: 2px;
+		border-color: @blue;
+		background-color: @bg-col;
+		width: 600px;
+	}
+
+	mainbox {
+		background-color: @bg-col;
+	}
+
+	inputbar {
+		children: [entry];
+		background-color: @bg-col;
+		border-radius: 0px;
+		padding: 2px;
+	}
+
+	prompt {
+		background-color: @blue;
+		padding: 2px;
+		text-color: @bg-col;
+		border-radius: 0px;
+		margin: 0px;
+	}
+
+	entry {
+		background-color: @bg-col;
+		margin: 0px;
+		padding: 2px;
+		text-color: @fg-col;
+	}
+
+	listview {
+		background-color: @bg-col;
+		border: 0px;
+		columns: 1;
+		lines: 10;
+		margin: 0px;
+	}
+
+	element {
+		background-color: @bg-col;
+		padding: 2px 0px;
+		text-color: @fg-col;
+	}
+
+	element-icon {
+		size: 24px;
+	}
+
+	element selected {
+		background-color: @selected-col;
+		text-color: @fg-col2;
+	}
+
+	mode-switcher {
+		spacing: 0;
+	}
+
+	button {
+		background-color: @bg-col-light;
+		horizontal-align: 0.5;
+		padding: 10px;
+		text-color: @grey;
+  vertical-align: 0.5; 
+}
+
+button selected {
+  background-color: @bg-col;
+  text-color: @fg-col;
+}
+
+message {
+  background-color: @bg-col-light;
+  border-radius: 0px;
+  margin: 0px;
+  padding: 2px;
+}
+
+textbox {
+  background-color: @bg-col-light;
+  margin: 0px;
+  padding: 2px;
+  text-color: @blue;
+}
+

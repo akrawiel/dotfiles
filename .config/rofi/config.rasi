@@ -7,4 +7,4 @@ configuration {
   terminal: "kitty";
 }
 
-@theme "catppuccin-frappe-mini"
+@theme "everforest-dark"
