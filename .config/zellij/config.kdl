@@ -198,7 +198,7 @@ on_force_close "detach"
 simplified_ui true
 pane_frames false
 
-theme "catppuccin-mocha"
 mouse_mode false
+theme "everforest-dark"
 copy_on_select false
 mirror_session true
