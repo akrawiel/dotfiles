@@ -20,6 +20,26 @@ gui:
   showIcons: true
   theme:
     lightTheme: false
+    activeBorderColor:
+      - '#ffffff'
+      - 'bold'
+    inactiveBorderColor:
+      - '#b0b0b0'
+    searchingActiveBorderColor:
+      - '#383838' 
+      - 'bold'
+    optionsTextColor: 
+      - '#e0e0e0'
+    selectedLineBgColor: 
+      - '#4a4a4a'
+    cherryPickedCommitBgColor:
+      - '#383838'
+    cherryPickedCommitFgColor:
+      - '#4a4a4a'
+    unstagedChangesColor:
+      - '#e6c300'
+    defaultFgColor:
+      - '#d0d0d0'
 os:
   edit: 'nvr --remote {{filename}}'
   editAtLine: 'nvr --remote +{{line}} {{filename}}'

@@ -43,6 +43,29 @@ return {
 		-- ai (not to be confused with AI)
 		require("mini.ai").setup()
 
+		-- base16 theme
+		require("mini.base16").setup({
+			plugins = { default = true },
+			palette = {
+				["base00"] = "#1c1c1c",
+				["base01"] = "#2a2a2a",
+				["base02"] = "#383838",
+				["base03"] = "#4a4a4a",
+				["base04"] = "#b0b0b0",
+				["base05"] = "#d0d0d0",
+				["base06"] = "#e0e0e0",
+				["base07"] = "#ffffff",
+				["base08"] = "#e6c300",
+				["base09"] = "#c99e00",
+				["base0A"] = "#b59400",
+				["base0B"] = "#b8c100",
+				["base0C"] = "#e1c700",
+				["base0D"] = "#d0b600",
+				["base0E"] = "#f4db00",
+				["base0F"] = "#c7a53a",
+			},
+		})
+
 		-- operators
 		require("mini.operators").setup({
 			sort = {
