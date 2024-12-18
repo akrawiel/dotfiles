@@ -117,7 +117,6 @@ return {
 					cmd = { "elixir-ls" },
 				},
 			},
-			kotlin_language_server = true,
 			tailwindcss = has_file("tailwind.config.js", "tailwind.config.ts"),
 			unocss = has_file("unocss.config.js", "unocss.config.ts", "uno.config.js", "uno.config.ts"),
 			astro = has_file("astro.config.mjs"),

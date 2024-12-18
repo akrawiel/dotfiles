@@ -1,7 +1,7 @@
 return {
 	"williamboman/mason-lspconfig.nvim",
 	opts = {
-		ensure_installed = { "elixirls", "unocss", "volar", "kotlin_language_server" },
+		ensure_installed = { "elixirls", "unocss", "volar"  },
 
 		automatic_installation = true,
 	},
