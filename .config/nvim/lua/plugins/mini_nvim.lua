@@ -9,20 +9,6 @@ return {
 			},
 		})
 
-		-- notify
-		local notify = require("mini.notify")
-		notify.setup({
-			window = {
-				max_width_share = 1,
-				config = {
-					anchor = "SE",
-					border = "rounded",
-				},
-			},
-		})
-
-		vim.notify = notify.make_notify()
-
 		-- icons
 		local mini_icons = require("mini.icons")
 		mini_icons.setup()
