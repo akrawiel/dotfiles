@@ -92,7 +92,7 @@ local function files()
 end
 
 local function filesnotes()
-	tb.find_files({ follow = true, cwd = string.format("%s/Sync/Notes", os.getenv("HOME")) })
+	tb.find_files({ follow = true, cwd = string.format("%s/Sync/Vault", os.getenv("HOME")) })
 end
 
 local function tex(extension, func, ...)
