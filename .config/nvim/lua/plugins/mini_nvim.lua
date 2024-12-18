@@ -41,7 +41,9 @@ return {
 		require("mini.statusline").setup()
 
 		-- ai (not to be confused with AI)
-		require("mini.ai").setup()
+		require("mini.ai").setup({
+			n_lines = 1000,
+		})
 
 		-- base16 theme
 		require("mini.base16").setup({
