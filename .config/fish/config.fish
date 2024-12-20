@@ -7,7 +7,6 @@ end
 # global variables
 
 set -gx EDITOR nvim
-set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --exclude .git'
 set -gx GIT_PAGER 'delta'
 set -gx DESKTOP_SESSION 'gnome'
 set -gx GPG_TTY (tty)
@@ -91,25 +90,6 @@ end
 
 # fzf plugin config
 
-fzf_configure_bindings --directory=\cf --git_log= --git_status= --history=\cr
-set fzf_fd_opts --hidden --exclude=.git
-
-function _open_with_editor
-  set -l file (fzf --preview='bat --color always -pp {}');
-  if test $file;
-    $EDITOR $file;
-  end;
-end
-
-function _open_with_xdg
-  set -l file (fzf --preview='bat --color always -pp {}');
-  if test $file;
-    xdg-open $file;
-  end;
-end
-
-bind --mode insert \co _open_with_editor
-bind --mode insert \cx _open_with_xdg
 
 # options
 
@@ -127,9 +107,8 @@ set -g fish_cursor_visual block
 
 # custom booters
 
-setxkbmap pl -option caps:ctrl_modifier -option compose:sclk
-
 zoxide init fish | source
+fzf --fish | source
 
 gpgconf --launch gpg-agent
 
@@ -137,3 +116,6 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
 end
 
+if test -z "$HYPRLAND_INSTANCE_SIGNATURE"
+  setxkbmap pl -option caps:ctrl_modifier -option compose:sclk
+end
