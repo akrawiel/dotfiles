@@ -10,6 +10,7 @@
     "modules-right": [
         "privacy",
         "idle_inhibitor",
+        "custom/backlight",
         "wireplumber",
         "cpu",
         "memory",
@@ -79,6 +80,13 @@
         "format-full": "<b>B</b>{capacity:2}!",
         "format-charging": "<b>B</b>{capacity:2}+({timeTo})",
         "format-discharging": "<b>B</b>{capacity:2}-({timeTo})"
+    },
+    "custom/backlight": {
+        "format": "<b>L</b>{}",
+        "exec-on-event": true,
+        "interval": "once",
+        "exec": "sleep 3 && ddcutil getvcp 10 -t | cut -d' ' -f4",
+        "on-click": "toggle-brightness.ts"
     },
     "wireplumber": {
         "format": "<b>V</b>{volume:2}",
