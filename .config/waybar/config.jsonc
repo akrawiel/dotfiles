@@ -18,6 +18,12 @@
         "clock",
         "tray"
     ],
+    "hyprland/window": {
+        "format": "<i>{title}</i>",
+        "separate-outputs": true,
+        "icon": true,
+        "icon-size": 16
+    },
     "hyprland/workspaces": {
         "format": "{icon}"
     },
