@@ -10,6 +10,7 @@ return {
 				"fish",
 				"go",
 				"heex",
+				"hyprlang",
 				"javascript",
 				"kotlin",
 				"json",
@@ -37,6 +38,10 @@ return {
 			indent = {
 				enable = true,
 			},
+		})
+
+		vim.filetype.add({
+			pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
 		})
 	end,
 }
