@@ -1,3 +1,3 @@
 #!/bin/bash
 
-kitty -e nvim $HOME/.config/waybar/config
+kitty -e nvim $HOME/.config/waybar/config.jsonc

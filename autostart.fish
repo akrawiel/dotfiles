@@ -7,12 +7,16 @@ for variable in $keyringVariables
   eval "set -Ux $splitVariable[1] $splitVariable[2]"
 end
 
+if test -n "$HYPRLAND_INSTANCE_SIGNATURE"
+  exit
+end
+
 setxkbmap pl -option caps:ctrl_modifier -option compose:sclk
 xset s off
 
 runSingleInstance 'numlockx' 'numlockx'
 runSingleInstance 'flameshot' 'flameshot'
-runSingleInstance 'redshift -l 0:0 -t 3000:3000 -r' 'redshift'
+runSingleInstance 'redshift -b 1.0:0.75 -l 0:0 -t 3000:3000 -r' 'redshift'
 runSingleInstance 'nm-applet' 'nm-applet'
 runSingleInstance '/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1' '/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1'
 runSingleInstance '/usr/libexec/polkit-gnome/polkit-gnome-authentication-agent-1' '/usr/libexec/polkit-gnome/polkit-gnome-authentication-agent-1'

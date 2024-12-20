@@ -1,20 +1,16 @@
-// -*- mode: jsonc -*-
 {
     "height": 24,
     "spacing": 0,
     "reload_style_on_change": true,
     "modules-left": [
         "hyprland/workspaces",
-        "hyprland/submap"
-    ],
-    "modules-center": [
+        "hyprland/submap",
         "hyprland/window"
     ],
     "modules-right": [
-        "mpd",
+        "privacy",
         "idle_inhibitor",
         "wireplumber",
-        "power-profiles-daemon",
         "cpu",
         "memory",
         "battery",
@@ -22,45 +18,40 @@
         "tray"
     ],
     "hyprland/workspaces": {
-        "format": "{icon}",
-        "on-scroll-up": "hyprctl dispatch workspace e+1",
-        "on-scroll-down": "hyprctl dispatch workspace e-1"
+        "format": "{icon}"
     },
-    "mpd": {
-        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
-        "format-disconnected": "Disconnected ",
-        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
-        "unknown-tag": "N/A",
-        "interval": 5,
-        "consume-icons": {
-            "on": " "
-        },
-        "random-icons": {
-            "off": "<span color=\"#f53c3c\"></span> ",
-            "on": " "
-        },
-        "repeat-icons": {
-            "on": " "
-        },
-        "single-icons": {
-            "on": "1 "
-        },
-        "state-icons": {
-            "paused": "",
-            "playing": ""
-        },
-        "tooltip-format": "MPD (connected)",
-        "tooltip-format-disconnected": "MPD (disconnected)"
+    "privacy": {
+        "icon-spacing": 4,
+        "icon-size": 18,
+        "interval": 1,
+        "transition-duration": 250,
+        "modules": [
+            {
+                "type": "screenshare",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+            },
+            {
+                "type": "audio-out",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+            },
+            {
+                "type": "audio-in",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+            }
+        ]
     },
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
-            "activated": "",
-            "deactivated": "󰾪"
+            "activated": " ",
+            "deactivated": " "
         }
     },
     "tray": {
-        // "icon-size": 21,
+        "show-passive-items": true,
         "spacing": 10
     },
     "clock": {
@@ -68,12 +59,12 @@
         "format": "{:%a %d.%m.%y %H:%M}"
     },
     "cpu": {
-        "format": "<b>C</b> {usage}",
+        "format": "<b>C</b>{usage:2}",
         "tooltip": false,
         "interval": 2
     },
     "memory": {
-        "format": "<b>M</b> {percentage}",
+        "format": "<b>M</b>{percentage:2}",
         "interval": 2
     },
     "battery": {
@@ -81,27 +72,17 @@
             "warning": 30,
             "critical": 15
         },
-        "format": "{capacity}% {icon}",
-        "format-full": "{capacity}% {icon}",
-        "format-charging": "{capacity}% ",
-        "format-plugged": "{capacity}% ",
-        "format-alt": "{time} {icon}",
-        "format-icons": ["", "", "", "", ""]
-    },
-    "power-profiles-daemon": {
-      "format": "{icon}",
-      "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
-      "tooltip": true,
-      "format-icons": {
-        "default": "",
-        "performance": "",
-        "balanced": "",
-        "power-saver": ""
-      }
+        "interval": 5,
+        "tooltip": false,
+        "format": "<b>B</b>{capacity:2}({timeTo})",
+        "format-time": "{H}:{m}",
+        "format-full": "<b>B</b>{capacity:2}!",
+        "format-charging": "<b>B</b>{capacity:2}+({timeTo})",
+        "format-discharging": "<b>B</b>{capacity:2}-({timeTo})"
     },
     "wireplumber": {
-        "format": "{volume}%",
-        "format-muted": "<b>M</b>",
+        "format": "<b>V</b>{volume:2}",
+        "format-muted": "<b>V</b> M",
         "on-click-right": "pavucontrol",
         "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
         "scroll-step": 5
