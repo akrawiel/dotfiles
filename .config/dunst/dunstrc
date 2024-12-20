@@ -1,0 +1,67 @@
+[global]
+    offset = (10, 10)
+    monitor = 0
+    follow = mouse
+    indicate_hidden = yes
+    progress_bar = true
+    progress_bar_frame_width = 0
+    progress_bar_corner_radius = 5
+    shrink = no
+    transparency = 0
+    separator_height = 2
+    padding = 8
+    horizontal_padding = 8
+    frame_width = 0
+    frame_color = "#aaaaaa"
+    separator_color = auto
+    sort = yes
+    idle_threshold = 120
+    font = monospace 12
+    line_height = 0
+    markup = full
+    format = "<small><i>%a</i></small>\n<b>%s</b>\n%b"
+    browser = /usr/bin/xdg-open
+    alignment = left
+    show_age_threshold = 60
+    word_wrap = yes
+    ellipsize = middle
+    ignore_newline = no
+    stack_duplicates = true
+    hide_duplicate_count = false
+    show_indicators = yes
+    icon_position = right
+    max_icon_size = 48
+    icon_theme = Papirus
+    enable_recursive_icon_lookup = true
+    sticky_history = yes
+    history_length = 20
+    always_run_script = true
+    title = Dunst
+    class = Dunst
+    corner_radius = 5
+    force_xinerama = false
+    mouse_left_click = close_current
+    mouse_middle_click = do_action
+    mouse_right_click = close_all
+
+[experimental]
+    per_monitor_dpi = false
+
+[urgency_low]
+    background = "#2a2a2a"
+    foreground = "#c99e00"
+    timeout = 10
+    default_icon = dialog-information
+
+[urgency_normal]
+    background = "#4a4a4a"
+    foreground = "#ffffff"
+    timeout = 10
+    default_icon = dialog-information
+
+[urgency_critical]
+    background = "#e6c300"
+    foreground = "#2a2a2a"
+    frame_color = "#ff0000"
+    timeout = 0
+    default_icon = dialog-warning
