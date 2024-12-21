@@ -93,7 +93,7 @@ if type -q nnn
   set -gx NNN_OPTS 'geA'
   set -gx NNN_TRASH 2
   set -gx NNN_ARCHIVE '\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|rar|rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)$'
-  set -gx NNN_PLUG 'o:fzopen;d:dragdrop;z:autojump;G:getplugs;r:gitroot'
+  set -gx NNN_PLUG 'o:fzopen;d:dragdrop;z:autojump;r:gitroot'
 end
 
 # options
