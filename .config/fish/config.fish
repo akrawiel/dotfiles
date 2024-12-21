@@ -12,7 +12,6 @@ set -gx DESKTOP_SESSION 'gnome'
 set -gx GPG_TTY (tty)
 set -gx LANG en_US.UTF-8
 set -gx LC_ALL C.UTF-8
-set -gx NNN_PLUG 'd:dragdrop;z:autojump;G:getplugs;R:gitroot;r:renamer'
 set -gx PROJECT_PATHS "$HOME/Projects"
 set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 set -gx XDG_CONFIG_HOME $HOME/.config
@@ -88,8 +87,14 @@ if test -e "$HOME/.asdf/plugins/golang/set-env.fish"
   source "$HOME/.asdf/plugins/golang/set-env.fish"
 end
 
-# fzf plugin config
+# NNN options
 
+if type -q nnn
+  set -gx NNN_OPTS 'geA'
+  set -gx NNN_TRASH 2
+  set -gx NNN_ARCHIVE '\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|rar|rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)$'
+  set -gx NNN_PLUG 'o:fzopen;d:dragdrop;z:autojump;G:getplugs;r:gitroot'
+end
 
 # options
 
