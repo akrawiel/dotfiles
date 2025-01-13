@@ -82,11 +82,14 @@ type TaskData =
 			id: number;
 	  }
 	| {
+			kind: "stopWithHour";
+	  }
+	| {
 			kind: "confirmDelete";
 			id: number;
 	  }
 	| {
-			kind: "swap";
+			kind: "replace";
 			id: number;
 			tag: string;
 	  };
@@ -103,7 +106,8 @@ const instructions = [
 	"u - undo",
 	"d - delete",
 	"s - stop",
-	"S - swap",
+	"S - stop  ",
+	"r - replace",
 	"j - down",
 	"k - up",
 	"q - exit",
@@ -253,7 +257,7 @@ function TimewarriorPopup() {
 
 					try {
 						match(stateData)
-							.with({ kind: "swap" }, ({ tag, id }) => {
+							.with({ kind: "replace" }, ({ tag, id }) => {
 								const output = new Deno.Command("timew", {
 									args: ["retag", `@${id}`, `${tag}-${textInput}`],
 								}).outputSync();
@@ -375,6 +379,22 @@ function TimewarriorPopup() {
 								setStateData(undefined);
 								reloadTimewarriorExport();
 							})
+							.with({ kind: "stopWithHour" }, () => {
+								const output = new Deno.Command("timew", {
+									args: ["stop", textInput],
+								}).outputSync();
+								setStatus(
+									decoder
+										.decode(output.code === 0 ? output.stdout : output.stderr)
+										.split("\n")
+										.filter((line) => !line.includes("Note:"))
+										.at(0) ?? "",
+								);
+								setTextInput("");
+								setState("main");
+								setStateData(undefined);
+								reloadTimewarriorExport();
+							})
 							.run();
 					} catch {
 						// ignore errors
@@ -394,7 +414,7 @@ function TimewarriorPopup() {
 						if (foundSpecialTask) {
 							try {
 								match(stateData)
-									.with({ kind: "swap" }, ({ tag, id }) => {
+									.with({ kind: "replace" }, ({ tag, id }) => {
 										const output = new Deno.Command("timew", {
 											args: [
 												"retag",
@@ -549,9 +569,19 @@ function TimewarriorPopup() {
 					const timeEntryAtRow = timeEntries.at(row);
 
 					if (timeEntryAtRow) {
+						setState("selectHour");
+						setStateData({
+							kind: "stopWithHour",
+						});
+					}
+				})
+				.with({ input: "r", state: "main" }, () => {
+					const timeEntryAtRow = timeEntries.at(row);
+
+					if (timeEntryAtRow) {
 						setState("select");
 						setStateData({
-							kind: "swap",
+							kind: "replace",
 							id: timeEntryAtRow.id,
 							tag: "",
 						});
@@ -615,6 +645,7 @@ function TimewarriorPopup() {
 					state === "confirm" ||
 					(state === "selectHour" &&
 						(stateData?.kind === "continueWithHour" ||
+							stateData?.kind === "stopWithHour" ||
 							stateData?.kind === "newEmptyWithHour"))) && (
 					<>
 						<Box flexDirection="row" gap={1}>
@@ -657,6 +688,7 @@ function TimewarriorPopup() {
 				{(state === "selectTask" ||
 					(state === "selectHour" &&
 						stateData?.kind !== "continueWithHour" &&
+						stateData?.kind !== "stopWithHour" &&
 						stateData?.kind !== "newEmptyWithHour") ||
 					state === "selectManualTask") &&
 					selectedTask && (
