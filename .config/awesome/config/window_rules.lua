@@ -96,10 +96,17 @@ return {
 
 	-- Custom rules
 	{
-		rule = { class = "DropdownKitty" },
+		rule_any = { class = { "DropdownKitty" } },
 		properties = {
 			floating = true,
 			placement = awful.placement.centered,
+		},
+	},
+	{
+		rule_any = { class = { "KittyPopup" } },
+		properties = {
+			placement = awful.placement.centered,
+			floating = true,
 		},
 	},
 	{

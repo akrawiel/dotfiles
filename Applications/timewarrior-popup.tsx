@@ -3,7 +3,7 @@
 import process from "node:process";
 // @ts-types="npm:@types/react@18"
 import { useCallback, useEffect, useState } from "npm:react@18";
-import { useApp, useInput, Newline, Box, render, Text } from "npm:ink";
+import { useApp, useInput, Box, render, Text } from "npm:ink";
 import { match, P } from "npm:ts-pattern";
 // @ts-types="npm:@types/luxon"
 import { DateTime } from "npm:luxon";
